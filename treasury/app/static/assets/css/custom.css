@@ -1,0 +1,212 @@
+.line-7{
+    display: -webkit-box!important;
+    overflow: hidden;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+}
+
+.menu .brand img {
+    height: 77px;
+}
+
+ul.nav-list {
+    float: right;
+    width: fit-content;
+}
+
+.page-banner{
+    padding-top: 75px!important;
+}
+
+body{
+    overflow-x: initial;
+}
+
+.menu ul > li > a {
+    color: #bfbfbf;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 52px;
+}
+.menu ul > li > a:hover {
+    color: #fff;
+}
+.menu ul > li > a:active {
+    color: #fff;
+}
+
+.page-title{
+    color: #ffdcdc;
+    text-align: center;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+/*.main-search{*/
+/*    margin-top: -29px;*/
+/*    margin-left: 20px;*/
+/*    position: absolute;*/
+/*    border: grey 1px solid;*/
+/*}*/
+
+.main-search{
+    margin-top: 10px;
+}
+.main-search:focus{
+    outline: none;
+}
+
+.body-title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: #262626;
+    line-height: 1.8;
+}
+.body{
+    padding-top: 0;
+}
+
+table{
+    width: 100%;
+    padding: 10px;
+}
+tr, td, th{
+    text-align: right;
+    color: #000;
+    font-size: 18px;
+    padding-right: 10px;
+}
+
+thead th{
+    font-weight: normal;
+}
+.table-header{
+    font-weight: bold;
+    color: #000;
+    font-size: 18px;
+}
+
+.active-table .table-header{
+    background: #ffd9d9!important;
+}
+
+.active-table tbody tr:nth-child(odd){
+    background-color: #ffd9d9;
+}
+
+.text-success{
+    color: #003300!important;
+}
+
+.text-danger{
+    color: #c00000!important;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fff0f0;
+}
+
+.table-container{
+    border: 10px #fff0f0 solid;
+}
+
+.tab{
+    font-size: 18px;
+}
+
+.tab:hover{
+    color: black;
+}
+
+.active{
+    color: black;
+}
+.doc-header{
+    font-family: Aurial, sans-serif;
+    font-weight: bolder;
+    font-size: 28px;
+    color: #000;
+    line-height: 1.2;
+
+}
+
+.doc-content{
+    font-size: 18px;
+    color: black;
+}
+
+.logo-badge{
+    font-size: 18px;
+    color:#fff;
+    position:absolute;
+    top: 31px;
+    left: 239px;
+}
+
+.user-email{
+    text-align: right;
+    color: #ffffff;
+    padding-right: 20px;
+    margin-top: -26px;
+}
+
+.footer .logo{
+    width: 160px;
+}
+
+.footer p{
+    line-height: 1.3; font-size: 18px; color: white
+}
+
+th{
+    width: 28%;
+}
+.key_header{
+    width: 16%;
+}
+
+.active-table{
+    border: 10px #ffd9d9 solid;
+}
+
+@media (max-width: 768px) {
+    .d-sm-block{
+        display: block;
+    }
+    .main-search{
+        margin: 10px auto;
+    }
+    .d-sm-flex{
+        display: flex;
+    }
+
+    .menu .brand img {
+        height: 55px;
+    }
+
+    .logo-badge{
+        font-size: 13px;
+        color: #fff;
+        position: absolute;
+        top: 16px;
+        left: 177px;
+    }
+
+    .user-email{
+        margin-top: 0;
+    }
+
+    .footer .logo{
+        width: 120px;
+    }
+
+    .footer{
+        padding-top: 0;
+    }
+
+    .footer p{
+        line-height: 1.1;
+        font-size: 14px;
+    }
+}

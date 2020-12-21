@@ -1,0 +1,256 @@
+{% load static %}
+{% load app_tags %}
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TG Code">
+    <title>{{ cms.title_page }}</title>
+    <style>
+        @keyframes hidePreloader {
+            0% {
+                width: 100%;
+                height: 100%;
+            }
+
+            100% {
+                width: 0;
+                height: 0;
+            }
+        }
+
+        body > div.preloader {
+            position: fixed;
+            background: white;
+            width: 100%;
+            height: 100%;
+            z-index: 1071;
+            opacity: 0;
+            transition: opacity .5s ease;
+            overflow: hidden;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body:not(.loaded) > div.preloader {
+            opacity: 1;
+        }
+
+        body:not(.loaded) {
+            overflow: hidden;
+        }
+
+        body.loaded > div.preloader {
+            animation: hidePreloader .5s linear .5s forwards;
+        }
+    </style>
+
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        window.addEventListener("load", function () {
+            setTimeout(function () {
+                document.querySelector('body').classList.add('loaded');
+            }, 300);
+        });
+    </script>
+    <link rel="icon" href="{% static 'assets/img/brand/favicon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/libs/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/@fortawesome/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'assets/libs/swiper/dist/css/swiper.min.css' %}">
+
+    <!-- Custom style -->
+    <link rel="stylesheet" href="{% static 'assets/css/mega/style.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/quick-website.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" id="stylesheet">
+
+
+</head>
+
+<body>
+
+{% include 'app/basic/navbar.html' %}
+
+<section class="page-banner" style="background: #181717; padding-bottom: 0;">
+    <div class="container-fluid">
+        <div class="page-title"> Your Middel Office.</div>
+        <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
+        </div>
+    </div>
+</section>
+
+<section class="container-fluid page-subtitle">
+
+    <div style="text-align: center">
+         <span class="px-2 d-md-inline-flex d-sm-block tab">
+             What we do
+         </span>
+        <span class="px-2 d-md-inline-flex d-sm-block tab active" style="border-left: 1px solid grey;">
+             Excel Example
+         </span>
+        <span class="px-2 d-md-inline-flex d-sm-block tab" style="border-left: 1px solid grey;">
+             API Documentations
+         </span>
+    </div>
+
+
+</section>
+
+<section class="body">
+    <div class="container-fluid">
+        <div class="body-title">Swap & FX Market Rates</div>
+        <div class="row">
+            {% for item in currency_data %}
+                <div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom: 20px;">
+                {% if forloop.counter0 == 4 %}
+                    <div class="table-container active-table">
+                {% else %}
+                    <div class="table-container">
+                {% endif %}
+            <div class="table-header"
+                 style="text-align: center; background: #fff0f0;">{{ item.title }}</div>
+            <table>
+                <thead>
+                {% for head_item in item.head_data %}
+                    {% if forloop.counter0 == 0 %}
+                        <th class="key_header">{{ head_item }}</th>
+                    {% else %}
+                        <th>{{ head_item }}</th>
+                    {% endif %}
+                {% endfor %}
+                </thead>
+                <tbody>
+                {% for data_item in item.data %}
+                    <tr>
+                        {% for ele in data_item %}
+                            {% string_float ele as ele_float %}
+                            {% if forloop.counter0 == 3 %}
+                                {% if ele_float < 0 %}
+                                    <td class="text-danger">{{ ele }}</td>
+                                {% else %}
+                                    <td class="text-success">{{ ele }}</td>
+                                {% endif %}
+                            {% elif forloop.counter0 == 1 %}
+                                <td class="font-weight-bolder">{{ ele }}</td>
+                            {% else %}
+                                <td>{{ ele }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            </div>
+            {% endfor %}
+            </div>
+            <div class="row" style="padding-top: 40px">
+                <div class="col-md-6 col-sm-12 ">
+                    <div class="doc-header">At Treasury Quants, we believe you should never pay for license fee.</div>
+                    <p class="pt-4 doc-content">
+                        With us, you never do. With us, you will never have to commit to any contracts. We are a
+                        pay-as-you
+                        go service. This means that you only pay for what you use. Not a penny more. And when time
+                        comes,
+                        you can stop. No questions asked.
+                    </p>
+                    <p class="doc-content">We don’t have a sales department to keep calling you. We let go of that department a long time
+                        ago.
+                        When you have a question, you will talk to those who deliver your numbers. No one else! So why
+                        not
+                        give us a try? It’s free. Take a look around, ask us questions, take us for a test drive. Let us
+                        know what you think. With us, you are as free as a bird.
+                    </p>
+                </div>
+                <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-center">
+                    <video controls style="width: 100%" poster="{% static 'assets/video/poster.png' %}">
+                        <source src="{% static 'assets/video/sample.mp4' %}" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+</section>
+
+{#<img src="{% static 'assets/img/screenshut/1.png' %}">#}
+
+{% include "app/basic/footer.html" %}
+
+<!-- Core JS  -->
+<script src="{% static 'assets/js/jquery.js' %}"></script>
+<script src="{% static 'assets/js/jquery.migrate.js' %}"></script>
+
+{#  <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>#}
+
+<script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/libs/svg-injector/dist/svg-injector.min.js' %}"></script>
+<script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
+<!-- Optional JS -->
+<script src="{% static 'assets/libs/in-view/dist/in-view.min.js' %}"></script>
+<script src="{% static 'assets/libs/sticky-kit/dist/sticky-kit.min.js' %}"></script>
+<script src="{% static 'assets/libs/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<!-- Page JS -->
+<script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'assets/libs/autosize/dist/autosize.min.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'assets/libs/swiper/dist/js/swiper.min.js' %}"></script>
+<script src="{% static 'assets/libs/owl.carousel/owl.carousel.js' %}"></script>
+<script src="{% static 'assets/libs/easescroll/jquery.easeScroll.js' %}"></script>
+<!-- Quick JS -->
+
+<script src="{% static 'assets/js/e-magz.js' %}"></script>
+<script src="{% static 'assets/js/quick-website.js' %}"></script>
+
+
+<!-- Feather Icons -->
+<script>
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    });
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+{% load static %}
+<header class="primary">
+
+    <nav class="menu" style="background:#262626 ; border: 0">
+        <div class="container-fluid">
+            <div class="brand d-block">
+                <a href="/">
+                    <img src="{% static 'assets/img/brand/tq.png' %}" alt="Magz Logo">
+                    <span class="logo-badge"><i>Quants included!</i></span>
+                </a>
+            </div>
+            <div class="mobile-toggle">
+                <a href="#" data-toggle="menu" data-target="#menu-list"><i class="ion-navicon-round"></i></a>
+            </div>
+            <div class="mobile-toggle">
+                <a href="#" data-toggle="sidebar" data-target="#sidebar"><i class="ion-ios-arrow-left"></i></a>
+            </div>
+            <div id="menu-list">
+                <ul class="nav-list ml-lg-2" >
+                    <li class="for-tablet nav-title"><a>Menu</a></li>
+
+                    <li class="nav-search">
+                        <a href="#" >logout</a>
+                    </li>
+                     <li class="nav-search">
+                        <a href="#" >create account</a>
+                    </li>
+                     <li class="nav-search">
+                        <a href="#" >my account</a>
+                    </li>
+                     <li class="nav-search">
+                        <a href="#" >login</a>
+                     </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+

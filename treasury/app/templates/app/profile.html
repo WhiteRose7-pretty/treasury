@@ -1,0 +1,125 @@
+{% load static %}
+{% load app_tags %}
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TG Code">
+    <title>Treasury | profile</title>
+    <link rel="icon" href="{% static 'assets/img/brand/favicon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/libs/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/@fortawesome/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/swiper/dist/css/swiper.min.css' %}">
+    <!-- Custom style -->
+    <link rel="stylesheet" href="{% static 'assets/css/mega/style.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/quick-website.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" id="stylesheet">
+
+
+</head>
+
+<body>
+
+{% include 'app/basic/navbar.html' %}
+
+<section class="page-banner" style="background: #181717; padding-bottom: 0;">
+    <div class="container-fluid">
+        <div class="page-title"> Your Account Information.</div>
+        <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
+        </div>
+    </div>
+</section>
+
+<section class="container-fluid page-subtitle">
+
+    <div style="text-align: center">
+         <span class="px-2 d-md-inline-flex d-sm-block tab">
+             IP Change
+         </span>
+        <span class="px-2 d-md-inline-flex d-sm-block tab active" style="border-left: 1px solid grey;">
+             Information
+         </span>
+        <span class="px-2 d-md-inline-flex d-sm-block tab" style="border-left: 1px solid grey;">
+             Email Change
+         </span>
+    </div>
+</section>
+
+
+<section style="min-height: Calc(100vh - 75px - 209px - 58px); margin-top: 10px">
+    <div class="container d-flex justify-content-center ">
+        <table class="profile-table">
+            <tbody>
+                <tr>
+                    <td><span class="icon-profile"><i data-feather="user"></i></span>Id:</td>
+                    <td>{{ user_data.id }}</td>
+                </tr>
+                <tr>
+                    <td><span class="icon-profile"><i data-feather="credit-card"></i></span>balance:</td>
+                    <td>{{ user_data.balance }}</td>
+                </tr>
+                <tr>
+                    <td><span class="icon-profile"><i data-feather="dollar-sign"></i></span>Currency:</td>
+                    <td>{{ user_data.currency }}</td>
+                </tr>
+                <tr>
+                    <td><span class="icon-profile"><i data-feather="share-2"></i></span>ip:</td>
+                    <td>{{ user_data.ip }}</td>
+                </tr>
+                <tr>
+                    <td><span class="icon-profile"><i data-feather="clock"></i></span>last login:</td>
+                    <td>{{ user_data.last_login }}</td>
+                </tr>
+                <tr>
+                    <td><span class="icon-profile"><i data-feather="mail"></i></span>email:</td>
+                    <td>{{ user_data.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+{% include "app/basic/footer.html" %}
+
+<!-- Core JS  -->
+<script src="{% static 'assets/js/jquery.js' %}"></script>
+<script src="{% static 'assets/js/jquery.migrate.js' %}"></script>
+
+{#  <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>#}
+
+<script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/libs/svg-injector/dist/svg-injector.min.js' %}"></script>
+<script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
+<!-- Optional JS -->
+<script src="{% static 'assets/libs/in-view/dist/in-view.min.js' %}"></script>
+<script src="{% static 'assets/libs/sticky-kit/dist/sticky-kit.min.js' %}"></script>
+<script src="{% static 'assets/libs/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<!-- Page JS -->
+<script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'assets/libs/autosize/dist/autosize.min.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'assets/libs/swiper/dist/js/swiper.min.js' %}"></script>
+<script src="{% static 'assets/libs/owl.carousel/owl.carousel.js' %}"></script>
+<script src="{% static 'assets/libs/easescroll/jquery.easeScroll.js' %}"></script>
+<!-- Quick JS -->
+
+<script src="{% static 'assets/js/e-magz.js' %}"></script>
+<script src="{% static 'assets/js/quick-website.js' %}"></script>
+
+
+<!-- Feather Icons -->
+<script>
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    });
+
+</script>
+</body>
+
+</html>

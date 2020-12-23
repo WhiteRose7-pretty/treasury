@@ -26,7 +26,6 @@ def read_data(file_path):
 
 
 def home(request):
-
     data_list = []
     for item in files:
         obj = read_data(item)
@@ -35,6 +34,22 @@ def home(request):
         'currency_data' : data_list,
     }
     return render(request, 'app/home.html', context)
+
+def profile(request):
+    user_data = {
+        'id': '880',
+        'balance': '1000.00',
+        'currency': 'GBP',
+        'ip': '195.325.214.2',
+        'last_login': '2020-12-14 15:47:15',
+        'email': 'test.account@treasuryquants.com',
+    }
+
+    context = {
+        'user_data': user_data
+    }
+
+    return render(request, 'app/profile.html', context)
 
 
 def search(request):

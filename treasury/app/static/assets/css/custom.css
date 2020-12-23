@@ -170,6 +170,27 @@ th{
     border: 10px #ffd9d9 solid;
 }
 
+.profile-table{
+    width: fit-content;
+}
+
+.profile-table tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.profile-table tr, .profile-table td{
+    text-align: left;
+    font-size: 18px;
+    padding: 20px 30px;
+    border: 1px solid #80808054;
+}
+
+.icon-profile{
+    font-size: 18px;
+    color: grey;
+    padding-right: 10px;
+}
+
 @media (max-width: 768px) {
     .d-sm-block{
         display: block;

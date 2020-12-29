@@ -1,0 +1,69 @@
+{% extends 'app/home.html' %}
+
+{% load  static %}
+{% load app_tags %}
+
+
+{% block tab_menu %}
+    <div style="text-align: center">
+         <a href="{% url 'app:home' %}">
+             <span class="px-2 d-md-inline-flex d-sm-block tab">
+                Market
+             </span>
+         </a>
+        <a href="{% url 'app:about_us' %}">
+            <span class="px-2 d-md-inline-flex d-sm-block tab active" style="border-left: 1px solid grey;">
+                 Who we are
+            </span>
+        </a>
+        <a href="#">
+            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
+                 Workbench
+            </span>
+        </a>
+    </div>
+{% endblock %}
+
+
+{% block tab_body %}
+    <div class="container-fluid p-lg-40" >
+        <div class="row">
+            <div class="col-lg-2 col-sm-12">
+                <div class="italic-text">
+                    “In our view, the days of quarter-end evaluations are over…why shouldn’t you know how your trades are doing, every day?’’
+                </div>
+                <div class="italic-text">
+                    “We have made our business around you.  We don’t care if you are a small treasury. So, if you feel you are too small for others, not to worry.  To us, you are a perfect client.’’
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <div class="regular-text">
+                    <p>Who are we? Glad you asked.</p>
+
+                    <p>We are passionate about derivative support.</p>
+
+                    <p>
+                        For decades, we have been supporting banks for their evaluations and risk analysis of
+                        your derivatives. We have been there for every one of your new deals, restructuring and novation.
+                        We now want to do the same thing for you and be your derivative support. We want to be your middle office.</p>
+                    <p>
+                        We are a group of quants - expert in fixed income derivatives. We are independent of any banks, advisors or vendors. We work for you.
+                    </p>
+                    <p>
+                        In our view, the days of quarter-end evaluations are over. With all the technology and new ways of doing business, why shouldn’t you know how your trades are doing, every day?  Your bank does.
+                    </p>
+                    <p>
+                        We want to provide you with your P&L, sensitivities and a host of risk analysis every day of the week. We don’t need to know any proprietary information about your trades to do our job. We can provide our reports in a per-notional basis; removing any scale of the trade’s value while still providing detailed reports of your trade’s analysis.
+                    </p>
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                    <video  controls src="{% static 'assets/video/Who are we_.mp4' %}" style="width: 100%; margin-top: 24vh;"></video>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,3 +1,23 @@
+@font-face {
+  font-family: 'Calibri';
+  font-weight: 400;
+  src: url("fonts/calibri.ttf");
+}
+
+body{
+    line-height: 1.5;
+    color: #000;
+    font-family: Arial, serif;
+}
+
+h1, h2{
+    color: #000;
+}
+
+.fusion-text h2{
+    font-size: 1.5rem;
+}
+
 .line-7{
     display: -webkit-box!important;
     overflow: hidden;
@@ -35,11 +55,21 @@ body{
     color: #fff;
 }
 
+.menu ul > li .dropdown-menu > li > a {
+    color: black;
+    font-weight: 500;
+}
+
+header.primary.up nav.menu ul:not(.dropdown-menu) > li > a {
+    padding: 11px 16px;
+}
+
 .page-title{
     color: #ffdcdc;
     text-align: center;
     font-size: 34px;
     font-weight: bold;
+    line-height: 1.8;
 }
 
 /*.main-search{*/
@@ -113,6 +143,7 @@ tbody tr:nth-child(odd) {
 
 .tab{
     font-size: 18px;
+    color:grey;
 }
 
 .tab:hover{
@@ -191,6 +222,42 @@ th{
     padding-right: 10px;
 }
 
+.font-calibri{
+    font-family: Calibri, serif;
+}
+
+.italic-text{
+    font-family: 'Calibri', serif;
+    color: black;
+    font-size: 20px;
+    font-style: italic;
+    text-align: justify;
+    padding: 40px 0;
+
+}
+
+
+.regular-text{
+    font-family: 'Calibri', serif;
+    color: black;
+    font-size: 20px;
+    padding: 20px 40px;
+    text-align: justify;
+}
+
+.regular-text p{
+    margin-bottom: 50px;
+}
+
+@media(min-width: 768px){
+    .p-lg-40{
+        padding: 40px;
+    }
+    .p-lg-20-60{
+        padding: 20px 60px;
+    }
+}
+
 @media (max-width: 768px) {
     .d-sm-block{
         display: block;
@@ -229,5 +296,16 @@ th{
     .footer p{
         line-height: 1.1;
         font-size: 14px;
+    }
+
+    .profile-table tr, .profile-table td{
+        text-align: left;
+        font-size: 14px;
+        padding: 20px 10px;
+        border: 1px solid #80808054;
+    }
+
+    .regular-text{
+        padding: 0;
     }
 }

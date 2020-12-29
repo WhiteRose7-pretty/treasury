@@ -19,18 +19,31 @@
                 <ul class="nav-list ml-lg-2" >
                     <li class="for-tablet nav-title"><a>Menu</a></li>
 
+
                     <li class="nav-search">
-                        <a href="#" >logout</a>
+                        <a href="{% url 'app:policy_notice' %}" >Policy Notice</a>
+                    </li>
+                    <li class="nav-search">
+                        <a href="{% url 'app:terms_of_service' %}">Terms of Service</a>
                     </li>
                      <li class="nav-search">
                         <a href="#" >create account</a>
                     </li>
-                     <li class="nav-search">
-                        <a href="{% url 'app:profile' %}" >my account</a>
+                    <li class="nav-search">
+                        <a href="{% url 'app:profile' %}" >login</a>
                     </li>
-                     <li class="nav-search">
-                        <a href="#" >login</a>
-                     </li>
+
+                      <li class="nav-search  dropdown magz-dropdown">
+                        <a>Support <i class="ion-ios-arrow-right"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'app:policy_notice' %}">Policy Notice</a></li>
+                            <li><a href="{% url 'app:terms_of_service' %}">Terms of Service</a></li>
+                            <li><a href="#">API documentation</a></li>
+                            <li><a href="#">Career</a></li>
+                        </ul>
+                    </li>
+
+
                 </ul>
             </div>
         </div>

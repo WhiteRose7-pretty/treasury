@@ -7,7 +7,7 @@ email_default="test.account@treasuryquants.com"
 # server's url
 #
 url_server="http://operations.treasuryquants.com"
-url_server="http://192.168.1.80:8080" #this for testing the local server
+#url_server="http://192.168.1.80:8080" #this for testing the local server
 
 
 #

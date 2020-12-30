@@ -26,10 +26,6 @@ swap_rate_files = [
 fx_rate_file = 'app/media/currency_data/FX.csv'  # this is where the fx is going to be
 
 
-#
-# Global connection to the server. Contains and updates its own  token
-#
-connection=TQConnection.Connection(settings.email_default,settings.url_server)
 
 
 
@@ -96,7 +92,10 @@ def home(request):
 
 
 def profile(request):
-
+    #
+    # Connection to the server. Contains and updates its own  token
+    #
+    connection = TQConnection.Connection(settings.email_default, settings.url_server)
 
     our_test_account_email='test.account@treasuryquants.com'
     our_test_account_password='test.account@treasuryquants.com'

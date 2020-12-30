@@ -4,6 +4,7 @@ from django.shortcuts import render, get_list_or_404
 
 from .models import CurrencyData, DataFile
 from .modules import settings
+from .modules import utility_grids
 
 files = [
     'app/media/currency_data/EUR.csv',
@@ -14,7 +15,8 @@ files = [
     'app/media/currency_data/JPY.csv',
 ]
 
-def read_data(file_path):
+#todo: Shahram to remove this after a discusison with Daria.
+def read_data_old(file_path):
     with open(file_path, 'rt') as f:
         data = csv.reader(f)
         result = []
@@ -39,6 +41,24 @@ def read_data(file_path):
         obj.head_data[0] = ''
         return obj
 
+def read_data(file_path):
+    obj=CurrencyData('', ['','',''], [[0,0,0,0]]) #to ensure we do not crash and we always return something
+    grid=utility_grids.Grid()
+    status, message=grid.load(file_path)
+    if not status:
+        return obj
+    elements=list()
+    for i in range(0,len(grid.y1)):
+        tenor = grid.tenors[i]
+        col1 = "{:.4f}".format(round(float(grid.y1[i]),settings.grid_decimals))
+        col2 = "{:.4f}".format(round(float(grid.y2[i]), settings.grid_decimals))
+        col3 = "{:.4f}".format(round(float(grid.y3[i]), settings.grid_decimals))
+
+        elements.append([tenor,col1,col2,col3])
+    obj = CurrencyData(grid.title, grid.headings, elements)
+    obj.head_data[0] = ''
+
+    return obj
 
 
 def home(request):

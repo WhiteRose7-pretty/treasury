@@ -3,6 +3,7 @@ def send_email(email_recipient,
                email_subject,
                email_message_text
                ):
+
     sender_email = 'web.user@treasuryquants.com'
     password='web.user@treasuryquants.com1Password1'
     port=587
@@ -19,4 +20,5 @@ def send_email(email_recipient,
             server.sendmail(sender_email, email_recipient, message)
     except:
         print("SMPT server connection error")
-    return True
+        return False, "SMPT server connection error"
+    return True, ''

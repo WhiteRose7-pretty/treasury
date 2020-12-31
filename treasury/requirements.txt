@@ -17,3 +17,4 @@ setuptools==50.3.2
 six==1.15.0
 sqlparse==0.4.1
 wheel==0.35.1
+TQapis==0.12.4

@@ -70,8 +70,8 @@ def read_data(file_path):
         col1 = "{:.4f}".format(round(float(grid.y1[i]),settings.grid_decimals))
         col2 = "{:.4f}".format(round(float(grid.y2[i]), settings.grid_decimals))
         col3 = "{:.4f}".format(round(float(grid.y3[i]), settings.grid_decimals))
-
         elements.append([tenor,col1,col2,col3])
+
     obj = CurrencyData(grid.title, grid.headings, elements)
     obj.head_data[0] = ''
 
@@ -124,7 +124,6 @@ def profile(request):
         user_data['ip']=results['ip']
         user_data['last_login']=results['last_login']
         user_data['currency']=results['currency'].upper()
-
 
 
     context = {

@@ -1,7 +1,7 @@
 #
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
-email_default = "test.account@treasuryquants.com"
+email_default = "web.user@treasuryquants.com"
 
 #
 # server's url
@@ -15,7 +15,7 @@ url_server = "http://operations.treasuryquants.com"
 #
 # Location of the grid files
 #
-grid_folder = "../media/currency_data/"
+grid_folder = "app/media/currency_data/"
 
 #
 # number of decimals to print in the grid.

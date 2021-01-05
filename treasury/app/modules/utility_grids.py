@@ -7,6 +7,7 @@ import csv
 from . import apis
 from . import utility_common
 
+
 #
 # A grid class owning the format of the grid structure. All changes will be inside here
 #
@@ -48,14 +49,15 @@ class Grid:
         except Exception as e:
             return (False, str(e))
 
-    def save_as(self,path):
+    def save_as(self, path):
         lines = list()
-        line = "title,"+self.title+ "\n"
+        line = "title," + self.title + "\n"
         lines.append(line)
-        line = utility_common.list_to_csv(self.headings) +"\n" #titles,latest, " + previous_date.strftime("%Y%m%d") + ",change(%)\n"
+        line = utility_common.list_to_csv(
+            self.headings) + "\n"  # titles,latest, " + previous_date.strftime("%Y%m%d") + ",change(%)\n"
         lines.append(line)
 
-        for i in range(0,len(self.y1)):
+        for i in range(0, len(self.y1)):
             line = str(self.tenors[i]) + "," + str(self.y1[i]) + "," + str(self.y2[i]) + "," + str(self.y3[i]) + "\n"
             lines.append(line)
         try:
@@ -67,19 +69,16 @@ class Grid:
             return False, str(e)
 
 
-
-
-
 def utility_download_formatted_grid_swap_rates(connection, currencies, tenors, folder):
     try:
         if not apis.connection_is_ok(connection):
             return (False, {'utility_download_formatted_grid_swap_rates': 'failed on connection_is_ok(connection)'})
-
         #
         # Obtain all available dates
         #
         request_describe = TQRequests.request_function_show_available("asof_dates")
         message = connection.send(request_describe)
+
         if not message.is_OK:
             return (False, {'utility_download_formatted_grid_swap_rates': 'failed on connection.send'})
         asof_dates = connection.response.results
@@ -112,16 +111,16 @@ def utility_download_formatted_grid_swap_rates(connection, currencies, tenors, f
                         from_date, to_date, currency)})
             lines = []
 
-            grid=Grid()
-            path=os.path.join(folder,currency.upper()+".csv")
+            grid = Grid()
+            path = os.path.join(folder, currency.upper() + ".csv")
             grid.headings.append("headings")
             for key, value in results.items():
                 if 'title' in key:
-                    grid.title=value
+                    grid.title = value
                 elif 'headings' in key:
                     grid.headings.append(value)
                 else:
-                    tokens=value.split(",")
+                    tokens = value.split(",")
                     grid.tenors.append(key)
                     grid.y1.append(tokens[0])
                     grid.y2.append(tokens[1])
@@ -129,8 +128,8 @@ def utility_download_formatted_grid_swap_rates(connection, currencies, tenors, f
             status, message = grid.save_as(path)
             if not status:
                 return (False, {
-                    'utility_download_formatted_grid_fx': 'failed while saving file with base_currency={} and folder={}. Exception was {}'.format(
-                        base_currency, folder, message)})
+                    'utility_download_formatted_grid_fx': 'failed while saving file with folder={}. Exception was {}'.format(
+                         folder, message)})
 
     except Exception as e:
         return (False, {
@@ -186,15 +185,13 @@ def utility_download_formatted_grid_fx(currencies, base_currency, folder):
             grid.y2.append(v2)
             grid.y3.append(diff)
 
-
         path = folder + "FX.csv"
+        print("path:", path)
         status, message = grid.save_as(path)
         if not status:
             return (False, {
                 'utility_download_formatted_grid_fx': 'failed while saving file with base_currency={} and folder={}. Exception was {}'.format(
                     base_currency, folder, message)})
-
-
 
 
     except Exception as e:

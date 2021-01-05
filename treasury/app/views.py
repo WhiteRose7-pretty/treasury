@@ -5,6 +5,7 @@ from .modules import settings
 from .modules import utility_grids
 from .modules import apis
 from TQapis import TQConnection
+from .modules import sandbox
 
 
 def home(request):
@@ -13,21 +14,6 @@ def home(request):
 
 def about_us(request):
     return render(request, 'app/about_us.html')
-
-
-def home(request):
-    swap_rates_data_list = []
-    for item in swap_rate_files:
-        swap_rates_data_obj = read_data(item)
-        swap_rates_data_list.append(swap_rates_data_obj)
-
-    fx_rates_data_obj=read_data(fx_rate_file)
-
-    context = {
-        'currency_data' : swap_rates_data_list,
-        'fx_rates_data' : fx_rates_data_obj
-    }
-    return render(request, 'app/home.html', context)
 
 
 def profile(request):

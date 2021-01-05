@@ -1,9 +1,6 @@
 from django import template
-import csv
 from app.models import CurrencyData
 from app.modules import utility_grids
-from app.modules import apis
-from TQapis import TQConnection
 from app.modules import settings
 
 register = template.Library()

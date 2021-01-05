@@ -71,7 +71,6 @@ def account_send_activation_key(connection, user_email, callback_url, is_test):
     return make_results(message, connection)
 
 
-
 def account_password_change(connection,user_email, password, new_password, is_test):
     #
     # Changes the existing password

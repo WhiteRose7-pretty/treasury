@@ -128,8 +128,9 @@ def utility_download_formatted_grid_swap_rates(connection, currencies, tenors, f
             status, message = grid.save_as(path)
             if not status:
                 return (False, {
-                    'utility_download_formatted_grid_fx': 'failed while saving file with folder={}. Exception was {}'.format(
-                         folder, message)})
+                    'utility_download_formatted_grid_fx': 'failed while saving file with base_currency={} and folder={}. Exception was {}'.format(
+                        currency, folder, message)})
+
 
     except Exception as e:
         return (False, {

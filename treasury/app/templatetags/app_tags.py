@@ -27,17 +27,6 @@ files = [
 ]
 
 
-
-def read_data_new(file_path):
-    with open(file_path, 'rt') as f:
-        data = csv.reader(f)
-        result = []
-        for row in data:
-            result.append(row)
-        obj = CurrencyData(result[0][1], result[1], result[2:])
-        obj.head_data[0] = ''
-        return obj
-
 def read_data(file_path):
     obj=CurrencyData('', ['','',''], [[0,0,0,0]]) #to ensure we do not crash and we always return something
     grid=utility_grids.Grid()

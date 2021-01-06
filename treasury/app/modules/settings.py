@@ -2,7 +2,7 @@
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
 email_default = "web.user@treasuryquants.com" #prod
-email_default = "test.account@treasuryquants.com" #for local testing
+#email_default = "test.account@treasuryquants.com" #for local testing
 
 
 

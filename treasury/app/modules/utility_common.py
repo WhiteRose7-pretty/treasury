@@ -1,6 +1,8 @@
 #
 # common and generic utilities
 #
+from app.modules import utility_email
+
 
 def dict_to_string(results):
     message = ""
@@ -16,3 +18,10 @@ def list_to_csv(l):
         if i < len(l) - 1:
             s += ","
     return s
+
+
+def process_fata_error(error_message, is_development=False):
+    if is_development:
+        print(error_message)
+    else:
+        utility_email.send_email("operations@treasuryquants.com", "web cron error",error_message)

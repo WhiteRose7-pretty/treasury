@@ -187,7 +187,7 @@ def utility_download_formatted_grid_fx(currencies, base_currency, folder):
             grid.y3.append(diff)
 
         path = folder + "FX.csv"
-        print("path:", path)
+
         status, message = grid.save_as(path)
         if not status:
             return (False, {

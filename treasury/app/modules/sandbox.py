@@ -23,8 +23,9 @@ def download_fx_data():
 
     if not status:
         # Do Failure
-        utility_email.send_email("operations@treasuryquants.com", "web cron error",
-                                 utility_common.dict_to_string(results))
+        print(status, results)
+        # utility_email.send_email("operations@treasuryquants.com", "web cron error",
+        #                          utility_common.dict_to_string(results))
     else:
         # Do success
         print(status, results)
@@ -33,8 +34,9 @@ def download_fx_data():
         ['USD', 'GBP', 'CHF', 'EUR', 'JPY', 'AUD', 'SGD', 'NZD'], "USD", settings.grid_folder)
     if not status:
         # Do Failure
-        utility_email.send_email("operations@treasuryquants.com", "web cron error",
-                                 utility_common.dict_to_string(results))
+        print(status, results)
+        # utility_email.send_email("operations@treasuryquants.com", "web cron error",
+        #                          utility_common.dict_to_string(results))
     else:
         # Do success
         print(status, results)

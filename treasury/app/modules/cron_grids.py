@@ -22,7 +22,6 @@ def download_rates_data():
                                                                                  ['USD', 'GBP', 'CHF', 'EUR', 'JPY'],
                                                                                  settings.grid_swap_tenors,
                                                                                  settings.grid_folder)
-
     if not status:
         # Do Failure
         utility_common.process_fata_error(utility_common.dict_to_string(results),settings.is_development)

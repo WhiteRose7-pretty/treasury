@@ -341,8 +341,7 @@ class AccountProfile(functionCall):
         return True, ''
 
     def call(self, connection, is_test):
-        status, results = apis.account_password_reset(connection, self.user_email, self.password,
-                                               is_test)
+        status, results = apis.account_profile(connection, self.user_email, self.password)
         return self._make_response(status, results)
 
     def create_new(self):

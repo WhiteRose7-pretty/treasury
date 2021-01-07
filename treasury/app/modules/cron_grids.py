@@ -1,11 +1,11 @@
-from TQapis import TQConnection  # version 0.12.4 and above
+
 from app.modules import settings
 from app.modules import utility_grids
 from app.modules import utility_common
-
+from app.modules import utility_connection
 
 # we need a global (across sessions) connection for all our API calls
-connection = TQConnection.Connection(settings.email_default, settings.url_server)
+connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
 
 
 def download_fx_data():
@@ -26,3 +26,9 @@ def download_rates_data():
         # Do Failure
         utility_common.process_fata_error(utility_common.dict_to_string(results),settings.is_development)
     return status
+
+
+
+# print(download_fx_data())
+# print(download_rates_data())
+

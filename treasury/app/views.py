@@ -4,8 +4,8 @@ from .models import CurrencyData, DataFile
 from .modules import settings
 from .modules import utility_grids
 from .modules import apis
-from TQapis import TQConnection
-from .modules import cron_grids
+from .modules import utility_connection
+
 
 
 def home(request):
@@ -20,7 +20,7 @@ def profile(request):
     #
     # Connection to the server. Contains and updates its own  token
     #
-    connection = TQConnection.Connection(settings.email_default, settings.url_server)
+    connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
 
     our_test_account_email='test.account@treasuryquants.com'
     our_test_account_password='test.account@treasuryquants.com'

@@ -1,4 +1,4 @@
-from  app.modules.api_factory import web_api
+from  app.modules.apis_for_json import web_api
 
 print(web_api("{\"function_name\":\"connection_is_ok\", \"arguments\":null, \"source_caller\":\"front-end-function1\"}", True))
 print(web_api("{\"function_name\":\"account_status\", \"arguments\":{\"user_email\":\"test.account@treasuryquants.com\"}, \"source_caller\":\"front-end-function2\"}",True))

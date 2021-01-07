@@ -2,10 +2,11 @@
 import app.modules.apis as apis
 import app.modules.settings as settings
 import app.modules.utility_common as utility_common
-import  TQapis.TQConnection as TQConnection
 
+import app.modules.utility_connection as utility_connection
 
 import json
+
 #
 # this factory is to support the front end by receiving jason request and returning a json response.
 #
@@ -363,7 +364,7 @@ factory[AccountPasswordReset().name]=AccountPasswordReset()
 
 
 def web_api(json_request_string, is_test=False):
-    connection = TQConnection.Connection(settings.email_default, settings.url_server)
+    connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
     #
     # ceate an empty response
     #

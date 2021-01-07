@@ -6,9 +6,15 @@ from .modules import utility_grids
 from .modules import apis
 from TQapis import TQConnection
 from .modules import cron_grids
+from .modules import sandbox
 
 
 def home(request):
+    # sandbox.ajax_test()
+    return render(request, 'app/home.html')
+
+
+def login(request):
     return render(request, 'app/home.html')
 
 

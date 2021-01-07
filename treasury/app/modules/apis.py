@@ -47,8 +47,6 @@ def account_activation_key_status(connection, activation_key):
     #
     request_account_activation_key_status = TQRequests.request_account_activation_key_status(activation_key)
     message = connection.send(request_account_activation_key_status)
-
-
     return make_results(message, connection)
 
 
@@ -111,6 +109,7 @@ def account_password_ip_change(connection, user_email, password, new_password, n
     return make_results(message, connection)
 
 
+
 def account_profile(connection, user_email, password):
     #
     # Changes/resets the password
@@ -119,16 +118,4 @@ def account_profile(connection, user_email, password):
     message = connection.send(request_account_profile_dict)
     return make_results(message, connection)
 
-def formatted_grid_swap_rates(connection, from_date, to_date,currency, tenors):
-    #
-    # Creates a grid of swap rates
-    #
-    request_formatted_grid_swap_rates = TQRequests.request_function_formatted_grid_swap_rates(from_date,
-                                                                                              to_date, currency)
-    # todo: Shahram to remove below after TQapis version 0.12.5
-    if 'tenors' not in request_formatted_grid_swap_rates.params:
-        request_formatted_grid_swap_rates.params['tenors'] = utility_common.list_to_csv(tenors)
-    # end todo
 
-    message = connection.send(request_formatted_grid_swap_rates)
-    return make_results(message, connection)

@@ -19,6 +19,13 @@ is_development=False
 
 
 #
+# Location of the token files
+#
+token_path = "app/configs/token.json"
+
+
+
+#
 # Location of the grid files
 #
 grid_folder = "app/media/currency_data/"

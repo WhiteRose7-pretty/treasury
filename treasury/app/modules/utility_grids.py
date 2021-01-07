@@ -69,6 +69,9 @@ class Grid:
             return False, str(e)
 
 
+
+
+
 def utility_download_formatted_grid_swap_rates(connection, currencies, tenors, folder):
     try:
         if not apis.connection_is_ok(connection):
@@ -77,7 +80,7 @@ def utility_download_formatted_grid_swap_rates(connection, currencies, tenors, f
         # Obtain all available dates
         #
         request_describe = TQRequests.request_function_show_available("asof_dates")
-        message = connection.send(request_describe)
+        message = connection.send_web(request_describe)
 
         if not message.is_OK:
             return (False, {'utility_download_formatted_grid_swap_rates': 'failed on connection.send'})

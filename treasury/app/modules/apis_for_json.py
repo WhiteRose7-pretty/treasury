@@ -175,9 +175,11 @@ class AccountActivationKeyStatus(functionCall):
 
         return True, ''
 
-    def call(self, connection, is_test):
-        status, results = apis.account_status(connection, self.activation_key)
-        return self._make_response(status, results)
+
+    def call(self,connection,is_test):
+        status, results = apis.account_activation_key_status(connection, self.activation_key)
+        return self._make_response(status,results)
+
 
     def create_new(self):
         return AccountActivationKeyStatus()

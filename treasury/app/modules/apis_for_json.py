@@ -1,4 +1,3 @@
-
 import app.modules.apis as apis
 import app.modules.settings as settings
 import app.modules.utility_common as utility_common
@@ -7,6 +6,7 @@ import app.modules.utility_connection as utility_connection
 
 import json
 
+
 #
 # this factory is to support the front end by receiving jason request and returning a json response.
 #
@@ -14,13 +14,14 @@ import json
 
 class WebRequest:
     def __init__(self):
-        self.function_name=""
-        self.arguments=dict()
-        self.source_caller=""
+        self.function_name = ""
+        self.arguments = dict()
+        self.source_caller = ""
+
     def from_string(self, string_json):
 
         try:
-            request=json.loads(string_json)
+            request = json.loads(string_json)
             if 'function_name' not in request:
                 return False, "key 'function_name' is missing"
             if 'arguments' not in request:
@@ -28,133 +29,133 @@ class WebRequest:
             if 'source_caller' not in request:
                 return False, "key 'source_caller' is missing"
 
-            self.function_name=request['function_name'].strip()
-            self.arguments=request['arguments']
-            self.source_caller=request['source_caller'].strip()
+            self.function_name = request['function_name'].strip()
+            self.arguments = request['arguments']
+            self.source_caller = request['source_caller'].strip()
 
-
-            if len( self.function_name)==0:
+            if len(self.function_name) == 0:
                 return False, "key 'function_name' has no value"
             if len(self.source_caller) == 0:
                 return False, "key 'source_caller' has no value"
 
-            return True,''
+            return True, ''
         except Exception as e:
-            raise Exception("WebRequest.from_string:"+str(e))
-
+            raise Exception("WebRequest.from_string:" + str(e))
 
 
 class WebResponse:
     def __init__(self):
-        self.results=dict()
-        self.error=""
-        self.source_caller=''
+        self.results = dict()
+        self.error = ""
+        self.source_caller = ''
 
     def to_string(self):
-        response=dict()
-        response['error']=self.error
-        response['results']=self.results
-        response['source_caller']=self.source_caller
+        response = dict()
+        response['error'] = self.error
+        response['results'] = self.results
+        response['source_caller'] = self.source_caller
         return json.dumps(response)
+
 
 class functionCall:
     def __init__(self, name):
-        self.name=name
+        self.name = name
 
-    def is_valid(self,web_request):
+    def is_valid(self, web_request):
         pass
 
-    def call(self,connection, is_test):
+    def call(self, connection, is_test):
         pass
 
     def create_new(self):
         pass
 
-    def _make_response(self,status,results):
-        web_response=WebResponse()
-        web_response.source_caller=self.name
+    def _make_response(self, status, results):
+        web_response = WebResponse()
+        web_response.source_caller = self.name
         if not status:
-            web_response.error=utility_common.dict_to_string(results)
+            web_response.error = utility_common.dict_to_string(results)
         else:
-            web_response.results=results
+            web_response.results = results
         return web_response
-
 
 
 class ConnectionIsOK(functionCall):
     def __init__(self):
         super(ConnectionIsOK, self).__init__("connection_is_ok")
 
-    def is_valid(self,web_request):
-        return True, '' ## no arguments
+    def is_valid(self, web_request):
+        return True, ''  ## no arguments
 
-    def call(self,connection,is_test):
+    def call(self, connection, is_test):
         status, results = apis.connection_is_ok(connection)
-        return self._make_response(status,results)
+        return self._make_response(status, results)
 
     def create_new(self):
         return ConnectionIsOK()
 
+
 class AccountStatus(functionCall):
     def __init__(self):
         super(AccountStatus, self).__init__("account_status")
-        self.user_email=''
-    def is_valid(self,web_request):
+        self.user_email = ''
+
+    def is_valid(self, web_request):
         if 'user_email' not in web_request.arguments:
             return False, " key 'user_email' is missing"
-        self.user_email=web_request.arguments['user_email'].strip()
-        if len(self.user_email)==0:
-            return False ,"user_email is empty"
+        self.user_email = web_request.arguments['user_email'].strip()
+        if len(self.user_email) == 0:
+            return False, "user_email is empty"
 
         return True, ''
 
-    def call(self,connection,is_test):
+    def call(self, connection, is_test):
         status, results = apis.account_status(connection, self.user_email)
-        return self._make_response(status,results)
+        return self._make_response(status, results)
 
     def create_new(self):
         return AccountStatus()
 
 
-
 class AccountCreate(functionCall):
     def __init__(self):
         super(AccountCreate, self).__init__("account_create")
-        self.user_email=''
-        self.user_password=''
-        self.user_ip=''
-        self.callback_url=''
+        self.user_email = ''
+        self.user_password = ''
+        self.user_ip = ''
+        self.callback_url = ''
 
-    def is_valid(self,web_request):
+    def is_valid(self, web_request):
         if 'user_email' not in web_request.arguments:
             return False, " key 'user_email' is missing"
-        self.user_email=web_request.arguments['user_email'].strip()
-        if len(self.user_email)==0:
-            return False ,"user_email is empty"
+        self.user_email = web_request.arguments['user_email'].strip()
+        if len(self.user_email) == 0:
+            return False, "user_email is empty"
 
         if 'user_password' not in web_request.arguments:
             return False, " key 'user_password' is missing"
-        self.user_password=web_request.arguments['user_password'].strip()
-        if len(self.user_password)==0:
-            return False ,"user_password is empty"
+        self.user_password = web_request.arguments['user_password'].strip()
+        if len(self.user_password) == 0:
+            return False, "user_password is empty"
 
         if 'user_ip' not in web_request.arguments:
             return False, " key 'user_ip' is missing"
-        self.user_ip=web_request.arguments['user_ip'].strip()
-        if len(self.user_ip)==0:
-            return False ,"user_ip is empty"
+        self.user_ip = web_request.arguments['user_ip'].strip()
+        if len(self.user_ip) == 0:
+            return False, "user_ip is empty"
 
         if 'callback_url' not in web_request.arguments:
             return False, " key 'callback_url' is missing"
-        self.callback_url=web_request.arguments['callback_url'].strip()
-        if len(self.callback_url)==0:
-            return False ,"callback_url is empty"
+        self.callback_url = web_request.arguments['callback_url'].strip()
+        if len(self.callback_url) == 0:
+            return False, "callback_url is empty"
 
         return True, ''
 
-    def call(self,connection,is_test):
-        status, results = apis. account_create(connection, self.user_email, self.user_password, self.user_ip, self.callback_url, is_test)
-        return self._make_response(status,results)
+    def call(self, connection, is_test):
+        status, results = apis.account_create(connection, self.user_email, self.user_password, self.user_ip,
+                                              self.callback_url, is_test)
+        return self._make_response(status, results)
 
     def create_new(self):
         return AccountCreate()
@@ -163,19 +164,20 @@ class AccountCreate(functionCall):
 class AccountActivationKeyStatus(functionCall):
     def __init__(self):
         super(AccountActivationKeyStatus, self).__init__("account_activation_key_status")
-        self.activation_key=''
-    def is_valid(self,web_request):
+        self.activation_key = ''
+
+    def is_valid(self, web_request):
         if 'activation_key' not in web_request.arguments:
             return False, " key 'activation_key' is missing"
-        self.activation_key=web_request.arguments['activation_key'].strip()
-        if len(self.activation_key)==0:
-            return False ,"activation_key is empty"
+        self.activation_key = web_request.arguments['activation_key'].strip()
+        if len(self.activation_key) == 0:
+            return False, "activation_key is empty"
 
         return True, ''
 
-    def call(self,connection,is_test):
+    def call(self, connection, is_test):
         status, results = apis.account_status(connection, self.activation_key)
-        return self._make_response(status,results)
+        return self._make_response(status, results)
 
     def create_new(self):
         return AccountActivationKeyStatus()
@@ -203,7 +205,7 @@ class AccountSendActivationKey(functionCall):
         return True, ''
 
     def call(self, connection, is_test):
-        status, results = apis.account_send_activation_key(connection,self.user_email, self.callback_url, is_test)
+        status, results = apis.account_send_activation_key(connection, self.user_email, self.callback_url, is_test)
         return self._make_response(status, results)
 
     def create_new(self):
@@ -216,7 +218,6 @@ class AccountPasswordChange(functionCall):
         self.user_email = ''
         self.user_password = ''
         self.new_password = ''
-
 
     def is_valid(self, web_request):
         if 'user_email' not in web_request.arguments:
@@ -240,8 +241,9 @@ class AccountPasswordChange(functionCall):
         return True, ''
 
     def call(self, connection, is_test):
-        status, results = apis.account_password_change(connection, self.user_email, self.user_password, self.new_password,
-                                               is_test)
+        status, results = apis.account_password_change(connection, self.user_email, self.user_password,
+                                                       self.new_password,
+                                                       is_test)
         return self._make_response(status, results)
 
     def create_new(self):
@@ -254,7 +256,6 @@ class AccountIPChange(functionCall):
         self.user_email = ''
         self.user_password = ''
         self.new_ip = ''
-
 
     def is_valid(self, web_request):
         if 'user_email' not in web_request.arguments:
@@ -279,7 +280,7 @@ class AccountIPChange(functionCall):
 
     def call(self, connection, is_test):
         status, results = apis.account_ip_change(connection, self.user_email, self.user_password, self.new_ip,
-                                               is_test)
+                                                 is_test)
         return self._make_response(status, results)
 
     def create_new(self):
@@ -309,12 +310,11 @@ class AccountPasswordReset(functionCall):
 
     def call(self, connection, is_test):
         status, results = apis.account_password_reset(connection, self.activation_key, self.new_password,
-                                               is_test)
+                                                      is_test)
         return self._make_response(status, results)
 
     def create_new(self):
         return AccountPasswordReset()
-
 
 
 class AccountProfile(functionCall):
@@ -322,8 +322,6 @@ class AccountProfile(functionCall):
         super(AccountProfile, self).__init__("account_profile")
         self.user_email = ''
         self.password = ''
-
-
 
     def is_valid(self, web_request):
         if 'user_email' not in web_request.arguments:
@@ -341,26 +339,23 @@ class AccountProfile(functionCall):
         return True, ''
 
     def call(self, connection, is_test):
-        status, results = apis.account_password_reset(connection, self.user_email, self.password,
-                                               is_test)
+        status, results = apis.account_profile(connection, self.user_email, self.password)
         return self._make_response(status, results)
 
     def create_new(self):
         return AccountProfile()
 
 
-
-factory=dict()
-factory[ConnectionIsOK().name]=ConnectionIsOK()
-factory[AccountStatus().name]=AccountStatus()
-factory[AccountCreate().name]=AccountCreate()
-factory[AccountActivationKeyStatus().name]=AccountActivationKeyStatus()
-factory[AccountIPChange().name]=AccountIPChange()
-factory[AccountPasswordChange().name]=AccountPasswordChange()
-factory[AccountProfile().name]=AccountProfile()
-factory[AccountSendActivationKey().name]=AccountSendActivationKey()
-factory[AccountPasswordReset().name]=AccountPasswordReset()
-
+factory = dict()
+factory[ConnectionIsOK().name] = ConnectionIsOK()
+factory[AccountStatus().name] = AccountStatus()
+factory[AccountCreate().name] = AccountCreate()
+factory[AccountActivationKeyStatus().name] = AccountActivationKeyStatus()
+factory[AccountIPChange().name] = AccountIPChange()
+factory[AccountPasswordChange().name] = AccountPasswordChange()
+factory[AccountProfile().name] = AccountProfile()
+factory[AccountSendActivationKey().name] = AccountSendActivationKey()
+factory[AccountPasswordReset().name] = AccountPasswordReset()
 
 
 def web_api(json_request_string, is_test=False):
@@ -373,32 +368,32 @@ def web_api(json_request_string, is_test=False):
         #
         # ceate a request, parse it and validate it
         #
-        web_request=WebRequest()
-        status, error=web_request.from_string(json_request_string)
+        web_request = WebRequest()
+        status, error = web_request.from_string(json_request_string)
         if not status:
-            web_response.error=error
+            web_response.error = error
             return web_response.to_string()
 
-        function_name=web_request.function_name
+        function_name = web_request.function_name
         if function_name not in factory:
-            web_response.error="function_name '"+function_name+"' not found"
+            web_response.error = "function_name '" + function_name + "' not found"
             return web_response.to_string()
         #
         # all good we have a valid function name.
         #
-        function=factory[function_name].create_new()
+        function = factory[function_name].create_new()
         #
         # validate the arguments
         #
-        status, error=function.is_valid(web_request)
+        status, error = function.is_valid(web_request)
         if not status:
-            web_response.error=error
+            web_response.error = error
             return web_response.to_string()
 
         #
         # call the function and return values
         #
-        web_response=function.call(connection, is_test)
+        web_response = function.call(connection, is_test)
 
         #
         # and off we go
@@ -407,5 +402,6 @@ def web_api(json_request_string, is_test=False):
     except Exception as e:
         web_response.error = str(e)
         return web_response.to_string()
+
 
 

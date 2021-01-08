@@ -1,0 +1,144 @@
+{% load static %}
+{% load app_tags %}
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TG Code">
+    <title>Treasury</title>
+
+    <link rel="icon" href="{% static 'assets/img/brand/favicon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/libs/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/@fortawesome/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'assets/libs/swiper/dist/css/swiper.min.css' %}">
+
+    <!-- Custom style -->
+    <link rel="stylesheet" href="{% static 'assets/css/mega/style.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/quick-website.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" id="stylesheet">
+
+</head>
+
+<body>
+
+{% include 'app/basic/navbar.html' %}
+
+<section class="page-banner" style="background: #181717; padding-bottom: 0;">
+    <div class="container-fluid">
+        <div class="page-title"> Login.</div>
+        <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
+        </div>
+    </div>
+</section>
+
+<section class="container-fluid page-subtitle">
+
+    {% block tab_menu %}
+    <div style="text-align: center">
+         <a href="{% url 'app:login' %}">
+             <span class="px-2 d-md-inline-flex d-sm-block tab active">
+                Login
+             </span>
+         </a>
+        <a href="{% url 'app:login' %}">
+            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
+                 Create Account
+            </span>
+        </a>
+        <a href="#">
+            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
+                 Reset Password
+            </span>
+        </a>
+    </div>
+    {% endblock %}
+
+</section>
+
+
+<section class="body">
+
+    <div class="container p-lg-20-60" style="max-width: 400px;" >
+    {% block tab_body %}
+        <form action="" method="post" enctype="multipart/form-data">
+            <label class="form-control-label" for="input-name">Email</label>
+            <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email" value="">
+            <label class="form-control-label mt-4" for="input-password">Password</label>
+            <input class="form-control mt-2" id="password" name="password" placeholder="Put Password" type="password" value="">
+            <button class="btn btn-primary mt-4 pull-right" style="float: right">Submit</button>
+            <div style="clear: both"></div>
+        </form>
+    {% endblock %}
+
+
+    {% if result_dic %}
+        {% if result_dic.error %}
+            <table class="profile-table mt-4" >
+            <tr>
+                <td>error</td>
+                <td>{{ result_dic.error }}</td>
+            </tr>
+            </table>
+        {% else %}
+            <table class="profile-table mt-4" >
+                {% for key,value in result_dic.results.items %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        {% endif %}
+    {% endif %}
+
+    </div>
+
+
+</section>
+
+
+
+{% include "app/basic/footer.html" %}
+
+<!-- Core JS  -->
+<script src="{% static 'assets/js/jquery.js' %}"></script>
+<script src="{% static 'assets/js/jquery.migrate.js' %}"></script>
+
+<script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/libs/svg-injector/dist/svg-injector.min.js' %}"></script>
+<script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
+<!-- Optional JS -->
+<script src="{% static 'assets/libs/in-view/dist/in-view.min.js' %}"></script>
+<script src="{% static 'assets/libs/sticky-kit/dist/sticky-kit.min.js' %}"></script>
+<script src="{% static 'assets/libs/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<!-- Page JS -->
+<script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'assets/libs/autosize/dist/autosize.min.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'assets/libs/easescroll/jquery.easeScroll.js' %}"></script>
+<script src="{% static 'assets/libs/owl.carousel/owl.carousel.js' %}"></script>
+<!-- Quick JS -->
+
+<script src="{% static 'assets/js/e-magz.js' %}"></script>
+<script src="{% static 'assets/js/quick-website.js' %}"></script>
+
+
+<!-- Feather Icons -->
+<script>
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    });
+
+</script>
+
+</body>
+
+</html>

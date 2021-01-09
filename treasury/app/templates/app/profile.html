@@ -52,33 +52,13 @@
 
 <section style="min-height: Calc(100vh - 75px - 209px - 58px); margin-top: 10px">
     <div class="container d-flex justify-content-center ">
-        <table class="profile-table">
-            <tbody>
-                <tr>
-                    <td><span class="icon-profile"><i data-feather="user"></i></span>Id:</td>
-                    <td>{{ user_data.id }}</td>
-                </tr>
-                <tr>
-                    <td><span class="icon-profile"><i data-feather="credit-card"></i></span>balance:</td>
-                    <td>{{ user_data.balance }}</td>
-                </tr>
-                <tr>
-                    <td><span class="icon-profile"><i data-feather="dollar-sign"></i></span>Currency:</td>
-                    <td>{{ user_data.currency }}</td>
-                </tr>
-                <tr>
-                    <td><span class="icon-profile"><i data-feather="share-2"></i></span>ip:</td>
-                    <td>{{ user_data.ip }}</td>
-                </tr>
-                <tr>
-                    <td><span class="icon-profile"><i data-feather="clock"></i></span>last login:</td>
-                    <td>{{ user_data.last_login }}</td>
-                </tr>
-                <tr>
-                    <td><span class="icon-profile"><i data-feather="mail"></i></span>email:</td>
-                    <td>{{ user_data.email }}</td>
-                </tr>
-            </tbody>
+        <table class="profile-table mt-4" >
+            {% for key,value in result_dic.results.items %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
         </table>
     </div>
 

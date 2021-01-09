@@ -6,9 +6,11 @@ app_name = 'app'
 urlpatterns = [
     path('', views.home, name='home'),
     path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
     path('who-we-are/', views.about_us, name='about_us'),
     path('profile/', views.profile, name='profile'),
     path('policy-notice/', views.policy_notice, name='policy_notice'),
     path('terms-of-service/', views.terms_service, name='terms_of_service'),
+    path('web_api/', views.call_web_api, name='web_api'),
 ]
 

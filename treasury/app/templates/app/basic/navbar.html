@@ -1,4 +1,5 @@
 {% load static %}
+{% load app_tags %}
 <header class="primary">
 
     <nav class="menu" style="background:#262626 ; border: 0">
@@ -29,9 +30,20 @@
                     <!--                     <li class="nav-search">-->
                     <!--                        <a href="#" >create account</a>-->
                     <!--                    </li>-->
-                    <li class="nav-search">
-                        <a href="{% url 'app:login' %}">Login</a>
-                    </li>
+
+                    {% if request.session.login %}
+                        <li class="nav-search">
+                            <a href="{% url 'app:logout' %}">Logout</a>
+                        </li>
+                        <li class="nav-search">
+                            <a href="{% url 'app:profile' %}">Profile</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-search">
+                            <a href="{% url 'app:login' %}">Login</a>
+                        </li>
+                    {% endif %}
+
                     <li class="nav-search">
                         <a href="{% url 'app:about_us' %}">about</a>
                     </li>

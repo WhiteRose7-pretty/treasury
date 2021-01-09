@@ -66,38 +66,16 @@
 
     <div class="container p-lg-20-60" style="max-width: 400px;" >
     {% block tab_body %}
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data" id="login-frm">
             <label class="form-control-label" for="input-name">Email</label>
-            <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email" value="">
+            <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email" value="test1.account@treasuryquants.com">
             <label class="form-control-label mt-4" for="input-password">Password</label>
-            <input class="form-control mt-2" id="password" name="password" placeholder="Put Password" type="password" value="">
-            <button class="btn btn-primary mt-4 pull-right" style="float: right">Submit</button>
+            <input class="form-control mt-2" id="input-password" name="password" placeholder="Put Password" type="password" value="test.account@treasuryquants.com">
+            <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="login()">Submit</button>
             <div style="clear: both"></div>
         </form>
     {% endblock %}
-
-
-    {% if result_dic %}
-        {% if result_dic.error %}
-            <table class="profile-table mt-4" >
-            <tr>
-                <td>error</td>
-                <td>{{ result_dic.error }}</td>
-            </tr>
-            </table>
-        {% else %}
-            <table class="profile-table mt-4" >
-                {% for key,value in result_dic.results.items %}
-                <tr>
-                    <td>{{ key }}</td>
-                    <td>{{ value }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-
-        {% endif %}
-    {% endif %}
-
+        <div id="msg"></div>
     </div>
 
 
@@ -137,7 +115,80 @@
         'height': '1em'
     });
 
+    function login(){
+        let email = $('#input-name').val();
+        var token = '{{csrf_token}}';
+        $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type: 'post',
+            url: "{% url 'app:web_api' %}",
+            data:JSON.stringify({
+                'function_name': 'account_status',
+                'arguments': {
+                    'user_email': email,
+                },
+                'source_caller': 'front-end-function10',
+            }),
+            success: function (data){
 
+               if (data.error){
+                      $('#msg').text(data['error']);
+               }
+               else{
+                   if(data.results.is_exist === 'False') {
+                       $('#msg').text('Account does not exist.');
+                   }
+                   else if(data.results.is_exist === 'True' && data.results.is_active === 'False'){
+                       $('#msg').text('Account is not active.');
+                   }
+                   else if(data.results.is_exist === 'True' && data.results.is_active === 'True'){
+                       $('#msg').text('Account is Good.');
+                       // after redirect;
+                        account_profile();
+                   }
+                   else{
+                       $('#msg').text('except');
+                   }
+
+               }
+
+            }
+        });
+
+    }
+
+    function account_profile(){
+        let email = $('#input-name').val();
+        let password = $('#input-password').val();
+        var token = '{{csrf_token}}';
+        $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type: 'post',
+            url: "{% url 'app:web_api' %}",
+            data:JSON.stringify({
+                'function_name': 'account_profile',
+                'arguments': {
+                    'user_email': email,
+                    'password': password,
+                },
+                'source_caller': 'front-end-function10',
+            }),
+            success: function (data){
+
+               if (data.error){
+                   $('#msg').text(data['error']);
+               }
+               else{
+                   document.location.href = "{% url 'app:profile' %}";
+               }
+
+            }
+        });
+    }
 
 </script>
 

@@ -60,3 +60,18 @@ def get_market_data():
         obj = read_data(item)
         data_list.append(obj)
     return data_list
+
+
+@register.inclusion_tag('app/basic/navbar.html', takes_context=True)
+def is_authenticated(context):
+    print("is_authenticate")
+    # return True
+    # request = context['request']
+    # if request.session['login']:
+    #     result = True
+    # else:
+    #     result = False
+    return {
+        'is_login': True
+    }
+

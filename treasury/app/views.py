@@ -7,36 +7,26 @@ from .modules import utility_connection
 from app.modules.apis_for_json import web_api
 import json
 from .modules import sandbox
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 
 
 def home(request):
+    # sandbox.account_create()
     return render(request, 'app/home.html')
 
 
 def login(request):
-    if request.method == 'POST':
-        post_data = {
-            'function_name': 'account_profile',
-            'arguments': {
-                'user_email': request.POST.get('email'),
-                'password': request.POST.get('password'),
-            },
-            'source_caller': 'front-end-function10',
-        }
-        r = json.dumps(post_data)
-        result = web_api(r, True)
-        result_dic = json.loads(result)
+    if request.session['login']:
+        return HttpResponseRedirect(reverse('app:profile'))
+    return render(request, 'app/login.html')
 
-        context = {
-            'result_dic': result_dic
-        }
 
-    else:
-        context = {
-         'result_dic': False
-        }
-
-    return render(request, 'app/login.html', context)
+def logout(request):
+    request.session['login'] = False
+    request.session['user_email'] = ''
+    request.session['password'] = ''
+    return HttpResponseRedirect(reverse('app:login'))
 
 
 def about_us(request):
@@ -47,31 +37,21 @@ def profile(request):
     #
     # Connection to the server. Contains and updates its own  token
     #
-    connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
+    if not request.session['login']:
+        return HttpResponseRedirect(reverse('app:login'))
 
-    our_test_account_email = 'test.account@treasuryquants.com'
-    our_test_account_password = 'test.account@treasuryquants.com'
-
-    anonymous = {
-        'id': '880',
-        'balance': '0.00',
-        'currency': 'GBP',
-        'ip': '0.0.0.0',
-        'last_login': '1900-01-01 00:00:00',
-        'email': ""  # empty email means anonymous
+    post_data = {
+        'function_name': 'account_profile',
+        'arguments': {
+            'user_email': request.session['user_email'],
+            'password': request.session['password'],
+        },
+        'source_caller': 'front-end-function10',
     }
-
-    user_data = anonymous
-    status, results = apis.account_profile(connection, our_test_account_email, our_test_account_password)
-    if status:
-        user_data['id'] = results['id']
-        user_data['balance'] = results['balance']
-        user_data['ip'] = results['ip']
-        user_data['last_login'] = results['last_login']
-        user_data['currency'] = results['currency'].upper()
-
+    result = web_api(json.dumps(post_data))
+    result_dic = json.loads(result)
     context = {
-        'user_data': user_data
+        'result_dic': result_dic,
     }
 
     return render(request, 'app/profile.html', context)
@@ -83,3 +63,21 @@ def policy_notice(request):
 
 def terms_service(request):
     return render(request, 'app/terms.html')
+
+
+def call_web_api(request):
+    data = json.loads(request.body)
+    post_data = json.dumps(data)
+    result = web_api(post_data)
+    result_dic = json.loads(result)
+    if result_dic['source_caller'] == 'account_profile':
+        if result_dic['error'] == '' and result_dic['results']['id']:
+            request.session['login'] = True
+            request.session['user_email'] = data['arguments']['user_email']
+            request.session['password'] = data['arguments']['password']
+        else:
+            request.session['login'] = False
+            request.session['user_email'] = ''
+            request.session['password'] = ''
+
+    return JsonResponse(result_dic)

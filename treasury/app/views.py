@@ -10,9 +10,6 @@ from .modules import sandbox
 
 
 def home(request):
-    # sandbox.ajax_test()
-    # sandbox.download_fx_data()
-
     return render(request, 'app/home.html')
 
 

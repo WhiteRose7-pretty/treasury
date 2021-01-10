@@ -6,22 +6,14 @@ from app.modules import settings
 register = template.Library()
 
 swap_rate_files = [
-    'app/media/currency_data/EUR.csv',
     'app/media/currency_data/USD.csv',
     'app/media/currency_data/GBP.csv',
+    'app/media/currency_data/EUR.csv',
     'app/media/currency_data/CHF.csv',
-    'app/media/currency_data/FX.csv',  #todo: shahram to remove this entry once the front-end FX is accessing its own data
     'app/media/currency_data/JPY.csv',
 ]
 
-files = [
-    'app/media/currency_data/EUR.csv',
-    'app/media/currency_data/USD.csv',
-    'app/media/currency_data/GBP.csv',
-    'app/media/currency_data/CHF.csv',
-    'app/media/currency_data/FX.csv',
-    'app/media/currency_data/JPY.csv',
-]
+fx_file = 'app/media/currency_data/FX.csv'
 
 
 def read_data(file_path):
@@ -54,12 +46,18 @@ def string_float(str):
 
 
 @register.simple_tag
-def get_market_data():
+def get_swap_rates_data():
     data_list = []
-    for item in files:
+    for item in swap_rate_files:
         obj = read_data(item)
         data_list.append(obj)
     return data_list
+
+
+@register.simple_tag
+def get_fx_rates_data():
+    obj = read_data(fx_file)
+    return obj
 
 
 @register.inclusion_tag('app/basic/navbar.html', takes_context=True)
@@ -75,3 +73,23 @@ def is_authenticated(context):
         'is_login': True
     }
 
+
+# TODO: Shahram to remove below once the new market page has been completed.
+files = [
+    'app/media/currency_data/EUR.csv',
+    'app/media/currency_data/USD.csv',
+    'app/media/currency_data/GBP.csv',
+    'app/media/currency_data/CHF.csv',
+    'app/media/currency_data/FX.csv',
+    'app/media/currency_data/JPY.csv',
+]
+
+
+@register.simple_tag
+def get_market_data():
+    data_list = []
+    for item in files:
+        obj = read_data(item)
+        data_list.append(obj)
+    return data_list
+# end TODO

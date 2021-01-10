@@ -115,7 +115,7 @@ def account_profile(connection, user_email, password):
     # Changes/resets the password
     #
     request_account_profile_dict = TQRequests.request_account_profile(user_email, password)
-    message = connection.send(request_account_profile_dict)
+    message = connection.send_web(request_account_profile_dict)
     return make_results(message, connection)
 
 def formatted_grid_swap_rates(connection, from_date, to_date,currency, tenors):

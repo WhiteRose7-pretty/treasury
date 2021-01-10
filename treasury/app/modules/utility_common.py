@@ -20,7 +20,7 @@ def list_to_csv(l):
     return s
 
 
-def process_fata_error(error_message, is_development=False):
+def process_fatal_error(error_message, is_development=False):
     if is_development:
         print(error_message)
     else:

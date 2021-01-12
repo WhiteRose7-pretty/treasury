@@ -12,7 +12,7 @@ from django.urls import reverse
 
 
 def home(request):
-    # sandbox.account_create()
+    print(sandbox.account_active())
     return render(request, 'app/home.html')
 
 
@@ -81,3 +81,33 @@ def call_web_api(request):
             request.session['password'] = ''
 
     return JsonResponse(result_dic)
+
+
+def password_reset(request):
+    return render(request, 'app/password_reset.html')
+
+
+def password_reset_call_back(request):
+    key = request.GET.get("activation_key", False)
+    if not key:
+        return HttpResponseRedirect(reverse('app:invalid_page-call'))
+
+    post_data = {
+        'function_name': 'account_activation_key_status',
+        'arguments': {
+            'activation_key': key,
+        },
+        'source_caller': 'password_reset_call_back_function',
+    }
+    result = web_api(json.dumps(post_data))
+    print(result)
+    result_dic = json.loads(result)
+    context = {
+        'result_dic': result_dic,
+        'key': key,
+    }
+    return render(request, 'app/password-reset-call-back.html', context)
+
+
+def invalid_page_call(request):
+    return render(request, 'app/invalid_page.html')

@@ -31,7 +31,7 @@
 
 <section class="page-banner" style="background: #181717; padding-bottom: 0;">
     <div class="container-fluid">
-        <div class="page-title"> Login.</div>
+        <div class="page-title"> Invalid page called.</div>
         <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
         </div>
     </div>
@@ -58,24 +58,6 @@
         </a>
     </div>
     {% endblock %}
-
-</section>
-
-
-<section class="body">
-
-    <div class="container p-lg-20-60" style="max-width: 400px;" >
-    {% block tab_body %}
-        <form action="" method="post" enctype="multipart/form-data" id="login-frm">
-            <label class="form-control-label" for="input-name">Email</label>
-            <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email" value="test1.account@treasuryquants.com">
-            <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="account_status()">Reset</button>
-            <div style="clear: both"></div>
-        </form>
-    {% endblock %}
-        <div id="msg"></div>
-    </div>
-
 
 </section>
 
@@ -113,7 +95,7 @@
         'height': '1em'
     });
 
-    function account_status(){
+    function login(){
         let email = $('#input-name').val();
         var token = '{{csrf_token}}';
         $.ajax({
@@ -127,7 +109,7 @@
                 'arguments': {
                     'user_email': email,
                 },
-                'source_caller': document.location.href,
+                'source_caller': 'front-end-function10',
             }),
             success: function (data){
 
@@ -144,7 +126,7 @@
                    else if(data.results.is_exist === 'True' && data.results.is_active === 'True'){
                        $('#msg').text('Account is Good.');
                        // after redirect;
-                        account_send_activation_key();
+                        account_profile();
                    }
                    else{
                        $('#msg').text('except');
@@ -155,10 +137,10 @@
 
     }
 
-    function account_send_activation_key(){
+    function account_profile(){
         let email = $('#input-name').val();
+        let password = $('#input-password').val();
         var token = '{{csrf_token}}';
-        var url = window.location;
         $.ajax({
             headers: {
                 "X-CSRFToken": token
@@ -166,12 +148,12 @@
             type: 'post',
             url: "{% url 'app:web_api' %}",
             data:JSON.stringify({
-                'function_name': 'account_send_activation_key',
+                'function_name': 'account_profile',
                 'arguments': {
                     'user_email': email,
-                    'callback_url': url.protocol + '//' + url.host  + '/password-reset-call-back/',
+                    'password': password,
                 },
-                'source_caller': document.location.href,
+                'source_caller': 'front-end-function10',
             }),
             success: function (data){
 
@@ -179,7 +161,7 @@
                    $('#msg').text(data['error']);
                }
                else{
-                   $('#msg').text("We sent email with reset link, Please check your mail box.");
+                   document.location.href = "{% url 'app:profile' %}";
                }
 
             }

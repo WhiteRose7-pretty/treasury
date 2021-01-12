@@ -41,9 +41,16 @@ def test_web_api():
 
 def account_create():
     print(web_api(
-        "{\"function_name\":\"account_create\", \"arguments\":{\"user_password\":\"test.account@treasuryquants.com\","
-        "\"user_email\":\"test2.account@treasuryquants.com\",\"user_ip\":\"127.0.0.1\", "
+        "{\"function_name\":\"account_create\", \"arguments\":{\"user_password\":\"developer123456\","
+        "\"user_email\":\"timurkju@gmail.com\",\"user_ip\":\"127.0.0.1\", "
         "\"callback_url\":\"treasuryquants.com/urlcallback/\"}, \"source_caller\":\"front-end-function3\"}",
         False))
 
+
+def account_active():
+    print(web_api(
+        "{\"function_name\":\"account_activate\", \"arguments\":{"
+        "\"activation_key\":\"btfy0i37xoxam_c9bpipedxagxamxsowgez8lycbwropgtrusiovmg\" "
+        "}, \"source_caller\":\"front-end-function3\"}",
+        False))
 

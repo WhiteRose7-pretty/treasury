@@ -51,7 +51,7 @@
                  Create Account
             </span>
         </a>
-        <a href="#">
+        <a href="{% url 'app:password_reset' %}">
             <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
                  Reset Password
             </span>
@@ -151,9 +151,7 @@
                    else{
                        $('#msg').text('except');
                    }
-
                }
-
             }
         });
 

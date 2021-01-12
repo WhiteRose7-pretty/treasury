@@ -13,7 +13,10 @@ url_server = "http://operations.treasuryquants.com"
 #url_server="http://192.168.1.80:8080" #Shahram's local server
 
 #
-# this means set the backend for the dev environment. i.e. don't send emails etc.
+# this means set the backend for the dev environment. i.e.
+# 1) don't send emails,
+# 2) use is_test=True for the api calls
+# 3) ... ?
 #
 is_development=False
 

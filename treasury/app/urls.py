@@ -15,5 +15,7 @@ urlpatterns = [
     path('policy-notice/', views.policy_notice, name='policy_notice'),
     path('terms-of-service/', views.terms_service, name='terms_of_service'),
     path('web_api/', views.call_web_api, name='web_api'),
+    path('create-account/', views.create_account, name='create_account'),
+    path('account-activation-callback/', views.account_activation_callback, name="account_activation_callback")
 ]
 

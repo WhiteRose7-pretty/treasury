@@ -17,7 +17,7 @@ def home(request):
 
 
 def login(request):
-    if request.session['login']:
+    if request.session.get('login', False):
         return HttpResponseRedirect(reverse('app:profile'))
     return render(request, 'app/login.html')
 
@@ -37,7 +37,7 @@ def profile(request):
     #
     # Connection to the server. Contains and updates its own  token
     #
-    if not request.session['login']:
+    if not request.session.get('login', False):
         return HttpResponseRedirect(reverse('app:login'))
 
     post_data = {
@@ -87,11 +87,7 @@ def password_reset(request):
     return render(request, 'app/password_reset.html')
 
 
-def password_reset_call_back(request):
-    key = request.GET.get("activation_key", False)
-    if not key:
-        return HttpResponseRedirect(reverse('app:invalid_page-call'))
-
+def check_activation_key(key):
     post_data = {
         'function_name': 'account_activation_key_status',
         'arguments': {
@@ -102,6 +98,15 @@ def password_reset_call_back(request):
     result = web_api(json.dumps(post_data))
     print(result)
     result_dic = json.loads(result)
+    return result_dic
+
+
+def password_reset_call_back(request):
+    key = request.GET.get("activation_key", False)
+    if not key:
+        return HttpResponseRedirect(reverse('app:invalid_page-call'))
+
+    result_dic = check_activation_key(key)
     context = {
         'result_dic': result_dic,
         'key': key,
@@ -111,3 +116,31 @@ def password_reset_call_back(request):
 
 def invalid_page_call(request):
     return render(request, 'app/invalid_page.html')
+
+
+def create_account(request):
+    return render(request, 'app/create_account.html')
+
+
+def account_activation_callback(request):
+    key = request.GET.get("activation_key", False)
+    if not key:
+        return HttpResponseRedirect(reverse('app:invalid_page-call'))
+
+    result_dic = check_activation_key(key)
+    context = {
+        'result_dic': result_dic,
+        'key': key,
+    }
+    return render(request, 'app/account-activation-callback.html', context)
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    elif request.META.get('HTTP_X_REAL_IP'):
+        ip = request.META.get('HTTP_X_REAL_IP')
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip

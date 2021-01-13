@@ -31,7 +31,7 @@
 
 <section class="page-banner" style="background: #181717; padding-bottom: 0;">
     <div class="container-fluid">
-        <div class="page-title"> Login.</div>
+        <div class="page-title"> Create Account.</div>
         <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
         </div>
     </div>
@@ -70,8 +70,10 @@
             <label class="form-control-label" for="input-name">Email</label>
             <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email" value="test1.account@treasuryquants.com">
             <label class="form-control-label mt-4" for="input-password">Password</label>
-            <input class="form-control mt-2" id="input-password" name="password" placeholder="Put Password" type="password" value="test.account@treasuryquants.com">
-            <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="login()">Submit</button>
+            <input class="form-control mt-2" id="input-password" name="password" placeholder="Put Password" type="text" value="test.account@treasuryquants.com">
+            <label class="form-control-label mt-4" for="input-password">Password Confirm</label>
+            <input class="form-control mt-2" id="input-password-confirm" name="password-confirm" placeholder="Confirm Password" type="text" value="test.account@treasuryquants.com">
+            <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="account_status()">Create Account</button>
             <div style="clear: both"></div>
         </form>
     {% endblock %}
@@ -114,10 +116,33 @@
         'width': '1em',
         'height': '1em'
     });
+    let user_ip = ''
+    get_ip();
+    function get_ip(){
+        $.getJSON("http://jsonip.com/?callback=?", function (data) {
+        console.log(data.ip)
+        user_ip = data.ip;
+    });
 
-    function login(){
+    }
+
+    function account_status(){
         let email = $('#input-name').val();
-        var token = '{{csrf_token}}';
+        let password = $('#input-password').val();
+        let confirm_password = $('#input-password-confirm').val();
+        let msg_text = ''
+        if(password.length < 10){
+            msg_text = 'Password must be at least 10 characters.';
+        }
+        if(password !== confirm_password){
+            msg_text += 'Password not matched.';
+        }
+        if(msg_text){
+            $('#msg').text(msg_text);
+            return;
+        }
+
+        let token = '{{csrf_token}}';
         $.ajax({
             headers: {
                 "X-CSRFToken": token
@@ -129,7 +154,7 @@
                 'arguments': {
                     'user_email': email,
                 },
-                'source_caller': 'front-end-function10',
+                'source_caller': document.location.href,
             }),
             success: function (data){
 
@@ -138,15 +163,15 @@
                }
                else{
                    if(data.results.is_exist === 'False') {
+                       create_account(email, password, user_ip);
                        $('#msg').text('Account does not exist.');
                    }
                    else if(data.results.is_exist === 'True' && data.results.is_active === 'False'){
-                       $('#msg').text('Account is not active.');
+                       $('#msg').text('The Email is already register, Please activate your account');
                    }
                    else if(data.results.is_exist === 'True' && data.results.is_active === 'True'){
-                       $('#msg').text('Account is Good.');
+                       $('#msg').html(`The Email is already register, <a href="{% url 'app:login' %}">Please login </a>`);
                        // after redirect;
-                        account_profile();
                    }
                    else{
                        $('#msg').text('except');
@@ -157,9 +182,9 @@
 
     }
 
-    function account_profile(){
-        let email = $('#input-name').val();
-        let password = $('#input-password').val();
+    function create_account(email, password, user_ip){
+
+        let url = document.location;
         var token = '{{csrf_token}}';
         $.ajax({
             headers: {
@@ -168,12 +193,14 @@
             type: 'post',
             url: "{% url 'app:web_api' %}",
             data:JSON.stringify({
-                'function_name': 'account_profile',
+                'function_name': 'account_create',
                 'arguments': {
                     'user_email': email,
-                    'password': password,
+                    'user_password': password,
+                    'user_ip': user_ip,
+                    'callback_url': url.protocol + '//' + url.host  + '/account-activation-callback/',
                 },
-                'source_caller': 'front-end-function10',
+                'source_caller': document.location.href,
             }),
             success: function (data){
 
@@ -181,7 +208,8 @@
                    $('#msg').text(data['error']);
                }
                else{
-                   document.location.href = "{% url 'app:profile' %}";
+                   $('#msg').text(data['results']['account_create']);
+
                }
 
             }

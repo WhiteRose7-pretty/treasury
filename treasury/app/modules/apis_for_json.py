@@ -348,6 +348,25 @@ class AccountProfile(functionCall):
         return AccountProfile()
 
 
+class AccountActivate(functionCall):
+    def __init__(self):
+        super(AccountActivate, self).__init__("account_activate")
+        self.activation_key = ''
+
+    def is_valid(self, web_request):
+        if 'activation_key' not in web_request.arguments:
+            return False, " key 'activation_key' is missing"
+        self.activation_key = web_request.arguments['activation_key'].strip()
+        return True, ''
+
+    def call(self, connection, is_test):
+        status, results = apis.account_activate(connection, self.activation_key, is_test)
+        return self._make_response(status, results)
+
+    def create_new(self):
+        return AccountActivate()
+
+
 factory = dict()
 factory[ConnectionIsOK().name] = ConnectionIsOK()
 factory[AccountStatus().name] = AccountStatus()
@@ -358,6 +377,7 @@ factory[AccountPasswordChange().name] = AccountPasswordChange()
 factory[AccountProfile().name] = AccountProfile()
 factory[AccountSendActivationKey().name] = AccountSendActivationKey()
 factory[AccountPasswordReset().name] = AccountPasswordReset()
+factory[AccountActivate().name] = AccountActivate()
 
 
 def web_api(json_request_string, is_test=False):

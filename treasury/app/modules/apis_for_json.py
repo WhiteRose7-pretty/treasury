@@ -380,7 +380,7 @@ factory[AccountPasswordReset().name] = AccountPasswordReset()
 factory[AccountActivate().name] = AccountActivate()
 
 
-def web_api(json_request_string, is_test=False):
+def account_api(json_request_string, is_test=settings.is_development):
     connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
     #
     # ceate an empty response

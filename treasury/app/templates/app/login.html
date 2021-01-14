@@ -123,7 +123,7 @@
                 "X-CSRFToken": token
             },
             type: 'post',
-            url: "{% url 'app:web_api' %}",
+            url: "{% url 'app:account_api' %}",
             data:JSON.stringify({
                 'function_name': 'account_status',
                 'arguments': {
@@ -166,7 +166,7 @@
                 "X-CSRFToken": token
             },
             type: 'post',
-            url: "{% url 'app:web_api' %}",
+            url: "{% url 'app:account_api' %}",
             data:JSON.stringify({
                 'function_name': 'account_profile',
                 'arguments': {

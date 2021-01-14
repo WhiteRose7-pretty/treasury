@@ -4,7 +4,7 @@ from .modules import settings
 from .modules import utility_grids
 from .modules import apis
 from .modules import utility_connection
-from app.modules.apis_for_json import web_api
+from app.modules.apis_for_json import account_api
 import json
 from .modules import sandbox
 from django.http import JsonResponse, HttpResponseRedirect
@@ -12,7 +12,7 @@ from django.urls import reverse
 
 
 def home(request):
-    print(sandbox.account_active())
+    sandbox.account_create()
     return render(request, 'app/home.html')
 
 
@@ -34,9 +34,7 @@ def about_us(request):
 
 
 def profile(request):
-    #
-    # Connection to the server. Contains and updates its own  token
-    #
+
     if not request.session.get('login', False):
         return HttpResponseRedirect(reverse('app:login'))
 
@@ -48,10 +46,12 @@ def profile(request):
         },
         'source_caller': 'front-end-function10',
     }
-    result = web_api(json.dumps(post_data))
+    result = account_api(json.dumps(post_data))
     result_dic = json.loads(result)
     context = {
         'result_dic': result_dic,
+        'user_email': request.session['user_email'],
+        'password': request.session['password'],
     }
 
     return render(request, 'app/profile.html', context)
@@ -65,10 +65,10 @@ def terms_service(request):
     return render(request, 'app/terms.html')
 
 
-def call_web_api(request):
+def call_account_api(request):
     data = json.loads(request.body)
     post_data = json.dumps(data)
-    result = web_api(post_data)
+    result = account_api(post_data)
     result_dic = json.loads(result)
     if result_dic['source_caller'] == 'account_profile':
         if result_dic['error'] == '' and result_dic['results']['id']:
@@ -95,7 +95,7 @@ def check_activation_key(key):
         },
         'source_caller': 'password_reset_call_back_function',
     }
-    result = web_api(json.dumps(post_data))
+    result = account_api(json.dumps(post_data))
     print(result)
     result_dic = json.loads(result)
     return result_dic

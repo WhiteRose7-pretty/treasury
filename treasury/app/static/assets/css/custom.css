@@ -249,6 +249,10 @@ th{
     margin-bottom: 50px;
 }
 
+.pull-right{
+    float: right!important;
+}
+
 @media(min-width: 768px){
     .p-lg-40{
         padding: 40px;

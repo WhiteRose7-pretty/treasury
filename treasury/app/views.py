@@ -12,7 +12,6 @@ from django.urls import reverse
 
 
 def home(request):
-    sandbox.account_create()
     return render(request, 'app/home.html')
 
 

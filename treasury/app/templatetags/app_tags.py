@@ -24,7 +24,8 @@ def read_data(file_path):
         return obj
     elements = list()
     tenors = list()  # for graph
-    changes = list() # for graph
+    data1 = list() # for graph
+    data2 = list()  # for graph
 
     for i in range(0, len(grid.y1)):
         tenor = grid.tenors[i]
@@ -34,8 +35,9 @@ def read_data(file_path):
 
         elements.append([tenor, col1, col2, col3])
         tenors.append(tenor)
-        changes.append(col3)
-    obj = CurrencyData(grid.title, grid.headings, elements, tenors, changes)
+        data1.append(col1)
+        data2.append(col2)
+    obj = CurrencyData(grid.title, grid.headings, elements, tenors, data1, data2)
     obj.head_data[0] = ''
 
     return obj

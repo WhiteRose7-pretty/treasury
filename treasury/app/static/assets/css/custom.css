@@ -356,6 +356,11 @@ canvas {
 .login-container .description{
     padding-top:30px;
 }
+
+.flag{
+    width: 30px;
+}
+
 @media (max-width: 1800px) {
 
     .headings-section div {

@@ -31,7 +31,16 @@ def terms_service(request):
 
 def fx_data_graph(request):
     query = get_market_data()
-    query_temp = [{"title": item.title, "tenor": item.tenors, "changes": item.changes}
-                  for item in query]
+    query_temp = [
+        {
+            "title": item.title,
+            "tenor": item.tenors,
+            "legend1": item.head_data[1],
+            "legend2": item.head_data[2],
+            "data1": item.data1,
+            "data2": item.data2,
+        }
+        for item in query]
     json_string = json.dumps({'data': query_temp})
+
     return JsonResponse(json_string, safe=False)

@@ -6,8 +6,11 @@ from app.modules import utility_email
 
 def dict_to_string(results):
     message = ""
+    i = 0
     for key, value in results.items():
-        message += key + "=>" + value + "\n"
+        message += key + ":" + value
+        if i < len(results) - 1:
+            message += "\n"
     return message
 
 
@@ -24,4 +27,4 @@ def process_fatal_error(error_message, is_development=False):
     if is_development:
         print(error_message)
     else:
-        utility_email.send_email("operations@treasuryquants.com", "web cron error",error_message)
+        utility_email.send_email("operations@treasuryquants.com", "web cron error", error_message)

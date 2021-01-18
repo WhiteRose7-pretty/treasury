@@ -1,0 +1,560 @@
+{% load static %}
+{% load app_tags %}
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TG Code">
+    <title>Treasury</title>
+
+    <link rel="icon" href="{% static 'assets/img/brand/favicon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/libs/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/@fortawesome/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'assets/libs/swiper/dist/css/swiper.min.css' %}">
+
+    <!-- Custom style -->
+    <link rel="stylesheet" href="{% static 'assets/css/mega/style.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/quick-website.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" id="stylesheet">
+
+</head>
+
+<body>
+
+{% include 'app/basic/navbar.html' %}
+
+<section class="page-banner" style="background: #181717; padding-bottom: 0;">
+    <div class="container-fluid">
+        <div class="page-title">Workbench</div>
+        <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
+        </div>
+    </div>
+</section>
+
+<section class="container-fluid page-subtitle">
+
+    {% block tab_menu %}
+    <div style="text-align: center">
+         <a href="{% url 'app:login' %}">
+             <span class="px-2 d-md-inline-flex d-sm-block tab active">
+                Login
+             </span>
+         </a>
+        <a href="{% url 'app:login' %}">
+            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
+                 Create Account
+            </span>
+        </a>
+        <a href="{% url 'app:password_reset' %}">
+            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
+                 Reset Password
+            </span>
+        </a>
+    </div>
+    {% endblock %}
+
+</section>
+
+
+<section class="body">
+
+    <div class="container p-lg-20-60" style="max-width: 400px;" >
+    {% block tab_body %}
+            <p id="api-names">
+        <select id="api-list" name="api-list" onchange="print_form(this.value)">
+        </select>
+        <form action="" method="post" enctype="multipart/form-data" id="api-form">
+
+
+            <p id="api-entries">
+            <label class="form-control-label" for="input-name">Email</label>
+            <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email" value="test1.account@treasuryquants.com">
+            </p>
+            <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="calculate()">Calculate</button>
+            <div style="clear: both"></div>
+        </form>
+    {% endblock %}
+        <div id="msg"></div>
+    </div>
+
+
+</section>
+
+
+
+{% include "app/basic/footer.html" %}
+
+<!-- Core JS  -->
+<script src="{% static 'assets/js/jquery.js' %}"></script>
+<script src="{% static 'assets/js/jquery.migrate.js' %}"></script>
+
+<script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/libs/svg-injector/dist/svg-injector.min.js' %}"></script>
+<script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
+<!-- Optional JS -->
+<script src="{% static 'assets/libs/in-view/dist/in-view.min.js' %}"></script>
+<script src="{% static 'assets/libs/sticky-kit/dist/sticky-kit.min.js' %}"></script>
+<script src="{% static 'assets/libs/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<!-- Page JS -->
+<script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'assets/libs/autosize/dist/autosize.min.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'assets/libs/easescroll/jquery.easeScroll.js' %}"></script>
+<script src="{% static 'assets/libs/owl.carousel/owl.carousel.js' %}"></script>
+<!-- Quick JS -->
+
+<script src="{% static 'assets/js/e-magz.js' %}"></script>
+<script src="{% static 'assets/js/quick-website.js' %}"></script>
+
+
+<!-- Feather Icons -->
+<script>
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    });
+
+var data_type_spec = {
+      'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': []}
+    , 'TYPE_STRING': {'type': 'string', 'width': '10', 'init_values': []}
+    , 'TYPE_DATE': {'type': 'date', 'width': '10', 'init_values': []}
+    , 'TYPE_BOOLEAN': {'type': 'combo', 'width': '10', 'init_values': ['true', 'false']}
+    , 'TYPE_BUSINESS_CENTRE': {'type': 'combo', 'width': '10',
+                                'init_values': ['none', 'frankfort', 'london', 'milan', 'newyork', 'paris', 'target',
+                                                'tokyo', 'zurich']}
+    , 'TYPE_DISCOUNT_CURVE': {'type': 'combo', 'width': '10',
+                               'init_values': ['chf.ois', 'eur.ois', 'gbp.ois', 'jpy.ois', 'usd.ois']}
+    , 'TYPE_LIBOR_CURVE': {'type': 'combo', 'width': '10',
+                            'init_values': ['chf.libor3m', 'chf.libor6m', 'eur.libor3m', 'eur.libor6m', 'gbp.libor3m',
+                                            'gbp.libor6m', 'jpy.libor3m', 'jpy.libor6m', 'usd.libor3m', 'usd.libor6m']}
+    , 'TYPE_CURRENCY': {'type': 'combo', 'width': '10', 'init_values': ['usd', 'gbp', 'eur', 'chf', 'jpy']}
+    , 'TYPE_ELEMENT_DESCRIBE': {'type': 'combo', 'width': '10',
+                                 'init_values': [' ','book', 'describe', 'formatted_grid_swap_rates', 'market_fx_rates',
+                                                 'market_swap_rates', 'pnl_attribute', 'pnl_predict', 'price',
+                                                 'price_fx_forward', 'price_vanilla_swap', 'risk_ladder',
+                                                 'show_available', 'workspace']}
+    , 'TYPE_ELEMENT_SHOW_AVAILABLE': {'type': 'combo', 'width': '10',
+                                       'init_values': [' ','asof_dates', 'daycounts', 'calendar', 'business_day_rule',
+                                                       'libor_curves', 'discount_curves']}
+    , 'TYPE_MARKET_DATES': {'type': 'combo', 'width': '10',
+                               'init_values': [20200101,20200102]}
+    , 'TYPE_TRADE_LIST': {'type': 'combo', 'width': '10',
+                               'init_values': ['TRADE1','TRADE2']}
+    , 'TYPE_SWAP_TYPES': {'type': 'combo', 'width': '10',
+                               'init_values': ['ir_vanilla_swap']}
+    , 'TYPE_FXFWD_TYPES': {'type': 'combo', 'width': '10',
+                               'init_values': ['fx_forward']}
+    };
+
+
+
+var _show_available={
+    'name':'show_available'
+    ,'arguments': ['element']
+    ,'argument_labels': ['element']
+    ,'argument_optionals': [1]
+    ,'argument_types': ['TYPE_ELEMENT_SHOW_AVAILABLE']
+    }
+
+var _describe={
+    'name':'describe'
+    ,'arguments': ['element']
+    ,'argument_labels': ['element']
+    ,'argument_optionals': [1]
+    ,'argument_types': ['TYPE_ELEMENT_DESCRIBE']
+    }
+
+var _market_swap_rates={
+    'name':'market_swap_rates'
+    ,'arguments': ['asof', 'currency']
+    ,'argument_labels': ['As of', 'Currency']
+    ,'argument_optionals': [0,0]
+    ,'argument_types': ['TYPE_MARKET_DATES','TYPE_CURRENCY']
+    }
+
+
+var _market_fx_rates={
+    'name':'market_fx_rates'
+    ,'arguments': ['asof', 'to_date', 'base_currency']
+    ,'argument_labels': ['As of', 'Date(to)','Base Currency']
+    ,'argument_optionals': [0,0,0]
+    ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_CURRENCY']
+    }
+
+
+var _price_fx_forward={
+    'name':'price_fx_forward'
+    ,'arguments': ['type','asof',  'trade_date', 'trade_expiry', 'pay_amount', 'pay_currency',
+                           'receive_amount', 'receive_currency','save_as' ]
+    ,'argument_labels': ['Type', 'As of','Trade Date', 'Expiry', 'Pay Amount', 'Pay Currency',
+                           'Receive Amount', 'Receive Currency','Save as']
+    ,'argument_optionals': [0,0,0,0,0,0,0,0,1]
+    ,'argument_types': ['TYPE_FXFWD_TYPES','TYPE_MARKET_DATES','TYPE_NUMBER','TYPE_NUMBER','TYPE_NUMBER','TYPE_CURRENCY','TYPE_NUMBER','TYPE_CURRENCY','TYPE_STRING']
+    }
+
+var _price_vanilla_swap={
+    'name':'price_vanilla_swap'
+    ,'arguments': ['type','asof', 'notional', 'trade_date', 'trade_maturity', 'index_id',
+                             'discount_id', 'floating_leg_period', 'fixed_leg_period', 'floating_leg_daycount',
+                             'fixed_leg_daycount', 'spread', 'fixed_rate', 'is_payer', 'business_day_rule',
+                             'business_centres', 'spot_lag_days','save_as' ]
+    ,'argument_labels': ['Type', 'As of', 'Notional', 'Trade Date', 'Trade Maturity', 'Index Id',
+                             'Discount Curve', 'Floating Leg Period', 'Fixed Leg Period', 'Floating Leg Daycount',
+                             'Fised Leg Daycount', 'Spread', 'Fixed Rate', 'Is Payer', 'Business Day Rule',
+                             'Business Centre', 'Spot Lag(days)','Save as']
+    ,'argument_optionals': [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+    ,'argument_types': ['TYPE_SWAP_TYPES','TYPE_MARKET_DATES','TYPE_NUMBER','TYPE_NUMBER','TYPE_LIBOR_CURVE','TYPE_DISCOUNT_CURVE','TYPE_CURRENCY','TYPE_STRING']
+    }
+
+
+var _price={
+    'name':'price'
+    ,'arguments': ['asof', 'load_as']
+    ,'argument_labels': ['As of', 'Load as']
+    ,'argument_optionals': [0,0]
+    ,'argument_types': ['TYPE_MARKET_DATES','TYPE_TRADE_LIST']
+    }
+
+
+var _risk_ladder={
+    'name':'risk_ladder'
+    ,'arguments': ['asof', 'load_as']
+    ,'argument_labels': ['As of', 'Load as']
+    ,'argument_optionals': [0,0]
+    ,'argument_types': ['TYPE_MARKET_DATES','TYPE_TRADE_LIST']
+    }
+
+
+
+var _pnl_predict={
+    'name':'pnl_predict'
+    ,'arguments': ['from_date', 'to_date', 'load_as']
+    ,'argument_labels': ['Date(from)', 'Date (to)', 'Load as']
+    ,'argument_optionals': [0,0,0]
+    ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_TRADE_LIST']
+    }
+
+
+var _pnl_attribute={
+    'name':'pnl_attribute'
+    ,'arguments': ['from_date', 'to_date', 'load_as']
+    ,'argument_labels': ['Date(from)', 'Date (to)', 'Load as']
+    ,'argument_optionals': [0,0,0]
+    ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_TRADE_LIST']
+    }
+
+
+api_specs={'pnl_attribute':_pnl_attribute,
+   'pnl_predict':_pnl_predict,
+   'risk_ladder':_risk_ladder,
+   'price':_price,
+   'price_vanilla_swap':_price_vanilla_swap,
+   'price_fx_forward':_price_fx_forward,
+   'market_fx_rates':_market_fx_rates,
+   'market_swap_rates':_market_swap_rates,
+   'describe':_describe,
+   'show_available':_show_available
+    }
+
+
+function get_list(id,list){
+    var content= "<select id=\""+id+"\" name=\""+id+"\">";
+    for ( j=0; j<list.length; ++j){
+        content+="<option value=\""+list[j]+"\"";
+        if (j==list.length-1){
+            content += " selected ";
+        }
+        content+=">"+list[j]+"</option>";
+    }
+    content+="</select>";
+    return content;
+}
+
+function get_input_object(argument,argument_text,argument_optional,argument_type){
+
+    var simple_type_content="<input ";
+        simple_type_content+=" class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\"";
+        simple_type_content+= " type=\"email\"";
+        simple_type_content+= " >";
+
+    var content="";
+
+
+    switch(argument_type){
+    case 'TYPE_NUMBER':
+    case 'TYPE_STRING':
+    case 'TYPE_DATE':
+        content="<input class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\" type=\"text\">";
+        break;
+    case 'TYPE_BOOLEAN':
+        content=get_list(argument,data_type_spec['TYPE_BOOLEAN']['init_values']);
+        break;
+    case 'TYPE_BUSINESS_CENTRE':
+        content=get_list(argument,data_type_spec['TYPE_BUSINESS_CENTRE']['init_values']);
+        break;
+    case 'TYPE_DISCOUNT_CURVE':
+        content=get_list(argument,data_type_spec['TYPE_DISCOUNT_CURVE']['init_values']);
+        break;
+    case 'TYPE_LIBOR_CURVE':
+        content=get_list(argument,data_type_spec['TYPE_LIBOR_CURVE']['init_values']);
+        break;
+    case 'TYPE_CURRENCY':
+        content=get_list(argument,data_type_spec['TYPE_CURRENCY']['init_values']);
+        break;
+    case 'TYPE_TRADE_LIST':
+        content=get_list(argument,data_type_spec['TYPE_TRADE_LIST']['init_values']);
+        break;
+    case 'TYPE_ELEMENT_DESCRIBE':
+        content=get_list(argument,data_type_spec['TYPE_ELEMENT_DESCRIBE']['init_values']);
+        break;
+    case 'TYPE_MARKET_DATES':
+        content=get_list(argument,data_type_spec['TYPE_MARKET_DATES']['init_values']);
+        break;
+    case 'TYPE_ELEMENT_SHOW_AVAILABLE':
+        content=get_list(argument,data_type_spec['TYPE_ELEMENT_SHOW_AVAILABLE']['init_values']);
+        break;
+    case 'TYPE_SWAP_TYPES':
+        content=get_list(argument,data_type_spec['TYPE_SWAP_TYPE']['init_values']);
+        break;
+    case 'TYPE_FXFWD_TYPES':
+        content=get_list(argument,data_type_spec['TYPE_FXFWD_TYPES']['init_values']);
+        break;
+    default:
+        content="<input class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\" type=\"text\">";
+    }
+    return content;
+}
+
+function get_api_list(){
+    var content="";
+    for (var key in api_specs) {
+        if (api_specs.hasOwnProperty(key)) {
+            content+= "<option value=\""+key+"\">"+key+"</option>";
+        }
+    }
+    return content;
+}
+
+
+function print_form(choice){
+    var chosen_function_name=choice;
+
+    var function_spec=api_specs[chosen_function_name];
+
+    var name=function_spec['name'];
+    var arguments=function_spec['arguments'];
+    var argument_labels=function_spec['argument_labels'];
+    var argument_optionals=function_spec['argument_optionals'];
+    var argument_types=function_spec['argument_types'];
+
+
+
+
+
+    var form_content="";
+    for ( i = 0 ; i < arguments.length; i++){
+        var argument=arguments[i];
+        var argument_label=argument_labels[i];
+        var argument_optional=argument_optionals[i];
+        var argument_type=argument_types[i];
+
+
+       form_content+="<label class=\"form-control-label\">"+argument_label+"</label>";
+
+
+       form_content+= get_input_object(argument,argument_label,argument_optional,argument_type);
+        form_content+="<br>";
+
+    }
+    document.getElementById("api-entries").innerHTML =form_content;
+}
+
+function clear_output(){
+ $('#msg').text('');
+}
+
+
+function calculate(){
+
+
+
+    var function_name=$('#api-list').val();
+    var function_spec=api_specs[function_name];
+
+    var name=function_spec['name'];
+    var arguments=function_spec['arguments'];
+    var argument_labels=function_spec['argument_labels'];
+    var argument_optionals=function_spec['argument_optionals'];
+    var argument_types=function_spec['argument_types'];
+
+
+    clear_output()
+
+
+    if (function_name.trim()==''){
+        return;
+    }
+
+    var argument_values=[];
+
+    var i = 0;
+
+    var arguments_dictionary={};
+
+    var is_error=false;
+    for (i=0; i< arguments.length; ++i){
+        var argument = arguments[i];
+        var argument_value=$('#'+argument).val();
+
+
+        //
+        //    validate argument_value by type and optional
+        //
+        var value=argument_value.trim();
+        if (argument_optionals[i]!=1 && value==''){
+            is_error=true;
+            $('#msg').text(argument_labels[i]+" cannot be empty.");
+            break;
+        }
+
+        if (argument_types[i]=='TYPE_NUMBER' && !isNan(value)){
+            is_error=true;
+            $('#msg').text(argument_labels[i]+" should be numeric.");
+            break;
+        }
+        /*
+        if (argument_types[i]=='TYPE_DATE' ){
+                window.alert("is_valid_date");
+        }
+
+        if (argument_types[i]=='TYPE_DATE' && !isNan(value) && !is_valid_date(value)){
+            is_error=true;
+            $('#msg').text(argument_labels[i]+" should be date in the following format: yyyymmdd.");
+            break;
+        }
+*/
+
+        argument_values.push(argument_value);
+        arguments_dictionary[arguments[i]]=argument_value;
+    }
+    if (!is_error){
+        create_user_request(function_name,arguments_dictionary, callback_nothing);
+    }
+}
+
+
+function callback_fill_market_dates(keys,values){
+
+    data_type_spec['TYPE_MARKET_DATES']['init_values']=values;
+}
+
+function callback_fill_trade_ids(keys,values){
+    values.sort(function(a, b){return a-b});
+    data_type_spec['TYPE_TRADE_LIST']['init_values']=values;
+}
+
+function callback_nothing(keys,values){
+}
+
+
+
+function create_user_request(function_name,arguments, callback_function){
+    arguments['user_email']=sessionStorage.getItem('email');
+    arguments['user_email']="test.account@treasuryquants.com";
+
+    var request={   'function_name':function_name,
+                    'arguments':arguments,
+                    'source_caller': document.location.href + ":"+function_name
+                    };
+
+    let token = '{{csrf_token}}';
+
+    $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type:    'post',
+            url:     "{% url 'app:web_api' %}",
+            data:    JSON.stringify(request),
+            success: function (data){
+
+               var keys=[];
+               var values=[];
+
+
+               if (data.error){
+                   $('#msg').text(JSON.stringify(data['error']));
+               }
+               else{
+                   var results=data['results'];
+                   for (var key in results) {
+                        keys.push(key);
+                        if (results.hasOwnProperty(key)) {
+                            values.push(results[key]);
+                        }
+                    }
+
+
+                    callback_function(key,values);
+                   $('#msg').text('');
+                   $('#msg').text(values.toString());
+               }
+
+
+            }
+    });
+
+}
+
+
+function load_market_data(){
+
+    var function_name='show_available';
+    arguments={'element':'asof_dates'};
+    create_user_request(function_name,arguments, callback_fill_market_dates);
+}
+
+function load_trade_ids(){
+    var function_name='workspace';
+    arguments={'list':'all'};
+    create_user_request(function_name,arguments, callback_fill_trade_ids);
+}
+
+/*
+function is_valid_date(str){
+    //str is assumed to be YYYYMMDD
+
+    try{
+      var year = str.substring(0, 4);
+      var month = str.substring(4, 6);
+      var day = str.substring(6, 8);
+      var str_reformatted=year+"-"+month+"-"+day+" 00:00";
+      var date = new Date(str_reformatted);
+      }
+    catch(err){
+      return false;
+    }
+    return true;
+}
+*/
+
+
+
+load_market_data();
+load_trade_ids();
+
+document.getElementById("api-list").innerHTML =get_api_list();
+
+
+
+</script>
+
+</body>
+
+</html>

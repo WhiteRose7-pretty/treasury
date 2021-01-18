@@ -21,6 +21,8 @@ class TokenContext:
         return json.dumps(results)
 
     def from_string(self, string_json):
+        if string_json=='':
+            return
         content=json.loads(string_json)
         self.secret=content['secret']
         self.expiry=datetime.datetime.strptime(content['expiry'],"%Y-%m-%d %H:%M:%S")
@@ -50,6 +52,8 @@ class WebConnection (TQConnection.Connection):
         self.expiry=self.token_context.expiry
 
     def send_web(self, request):
+        if self.token=='':
+            self.expiry=datetime.datetime.now()
         result = self.send(request)
         if self.token!=self.token_context.secret: # we now have an updated tokenl
             self.token_context=TokenContext(self.token,self.expiry)

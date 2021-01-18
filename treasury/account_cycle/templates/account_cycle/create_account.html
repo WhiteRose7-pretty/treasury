@@ -1,0 +1,223 @@
+{% load static %}
+{% load app_tags %}
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TG Code">
+    <title>Treasury</title>
+
+    <link rel="icon" href="{% static 'assets/img/brand/favicon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/libs/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/@fortawesome/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'assets/libs/swiper/dist/css/swiper.min.css' %}">
+
+    <!-- Custom style -->
+    <link rel="stylesheet" href="{% static 'assets/css/mega/style.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/quick-website.css' %}" id="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" id="stylesheet">
+
+</head>
+
+<body>
+
+{% include 'app/basic/navbar.html' %}
+
+<section class="page-banner" style="background: #181717; padding-bottom: 0;">
+    <div class="container-fluid">
+        <div class="page-title"> Create Account.</div>
+        <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
+        </div>
+    </div>
+</section>
+
+<section class="container-fluid page-subtitle">
+
+    {% block tab_menu %}
+    <div style="text-align: center">
+         <a href="{% url 'app:login' %}">
+             <span class="px-2 d-md-inline-flex d-sm-block tab active">
+                Login
+             </span>
+         </a>
+        <a href="{% url 'app:create_account' %}">
+            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
+                 Create Account
+            </span>
+        </a>
+        <a href="{% url 'app:password_reset' %}">
+            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
+                 Reset Password
+            </span>
+        </a>
+    </div>
+    {% endblock %}
+
+</section>
+
+
+<section class="body">
+
+    <div class="container p-lg-20-60" style="max-width: 400px;" >
+    {% block tab_body %}
+        <form action="" method="post" enctype="multipart/form-data" id="login-frm">
+            <label class="form-control-label" for="input-name">Email</label>
+            <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email" value="test1.account@treasuryquants.com">
+            <label class="form-control-label mt-4" for="input-password">Password</label>
+            <input class="form-control mt-2" id="input-password" name="password" placeholder="Put Password" type="text" value="test.account@treasuryquants.com">
+            <label class="form-control-label mt-4" for="input-password">Password Confirm</label>
+            <input class="form-control mt-2" id="input-password-confirm" name="password-confirm" placeholder="Confirm Password" type="text" value="test.account@treasuryquants.com">
+            <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="account_status()">Create Account</button>
+            <div style="clear: both"></div>
+        </form>
+    {% endblock %}
+        <div id="msg"></div>
+    </div>
+
+
+</section>
+
+
+
+{% include "app/basic/footer.html" %}
+
+<!-- Core JS  -->
+<script src="{% static 'assets/js/jquery.js' %}"></script>
+<script src="{% static 'assets/js/jquery.migrate.js' %}"></script>
+
+<script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/libs/svg-injector/dist/svg-injector.min.js' %}"></script>
+<script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
+<!-- Optional JS -->
+<script src="{% static 'assets/libs/in-view/dist/in-view.min.js' %}"></script>
+<script src="{% static 'assets/libs/sticky-kit/dist/sticky-kit.min.js' %}"></script>
+<script src="{% static 'assets/libs/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<!-- Page JS -->
+<script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'assets/libs/autosize/dist/autosize.min.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'assets/libs/easescroll/jquery.easeScroll.js' %}"></script>
+<script src="{% static 'assets/libs/owl.carousel/owl.carousel.js' %}"></script>
+<!-- Quick JS -->
+
+<script src="{% static 'assets/js/e-magz.js' %}"></script>
+<script src="{% static 'assets/js/quick-website.js' %}"></script>
+
+
+<!-- Feather Icons -->
+<script>
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    });
+    let user_ip = ''
+    get_ip();
+    function get_ip(){
+        $.getJSON("http://jsonip.com/?callback=?", function (data) {
+        console.log(data.ip)
+        user_ip = data.ip;
+    });
+
+    }
+
+    function account_status(){
+        let email = $('#input-name').val();
+        let password = $('#input-password').val();
+        let confirm_password = $('#input-password-confirm').val();
+        let msg_text = ''
+        if(password.length < 10){
+            msg_text = 'Password must be at least 10 characters.';
+        }
+        if(password !== confirm_password){
+            msg_text += 'Password not matched.';
+        }
+        if(msg_text){
+            $('#msg').text(msg_text);
+            return;
+        }
+
+        let token = '{{csrf_token}}';
+        $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type: 'post',
+            url: "{% url 'account_cycle:account_api' %}",
+            data:JSON.stringify({
+                'function_name': 'account_status',
+                'arguments': {
+                    'user_email': email,
+                },
+                'source_caller': document.location.href,
+            }),
+            success: function (data){
+
+               if (data.error){
+                      $('#msg').text(data['error']);
+               }
+               else{
+                   if(data.results.is_exist === 'False') {
+                       create_account(email, password, user_ip);
+                       $('#msg').text('Account does not exist.');
+                   }
+                   else if(data.results.is_exist === 'True' && data.results.is_active === 'False'){
+                       $('#msg').text('The Email is already register, Please activate your account');
+                   }
+                   else if(data.results.is_exist === 'True' && data.results.is_active === 'True'){
+                       $('#msg').html(`The Email is already register, <a href="{% url 'app:login' %}">Please login </a>`);
+                       // after redirect;
+                   }
+                   else{
+                       $('#msg').text('except');
+                   }
+               }
+            }
+        });
+
+    }
+
+    function create_account(email, password, user_ip){
+
+        let url = document.location;
+        var token = '{{csrf_token}}';
+        $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type: 'post',
+            url: "{% url 'account_cycle:account_api' %}",
+            data:JSON.stringify({
+                'function_name': 'account_create',
+                'arguments': {
+                    'user_email': email,
+                    'user_password': password,
+                    'user_ip': user_ip,
+                    'callback_url': url.protocol + '//' + url.host  + '/account-activation-callback/',
+                },
+                'source_caller': document.location.href,
+            }),
+            success: function (data){
+
+               if (data.error){
+                   $('#msg').text(data['error']);
+               }
+               else{
+                   $('#msg').text(data['results']['account_create']);
+
+               }
+
+            }
+        });
+    }
+
+</script>
+
+</body>
+
+</html>

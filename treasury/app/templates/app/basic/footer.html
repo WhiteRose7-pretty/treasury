@@ -1,20 +1,27 @@
 {% load static %}
-  <footer class="position-relative" id="footer-main">
-    <div class="footer pt-lg-1 footer-dark " style="background: #262626">
-      <!-- Footer -->
-      <div class="container-fluid pt-4">
+<footer class="footer">
+  <div class="container-fluid">
+     <div class="row">
+        <div class="col-md-7">
 
-        <div>
-            <img src="{% static 'assets/img/brand/icon.png' %}" class="logo"  style="float: left; margin-right: 16px">
-            <p style="">Address: <br>&nbsp;&nbsp;20-22 Wenlock Road<br>&nbsp;&nbsp;London, England, <br>&nbsp;&nbsp; N1 7GU <br>Email: contact@treasuryquants.com</p>
-        </div>
-        <div class="row align-items-center justify-content-md-between pb-4">
-          <div class="col-md-12">
-            <div class="copyright text-center text-white" style="font-size: 18px">
-              &copy; 2020 <a href="#" class="font-weight-bold" target="_blank"> treasuryquants.com </a> - all rights reserved.
+         <div class="footer-left">
+            <div class="footer-logo"><a href="{% url 'app:home' %}">
+                <img src="{% static 'assets/images/footer-logo.png' %}" alt="logo" class="img-fluid"></a></div>
+            <div class="address">
+               <p>Address:</p>
+               <p>20-22 Wenlock Road,</p>
+               <p>London, England,</p>
+               <p>N1 7GU</p>
+               <p>Email:<a href="mailto:contact@treasuryquants.com">contact@treasuryquants.com</a></p>
             </div>
-          </div>
+         </div>
+
         </div>
-      </div>
-    </div>
-  </footer>
+        <div class="col-md-5 d-flex align-items-end justify-content-end">
+           <div class="copyright">
+              <p>© 2020 treasuryquants.com – all rights reserved.</p>
+           </div>
+        </div>
+     </div>
+  </div>
+</footer>

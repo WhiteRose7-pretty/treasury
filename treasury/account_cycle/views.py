@@ -1,0 +1,134 @@
+from django.shortcuts import render
+from app.modules.apis_for_json import account_api
+import json
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
+
+
+def home(request):
+    return HttpResponseRedirect(reverse('account_cycle:login'))
+
+
+def login(request):
+    if request.session.get('login', False):
+        return HttpResponseRedirect(reverse('account_cycle:profile'))
+    return render(request, 'account_cycle/login.html')
+
+
+def logout(request):
+    request.session['login'] = False
+    request.session['user_email'] = ''
+    request.session['password'] = ''
+    return HttpResponseRedirect(reverse('account_cycle:login'))
+
+
+def profile(request):
+    if not request.session.get('login', False):
+        return HttpResponseRedirect(reverse('account_cycle:login'))
+
+    post_data = {
+        'function_name': 'account_profile',
+        'arguments': {
+            'user_email': request.session['user_email'],
+            'password': request.session['password'],
+        },
+        'source_caller': 'front-end-function10',
+    }
+    result = account_api(json.dumps(post_data))
+    result_dic = json.loads(result)
+    context = {
+        'result_dic': result_dic,
+        'user_email': request.session['user_email'],
+        'password': request.session['password'],
+    }
+
+    return render(request, 'account_cycle/profile.html', context)
+
+
+def policy_notice(request):
+    return render(request, 'account_cycle/policy_notice.html')
+
+
+def terms_service(request):
+    return render(request, 'account_cycle/terms.html')
+
+
+def call_account_api(request):
+    data = json.loads(request.body)
+    post_data = json.dumps(data)
+    result = account_api(post_data)
+    result_dic = json.loads(result)
+    if result_dic['source_caller'] == 'account_profile':
+        if result_dic['error'] == '' and result_dic['results']['id']:
+            request.session['login'] = True
+            request.session['user_email'] = data['arguments']['user_email']
+            request.session['password'] = data['arguments']['password']
+        else:
+            request.session['login'] = False
+            request.session['user_email'] = ''
+            request.session['password'] = ''
+
+    return JsonResponse(result_dic)
+
+
+def password_reset(request):
+    return render(request, 'account_cycle/password_reset.html')
+
+
+def check_activation_key(key):
+    post_data = {
+        'function_name': 'account_activation_key_status',
+        'arguments': {
+            'activation_key': key,
+        },
+        'source_caller': 'password_reset_call_back_function',
+    }
+    result = account_api(json.dumps(post_data))
+    print(result)
+    result_dic = json.loads(result)
+    return result_dic
+
+
+def password_reset_call_back(request):
+    key = request.GET.get("activation_key", False)
+    if not key:
+        return HttpResponseRedirect(reverse('account_cycle:invalid_page-call'))
+
+    result_dic = check_activation_key(key)
+    context = {
+        'result_dic': result_dic,
+        'key': key,
+    }
+    return render(request, 'account_cycle/password-reset-call-back.html', context)
+
+
+def invalid_page_call(request):
+    return render(request, 'account_cycle/invalid_page.html')
+
+
+def create_account(request):
+    return render(request, 'account_cycle/create_account.html')
+
+
+def account_activation_callback(request):
+    key = request.GET.get("activation_key", False)
+    if not key:
+        return HttpResponseRedirect(reverse('account_cycle:invalid_page-call'))
+
+    result_dic = check_activation_key(key)
+    context = {
+        'result_dic': result_dic,
+        'key': key,
+    }
+    return render(request, 'account_cycle/account-activation-callback.html', context)
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    elif request.META.get('HTTP_X_REAL_IP'):
+        ip = request.META.get('HTTP_X_REAL_IP')
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip

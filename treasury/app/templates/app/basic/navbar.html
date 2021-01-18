@@ -1,73 +1,39 @@
 {% load static %}
 {% load app_tags %}
-<header class="primary">
-
-    <nav class="menu" style="background:#262626 ; border: 0">
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
         <div class="container-fluid">
-            <div class="brand d-block">
-                <a href="/">
-                    <img src="{% static 'assets/img/brand/tq.png' %}" alt="Magz Logo">
-                    <span class="logo-badge"><i>Quants included!</i></span>
-                </a>
-            </div>
-            <div class="mobile-toggle">
-                <a href="#" data-toggle="menu" data-target="#menu-list"><i class="ion-navicon-round"></i></a>
-            </div>
-            <div class="mobile-toggle">
-                <a href="#" data-toggle="sidebar" data-target="#sidebar"><i class="ion-ios-arrow-left"></i></a>
-            </div>
-            <div id="menu-list">
-                <ul class="nav-list ml-lg-2">
-<!--                    <li class="for-tablet nav-title"><a>Menu</a></li>-->
-
-
-                    <!--                    <li class="nav-search">-->
-                    <!--                        <a href="{% url 'app:policy_notice' %}" >Policy Notice</a>-->
-                    <!--                    </li>-->
-                    <!--                    <li class="nav-search">-->
-                    <!--                        <a href="{% url 'app:terms_of_service' %}">Terms of Service</a>-->
-                    <!--                    </li>-->
-                    <!--                     <li class="nav-search">-->
-                    <!--                        <a href="#" >create account</a>-->
-                    <!--                    </li>-->
-
-                    {% if request.session.login %}
-                        <li class="nav-search">
-                            <a href="{% url 'app:logout' %}">Logout</a>
-                        </li>
-                        <li class="nav-search">
-                            <a href="{% url 'app:profile' %}">Profile</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-search">
-                            <a href="{% url 'app:login' %}">Login</a>
-                        </li>
-                        <li class="nav-search">
-                            <a href="{% url 'app:create_account' %}">Create Account</a>
-                        </li>
-                    {% endif %}
-
-                    <li class="nav-search">
-                        <a href="{% url 'app:about_us' %}">about</a>
+            <a class="navbar-brand" href="{% url 'app:home' %}"><img src="{% static 'assets/images/logo.png' %}" alt=""
+                                                                     class="img-fluid"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'app:home' %}">markets</a>
                     </li>
-                    <li class="nav-search">
-                        <a href="{% url 'app:home' %}">workbench</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">workbench</a>
                     </li>
-                    <li class="nav-search">
-                        <a href="{% url 'app:home' %}">markets</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'app:about_us' %}">about</a>
                     </li>
-<!--                    <li class="nav-search  dropdown magz-dropdown">-->
-<!--                        <a>Support <i class="ion-ios-arrow-right"></i></a>-->
-<!--                        <ul class="dropdown-menu">-->
-<!--                            <li><a href="{% url 'app:policy_notice' %}">Policy Notice</a></li>-->
-<!--                            <li><a href="{% url 'app:terms_of_service' %}">Terms of Service</a></li>-->
-<!--                            <li><a href="#">API documentation</a></li>-->
-<!--                            <li><a href="#">Career</a></li>-->
-<!--                        </ul>-->
-<!--                    </li>-->
-
-
+{#                    <li class="nav-item">#}
+{#                        <form class="search-form">#}
+{#                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
+{#                            <button class="btn" type="submit"><i class="fa fa-search"></i></button>#}
+{#                        </form>#}
+{#                    </li>#}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_cycle:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary " href="{% url 'account_cycle:create_account' %}">Create&nbsp;Account</a>
+                    </li>
                 </ul>
+
             </div>
         </div>
     </nav>

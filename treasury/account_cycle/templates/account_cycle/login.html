@@ -1,0 +1,148 @@
+{% load static %}
+{% load app_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Treasury</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}">
+</head>
+
+<body>
+
+{% include 'app/basic/navbar.html' %}
+
+
+<section class="mid">
+    <sectiodiv class="middle-office">
+        <div class="container-fluid">
+            <h2>Your Middle Office</h2>
+        </div>
+    </sectiodiv>
+    <div class="container login-container">
+        <div class="changes-detail-main">
+            <h2 class="font-weight-bold">Login</h2>
+            <div class="description">
+                <span>
+                     With us, you will never have to commit to any contracts. We are a
+                        pay-as-you go service.  Not a penny more. And
+                        when time comes, you can stop Quis.
+                </span>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data" id="login-frm">
+                <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email"
+                       value="test1.account@treasuryquants.com">
+
+                <input class="form-control mt-2" id="input-password" name="password" placeholder="Put Password"
+                       type="password" value="test.account@treasuryquants.com">
+                <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="login()">
+                    Submit
+                </button>
+                <div style="clear: both"></div>
+            </form>
+
+            <div id="msg"></div>
+        </div>
+    </div>
+
+
+    {% include "app/basic/license.html" %}
+
+</section>
+
+
+{% include "app/basic/footer.html" %}
+
+<!-- Core JS  -->
+<script src="{% static 'assets/js/jquery-2.1.3.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
+
+
+<!-- Feather Icons -->
+<script>
+
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    });
+
+    function login() {
+        let email = $('#input-name').val();
+        var token = '{{csrf_token}}';
+        $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type: 'post',
+            url: "{% url 'account_cycle:account_api' %}",
+            data: JSON.stringify({
+                'function_name': 'account_status',
+                'arguments': {
+                    'user_email': email,
+                },
+                'source_caller': 'front-end-function10',
+            }),
+            success: function (data) {
+
+                if (data.error) {
+                    $('#msg').text(data['error']);
+                } else {
+                    if (data.results.is_exist === 'False') {
+                        $('#msg').text('Account does not exist.');
+                    } else if (data.results.is_exist === 'True' && data.results.is_active === 'False') {
+                        $('#msg').text('Account is not active.');
+                    } else if (data.results.is_exist === 'True' && data.results.is_active === 'True') {
+                        $('#msg').text('Account is Good.');
+                        // after redirect;
+                        account_profile();
+                    } else {
+                        $('#msg').text('except');
+                    }
+                }
+            }
+        });
+
+    }
+
+    function account_profile() {
+        let email = $('#input-name').val();
+        let password = $('#input-password').val();
+        var token = '{{csrf_token}}';
+        $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type: 'post',
+            url: "{% url 'account_cycle:account_api' %}",
+            data: JSON.stringify({
+                'function_name': 'account_profile',
+                'arguments': {
+                    'user_email': email,
+                    'password': password,
+                },
+                'source_caller': 'front-end-function10',
+            }),
+            success: function (data) {
+
+                if (data.error) {
+                    $('#msg').text(data['error']);
+                } else {
+                    document.location.href = "{% url 'account_cycle:profile' %}";
+                }
+
+            }
+        });
+    }
+
+</script>
+
+</body>
+
+</html>

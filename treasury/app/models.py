@@ -2,10 +2,12 @@ from django.db import models
 
 
 class CurrencyData:
-    def __init__(self, title, head_data, data):
+    def __init__(self, title, head_data, data, tenors, changes):
         self.title = title
         self.head_data = head_data
         self.data = data
+        self.tenors = tenors
+        self.changes = changes
 
 
 class DataFile(models.Model):

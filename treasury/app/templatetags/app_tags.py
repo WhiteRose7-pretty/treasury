@@ -17,20 +17,25 @@ fx_file = 'app/media/currency_data/FX.csv'
 
 
 def read_data(file_path):
-    obj=CurrencyData('', ['','',''], [[0,0,0,0]]) #to ensure we do not crash and we always return something
-    grid=utility_grids.Grid()
-    status, message=grid.load(file_path)
+    obj = CurrencyData('', ['', '', ''], [[0, 0, 0, 0]], [0], [0])  # to ensure we do not crash and we always return something
+    grid = utility_grids.Grid()
+    status, message = grid.load(file_path)
     if not status:
         return obj
-    elements=list()
-    for i in range(0,len(grid.y1)):
+    elements = list()
+    tenors = list()  # for graph
+    changes = list() # for graph
+
+    for i in range(0, len(grid.y1)):
         tenor = grid.tenors[i]
-        col1 = "{:.4f}".format(round(float(grid.y1[i]),settings.grid_decimals))
+        col1 = "{:.4f}".format(round(float(grid.y1[i]), settings.grid_decimals))
         col2 = "{:.4f}".format(round(float(grid.y2[i]), settings.grid_decimals))
         col3 = "{:.4f}".format(round(float(grid.y3[i]), settings.grid_decimals))
 
-        elements.append([tenor,col1,col2,col3])
-    obj = CurrencyData(grid.title, grid.headings, elements)
+        elements.append([tenor, col1, col2, col3])
+        tenors.append(tenor)
+        changes.append(col3)
+    obj = CurrencyData(grid.title, grid.headings, elements, tenors, changes)
     obj.head_data[0] = ''
 
     return obj
@@ -60,27 +65,12 @@ def get_fx_rates_data():
     return obj
 
 
-@register.inclusion_tag('app/basic/navbar.html', takes_context=True)
-def is_authenticated(context):
-    print("is_authenticate")
-    # return True
-    # request = context['request']
-    # if request.session['login']:
-    #     result = True
-    # else:
-    #     result = False
-    return {
-        'is_login': True
-    }
-
-
 # TODO: Shahram to remove below once the new market page has been completed.
 files = [
     'app/media/currency_data/EUR.csv',
     'app/media/currency_data/USD.csv',
     'app/media/currency_data/GBP.csv',
     'app/media/currency_data/CHF.csv',
-    'app/media/currency_data/FX.csv',
     'app/media/currency_data/JPY.csv',
 ]
 
@@ -92,4 +82,5 @@ def get_market_data():
         obj = read_data(item)
         data_list.append(obj)
     return data_list
-# end TODO
+
+

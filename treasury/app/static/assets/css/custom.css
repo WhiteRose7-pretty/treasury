@@ -46,7 +46,7 @@ canvas {
 }
 
 .header .navbar .nav-item {
-    padding: 10px 15px;
+    padding: 23px 15px;
 }
 
 .header .navbar .nav-link {
@@ -58,7 +58,7 @@ canvas {
 .header .navbar .nav-link:before {
     position: absolute;
     left: 0;
-    bottom: -20px;
+    bottom: -33px;
     width: 0%;
     height: 3px;
     background: #4f78e0;
@@ -121,8 +121,8 @@ canvas {
 
 .middle-office h4 {
     text-align: center;
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 600;
     color: #252a32;
     margin-bottom: 20px;
 }
@@ -254,6 +254,7 @@ canvas {
     margin-bottom: 0;
     font-size: 18px;
     color: #465373;
+    line-height: 1.25;
 }
 
 .address a {

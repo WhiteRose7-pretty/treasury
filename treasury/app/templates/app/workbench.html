@@ -1,28 +1,17 @@
 {% load static %}
 {% load app_tags %}
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
+
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="TG Code">
     <title>Treasury</title>
-
-    <link rel="icon" href="{% static 'assets/img/brand/favicon.png' %}" type="image/png">
-    <link rel="stylesheet" href="{% static 'assets/libs/animate.css/animate.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/libs/@fortawesome/fontawesome-free/css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
-
-
-    <link rel="stylesheet" href="{% static 'assets/libs/swiper/dist/css/swiper.min.css' %}">
-
-    <!-- Custom style -->
-    <link rel="stylesheet" href="{% static 'assets/css/mega/style.css' %}" id="stylesheet">
-    <link rel="stylesheet" href="{% static 'assets/css/quick-website.css' %}" id="stylesheet">
-    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" id="stylesheet">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}">
 </head>
 
 <body>
@@ -70,11 +59,7 @@
         <select id="api-list" name="api-list" onchange="print_form(this.value)">
         </select>
         <form action="" method="post" enctype="multipart/form-data" id="api-form">
-
-
             <p id="api-entries">
-            <label class="form-control-label" for="input-name">Email</label>
-            <input class="form-control" id="input-name" name="email" placeholder="Put Email" type="email" value="test1.account@treasuryquants.com">
             </p>
             <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="calculate()">Calculate</button>
             <div style="clear: both"></div>
@@ -88,37 +73,13 @@
 
 
 
-{% include "app/basic/footer.html" %}
 
-<!-- Core JS  -->
-<script src="{% static 'assets/js/jquery.js' %}"></script>
-<script src="{% static 'assets/js/jquery.migrate.js' %}"></script>
-
-<script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'assets/libs/svg-injector/dist/svg-injector.min.js' %}"></script>
-<script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
-<!-- Optional JS -->
-<script src="{% static 'assets/libs/in-view/dist/in-view.min.js' %}"></script>
-<script src="{% static 'assets/libs/sticky-kit/dist/sticky-kit.min.js' %}"></script>
-<script src="{% static 'assets/libs/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
-<!-- Page JS -->
-<script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
-<script src="{% static 'assets/libs/autosize/dist/autosize.min.js' %}"></script>
-<script src="{% static 'assets/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
-<script src="{% static 'assets/libs/easescroll/jquery.easeScroll.js' %}"></script>
-<script src="{% static 'assets/libs/owl.carousel/owl.carousel.js' %}"></script>
-<!-- Quick JS -->
-
-<script src="{% static 'assets/js/e-magz.js' %}"></script>
-<script src="{% static 'assets/js/quick-website.js' %}"></script>
-
-
-<!-- Feather Icons -->
+<script src="{% static 'assets/js/jquery-2.1.3.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 <script>
-    feather.replace({
-        'width': '1em',
-        'height': '1em'
-    });
+
+
+
 
 var data_type_spec = {
       'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': []}
@@ -143,9 +104,9 @@ var data_type_spec = {
                                        'init_values': [' ','asof_dates', 'daycounts', 'calendar', 'business_day_rule',
                                                        'libor_curves', 'discount_curves']}
     , 'TYPE_MARKET_DATES': {'type': 'combo', 'width': '10',
-                               'init_values': [20200101,20200102]}
+                               'init_values': []}
     , 'TYPE_TRADE_LIST': {'type': 'combo', 'width': '10',
-                               'init_values': ['TRADE1','TRADE2']}
+                               'init_values': []}
     , 'TYPE_SWAP_TYPES': {'type': 'combo', 'width': '10',
                                'init_values': ['ir_vanilla_swap']}
     , 'TYPE_FXFWD_TYPES': {'type': 'combo', 'width': '10',
@@ -182,9 +143,9 @@ var _market_swap_rates={
 var _market_fx_rates={
     'name':'market_fx_rates'
     ,'arguments': ['asof', 'to_date', 'base_currency']
-    ,'argument_labels': ['As of', 'Date(to)','Base Currency']
+    ,'argument_labels': ['As of', 'To Date','Base Currency']
     ,'argument_optionals': [0,0,0]
-    ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_CURRENCY']
+    ,'argument_types': ['TYPE_MARKET_DATES','TYPE_DATE','TYPE_CURRENCY']
     }
 
 
@@ -195,7 +156,7 @@ var _price_fx_forward={
     ,'argument_labels': ['Type', 'As of','Trade Date', 'Expiry', 'Pay Amount', 'Pay Currency',
                            'Receive Amount', 'Receive Currency','Save as']
     ,'argument_optionals': [0,0,0,0,0,0,0,0,1]
-    ,'argument_types': ['TYPE_FXFWD_TYPES','TYPE_MARKET_DATES','TYPE_NUMBER','TYPE_NUMBER','TYPE_NUMBER','TYPE_CURRENCY','TYPE_NUMBER','TYPE_CURRENCY','TYPE_STRING']
+    ,'argument_types': ['TYPE_FXFWD_TYPES','TYPE_MARKET_DATES','TYPE_DATE','TYPE_DATE','TYPE_NUMBER','TYPE_CURRENCY','TYPE_NUMBER','TYPE_CURRENCY','TYPE_STRING']
     }
 
 var _price_vanilla_swap={
@@ -206,10 +167,28 @@ var _price_vanilla_swap={
                              'business_centres', 'spot_lag_days','save_as' ]
     ,'argument_labels': ['Type', 'As of', 'Notional', 'Trade Date', 'Trade Maturity', 'Index Id',
                              'Discount Curve', 'Floating Leg Period', 'Fixed Leg Period', 'Floating Leg Daycount',
-                             'Fised Leg Daycount', 'Spread', 'Fixed Rate', 'Is Payer', 'Business Day Rule',
+                             'Fixed Leg Daycount', 'Spread', 'Fixed Rate', 'Is Payer', 'Business Day Rule',
                              'Business Centre', 'Spot Lag(days)','Save as']
     ,'argument_optionals': [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
-    ,'argument_types': ['TYPE_SWAP_TYPES','TYPE_MARKET_DATES','TYPE_NUMBER','TYPE_NUMBER','TYPE_LIBOR_CURVE','TYPE_DISCOUNT_CURVE','TYPE_CURRENCY','TYPE_STRING']
+    ,'argument_types': [
+    'TYPE_SWAP_TYPES',
+    'TYPE_MARKET_DATES',
+    'TYPE_NUMBER',
+    'TYPE_DATE',
+    'TYPE_DATE',
+    'TYPE_LIBOR_CURVE',
+    'TYPE_DISCOUNT_CURVE',
+    'TYPE_PERIOD',
+    'TYPE_PERIOD',
+    'TYPE_STRING',
+    'TYPE_STRING',
+    'TYPE_NUMBER',
+    'TYPE_NUMBER',
+    'TYPE_BOOLEAN',
+    'TYPE_STRING',
+    'TYPE_BUSINESS_CENTRE',
+    'TYPE_NUMBER',
+    'TYPE_STRING']
     }
 
 
@@ -277,14 +256,12 @@ function get_list(id,list){
 }
 
 function get_input_object(argument,argument_text,argument_optional,argument_type){
-
     var simple_type_content="<input ";
         simple_type_content+=" class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\"";
         simple_type_content+= " type=\"email\"";
         simple_type_content+= " >";
 
     var content="";
-
 
     switch(argument_type){
     case 'TYPE_NUMBER':
@@ -320,7 +297,7 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
         content=get_list(argument,data_type_spec['TYPE_ELEMENT_SHOW_AVAILABLE']['init_values']);
         break;
     case 'TYPE_SWAP_TYPES':
-        content=get_list(argument,data_type_spec['TYPE_SWAP_TYPE']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_SWAP_TYPES']['init_values']);
         break;
     case 'TYPE_FXFWD_TYPES':
         content=get_list(argument,data_type_spec['TYPE_FXFWD_TYPES']['init_values']);
@@ -359,19 +336,26 @@ function print_form(choice){
 
     var form_content="";
     for ( i = 0 ; i < arguments.length; i++){
+
         var argument=arguments[i];
+
         var argument_label=argument_labels[i];
+
         var argument_optional=argument_optionals[i];
+
         var argument_type=argument_types[i];
 
 
+
        form_content+="<label class=\"form-control-label\">"+argument_label+"</label>";
+
 
 
        form_content+= get_input_object(argument,argument_label,argument_optional,argument_type);
         form_content+="<br>";
 
     }
+
     document.getElementById("api-entries").innerHTML =form_content;
 }
 
@@ -383,8 +367,8 @@ function clear_output(){
 function calculate(){
 
 
-
     var function_name=$('#api-list').val();
+
     var function_spec=api_specs[function_name];
 
     var name=function_spec['name'];
@@ -408,6 +392,7 @@ function calculate(){
     var arguments_dictionary={};
 
     var is_error=false;
+
     for (i=0; i< arguments.length; ++i){
         var argument = arguments[i];
         var argument_value=$('#'+argument).val();
@@ -428,17 +413,15 @@ function calculate(){
             $('#msg').text(argument_labels[i]+" should be numeric.");
             break;
         }
-        /*
-        if (argument_types[i]=='TYPE_DATE' ){
-                window.alert("is_valid_date");
-        }
 
-        if (argument_types[i]=='TYPE_DATE' && !isNan(value) && !is_valid_date(value)){
-            is_error=true;
-            $('#msg').text(argument_labels[i]+" should be date in the following format: yyyymmdd.");
-            break;
+
+        if (argument_types[i]=='TYPE_DATE'){
+            if (!is_valid_date(value)){
+                is_error=true;
+                $('#msg').text(argument_labels[i]+" should be a valid date in the following format: yyyymmdd.");
+                break;
+                }
         }
-*/
 
         argument_values.push(argument_value);
         arguments_dictionary[arguments[i]]=argument_value;
@@ -447,6 +430,7 @@ function calculate(){
         create_user_request(function_name,arguments_dictionary, callback_nothing);
     }
 }
+
 
 
 function callback_fill_market_dates(keys,values){
@@ -460,7 +444,17 @@ function callback_fill_trade_ids(keys,values){
 }
 
 function callback_nothing(keys,values){
+ var output_div = document.getElementById('msg');
+
+ var cntr=0;
+ var output_content='';
+ for (cntr=0;cntr<keys.length;++cntr){
+    output_content+=keys[cntr]+":"+values[cntr]+ "<br>"
+ }
+ output_div.innerHTML=output_content;
 }
+
+
 
 
 
@@ -475,14 +469,18 @@ function create_user_request(function_name,arguments, callback_function){
 
     let token = '{{csrf_token}}';
 
+    //window.alert(JSON.stringify(request));
+
     $.ajax({
             headers: {
                 "X-CSRFToken": token
             },
             type:    'post',
-            url:     "{% url 'app:web_api' %}",
+            url:     "{% url 'app:api_gateway' %}",
             data:    JSON.stringify(request),
+
             success: function (data){
+
 
                var keys=[];
                var values=[];
@@ -501,9 +499,8 @@ function create_user_request(function_name,arguments, callback_function){
                     }
 
 
-                    callback_function(key,values);
-                   $('#msg').text('');
-                   $('#msg').text(values.toString());
+                    callback_function(keys,values);
+
                }
 
 
@@ -526,9 +523,11 @@ function load_trade_ids(){
     create_user_request(function_name,arguments, callback_fill_trade_ids);
 }
 
-/*
+
 function is_valid_date(str){
     //str is assumed to be YYYYMMDD
+
+    str = str.toString();
 
     try{
       var year = str.substring(0, 4);
@@ -536,13 +535,13 @@ function is_valid_date(str){
       var day = str.substring(6, 8);
       var str_reformatted=year+"-"+month+"-"+day+" 00:00";
       var date = new Date(str_reformatted);
+      return !isNaN(date.getTime());
       }
     catch(err){
       return false;
     }
-    return true;
 }
-*/
+
 
 
 
@@ -554,7 +553,10 @@ document.getElementById("api-list").innerHTML =get_api_list();
 
 
 </script>
+{% include "app/basic/footer.html" %}
 
 </body>
 
 </html>
+
+

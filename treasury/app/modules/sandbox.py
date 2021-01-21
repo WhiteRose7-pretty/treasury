@@ -30,6 +30,12 @@ def test_account_api():
         "{\"function_name\":\"account_password_reset\", \"arguments\":{\"new_password\":\"test.account@treasuryquants.com\",\"activation_key\":\"j7v3ffy_uqbggkgt-mstvc_qa1bxyp42vgfvuvj83gyvc-fwdglgla\"}, \"source_caller\":\"front-end-function9\"}"))
     print(api_gateway(
         "{\"function_name\":\"account_profile\", \"arguments\":{\"user_email\":\"test.account@treasuryquants.com\",\"password\":\"test.account@treasuryquants.com\"}, \"source_caller\":\"front-end-function10\"}"))
+    print(api_gateway(
+        "{\"function_name\":\"account_token_create\", \"arguments\":{\"email\":\"test.account@treasuryquants.com\",\"password\":\"test.account@treasuryquants.com\"}, \"source_caller\":\"front-end-function10\"}"))
+    print(api_gateway(
+        "{\"function_name\":\"account_token_create\", \"arguments\":{\"email\":\"valya.varechkina.76@bk.ru\"}, \"source_caller\":\"front-end-function10\"}"))
+
+
 
 
 def account_create():
@@ -49,15 +55,16 @@ def check():
         "{\"function_name\":\"account_token_create\", \"arguments\":{\"email\":\"valya.varechkina.76@bk.ru\",\"password\":\"test.account\"}, \"source_caller\":\"front-end-function10\"}"))
 
 
-# def call_web_api(request):
-#     data = json.loads(request)
-#     post_data = json.dumps(data)
-#     result = api_gateway(post_data, general_apis_factory)
-#     result_dic = json.loads(result)
-#     return result_dic#JsonResponse(result_dic)
+def call_web_api(request):
+    data = json.loads(request)
+    post_data = json.dumps(data)
+    result = api_gateway(post_data, general_apis_factory)
+    result_dic = json.loads(result)
+    return result_dic#JsonResponse(result_dic)
 
+string="{\"function_name\":\"describe\", \"arguments\":{" \
+    "\"user_email\":\"test.account@treasuryquants.com\"" \
+    "}, \"source_caller\":\"front-end-function3\"}"
 
-# print(call_web_api(
-#     "{\"function_name\":\"describe\", \"arguments\":{"
-#     "\"user_email\":\"test.account@treasuryquants.com\" "
-#     "}, \"source_caller\":\"front-end-function3\"}"))
+print(string)
+print(call_web_api(string))

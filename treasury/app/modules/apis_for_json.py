@@ -869,6 +869,7 @@ class MarketFxRates(functionCall):
         super(MarketFxRates, self).__init__("market_fx_rates")
         self.base_date = ''
         self.base_currency = ''
+        self.asof = ''
 
 
     def is_valid(self, web_request):
@@ -877,10 +878,10 @@ class MarketFxRates(functionCall):
             return False, " key 'user_email' is missing"
         self.user_email = web_request.arguments['user_email'].strip()
 
-        self.base_date = ''
-        if 'base_date' not in web_request.arguments:
-            return False, " key 'base_date' is missing"
-        self.asof = web_request.arguments['base_date'].strip()
+        self.asof = ''
+        if 'asof' not in web_request.arguments:
+            return False, " key 'asof' is missing"
+        self.asof = str(web_request.arguments['asof']).strip()
 
 
         self.base_currency = ''
@@ -888,10 +889,16 @@ class MarketFxRates(functionCall):
             return False, " key 'base_currency' is missing"
         self.base_currency = web_request.arguments['base_currency'].strip()
 
+        self.to_date = ''
+        if 'to_date' not in web_request.arguments:
+            return False, " key 'to_date' is missing"
+        self.to_date = str(web_request.arguments['to_date']).strip()
+
         return True, ''
 
     def call(self, connection, is_test=False):
-        status, results = apis.market_fx_rates(connection, self.user_email,self.base_date,self.base_currency)
+
+        status, results = apis.market_fx_rates(connection, self.user_email,self.asof,self.to_date,self.base_currency)
         return self._make_response(status, results)
 
     def create_new(self):

@@ -4,7 +4,7 @@ from .modules import settings
 from .modules import utility_grids
 from .modules import apis
 from .modules import utility_connection
-from app.modules.apis_for_json import account_api
+import app.modules.apis_for_json   as apis_for_json
 import json
 from .modules import sandbox
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
@@ -19,6 +19,9 @@ def home(request):
 
 def about_us(request):
     return render(request, 'app/about_us.html')
+
+def workbench(request):
+    return render(request, 'app/workbench.html')
 
 
 def policy_notice(request):
@@ -44,3 +47,10 @@ def fx_data_graph(request):
     json_string = json.dumps({'data': query_temp})
 
     return JsonResponse(json_string, safe=False)
+
+def api_gateway(request):
+    data = json.loads(request.body)
+    post_data = json.dumps(data)
+    result = apis_for_json.api_gateway(post_data, apis_for_json.general_apis_factory)
+    result_dic = json.loads(result)
+    return JsonResponse(result_dic, safe=False)

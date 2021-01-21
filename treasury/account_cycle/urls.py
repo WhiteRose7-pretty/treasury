@@ -13,6 +13,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('account_api/', views.call_account_api, name='account_api'),
     path('create-account/', views.create_account, name='create_account'),
-    path('account-activation-callback/', views.account_activation_callback, name="account_activation_callback")
+    path('account-activation-callback/', views.account_activation_callback, name="account_activation_callback"),
+    path('confirm-email-activate-account/', views.confirm_email_activate_account, name="confirm_email_activate_account"),
 ]
 

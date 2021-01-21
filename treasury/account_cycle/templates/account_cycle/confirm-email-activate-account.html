@@ -4,11 +4,8 @@
 <html lang="pl">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="TG Code">
     <title>Treasury</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
@@ -30,47 +27,32 @@
     </sectiodiv>
     <div class="container login-container">
         <div class="changes-detail-main">
-            <h3 class="font-weight-bold">Reset password.</h3>
+            <h3 class="font-weight-bold">Confirm Email to Activate Account.</h3>
 
-            <form action="" method="post" id="login-frm" >
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <input type="password" class="form-control" placeholder="New password" aria-label="Password"
-                           aria-describedby="basic-addon1" id="input-password" name="password" {{ input_disabled }}>
-                </div>
+            <form action="" method="post" id="login-frm">
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <input type="password" class="form-control" placeholder="Confirm password" aria-label="Password"
-                           aria-describedby="basic-addon1" id="input-password-confirm" name="password-confirm" {{ input_disabled }}>
+                    <input class="form-control" placeholder="Email" aria-label="Email"
+                           aria-describedby="basic-addon1" id="input-name" name="email" type="email">
                 </div>
 
 
                 <button class="btn btn-primary mt-4 pull-right btn-block" style="float: right" type="button"
-                        onclick="account_password_reset()">
-                    Reset<span class="spinner-border spinner-border-sm" id="loading-icon" role="status"
-                               aria-hidden="true"></span>
+                        onclick="account_status()">
+                    Confirm<span class="spinner-border spinner-border-sm" id="loading-icon" role="status"
+                                 aria-hidden="true"></span>
                 </button>
                 <div style="clear: both"></div>
 
                 <div class="description">
                     <span id="msg"></span>
                 </div>
-
-                <div class="mt-4">
-                    <span id="init-msg" class="text-danger">{{ result_dic }}</span>
-                </div>
             </form>
-
-
         </div>
     </div>
 
@@ -92,27 +74,9 @@
 <!-- Feather Icons -->
 <script>
 
-    function account_password_reset() {
-
-        if ($('#init-msg').text()) {
-            return false;
-        }
-
-        let password = $('#input-password').val();
-        let confirm_password = $('#input-password-confirm').val();
-        msg_text = ''
-        if (password.length < 10) {
-            msg_text = 'Password must be at least 10 characters.';
-        }
-        if (password !== confirm_password) {
-            msg_text += 'Password not matched.';
-        }
-        if (msg_text) {
-            msg_show($('#msg'), msg_text);
-            return;
-        }
-
-        let token = '{{csrf_token}}';
+    function account_status() {
+        let email = $('#input-name').val();
+        var token = '{{csrf_token}}';
         $('#loading-icon').css('display', 'inline-block');
         $.ajax({
             headers: {
@@ -121,10 +85,48 @@
             type: 'post',
             url: "{% url 'account_cycle:account_api' %}",
             data: JSON.stringify({
-                'function_name': 'account_password_reset',
+                'function_name': 'account_status',
                 'arguments': {
-                    'new_password': password,
-                    'activation_key': '{{ key }}'
+                    'user_email': email,
+                },
+                'source_caller': document.location.href,
+            }),
+            success: function (data) {
+
+                if (data.error) {
+                    msg_show($('#msg'), data['error']);
+                } else {
+                    if (data.results.is_exist === 'False') {
+                        msg_show($('#msg'), `Account does not exist. <a class="text-primary" href="{% url 'account_cycle:create_account' %}">Create Account</a> `);
+                    } else if (data.results.is_exist === 'True' && data.results.is_active === 'False') {
+                        account_send_activation_key();
+                    } else if (data.results.is_exist === 'True' && data.results.is_active === 'True') {
+                        msg_show($('#msg'), `Account is already activated. <a class="text-primary" href="{% url 'account_cycle:login' %}">Login</a> `);
+                    } else {
+                        msg_show($('#msg'), 'server error');
+                    }
+                }
+                $('#loading-icon').css('display', 'none');
+            }
+        });
+    }
+
+
+    function account_send_activation_key() {
+        let email = $('#input-name').val();
+        var token = '{{csrf_token}}';
+        var url = window.location;
+        $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type: 'post',
+            url: "{% url 'account_cycle:account_api' %}",
+            data: JSON.stringify({
+                'function_name': 'account_send_activation_key',
+                'arguments': {
+                    'user_email': email,
+                    'callback_url': url.protocol + '//' + url.host + '/account/account-activation-callback/',
                 },
                 'source_caller': document.location.href,
             }),
@@ -132,19 +134,17 @@
                 if (data.error) {
                     msg_show($('#msg'), data['error']);
                 } else {
-                    msg_show($('#msg'), `Password reseted successfully. <a href="{% url 'account_cycle:logout' %}" class="text-primary">Please login using new password. </a>`);
+                    msg_show($('#msg'), "An email with a new activation key was sent to : " + email);
                 }
-                $('#loading-icon').css('display', 'none');
             },
+
             error: function (jqXhr, textStatus, errorMessage) {
                 msg_show($('#msg'), "Error: " + errorMessage);
                 $('#loading-icon').css('display', 'none');
             },
 
         });
-
     }
-
 
 </script>
 

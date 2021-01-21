@@ -1,0 +1,62 @@
+<script>
+
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    });
+
+    $('#input-name').click(function () {
+        msg_show($('#msg'), '', false);
+    });
+
+    $(document).on('click', '#ip', function () {
+        console.log('here');
+        msg_show($('#ip-msg'), '', false);
+    })
+
+    $('#input-password').click(function () {
+        msg_show($('#msg'), '', false);
+    });
+
+    $('#input-password-confirm').click(function () {
+        msg_show($('#msg'), '', false);
+    });
+
+    function msg_show(obj, text, display = true) {
+        obj.html(text);
+        if (display) {
+            $('.description').css('display', 'block');
+        } else {
+            $('.description').css('display', 'none');
+        }
+    }
+
+
+    var format = /[ '"&|,]/;
+    //            ^                                       ^
+    console.log(format.test("My@string-with(some%text)") + "<br/>");
+    console.log(format.test("My string with spaces") + "<br/>");
+    console.log(format.test("MyStringContainingNoSpecialChars"));
+
+    function contains_any(str, set){
+        return set.test(str);
+    }
+
+    function password_validate(password, confirm_password){
+        let msg_text = '';
+        if(password !== confirm_password){
+            msg_text += `Password not matched.<br>`;
+        }
+        if(password.length < 10){
+            msg_text += `Password should be at least 10 characters long.<br>`;
+        }
+        let unaccepted_set = /[ '"&|,]/;
+        if(contains_any(password, unaccepted_set)){
+            msg_text += `Password contains invalid characters.<br>`;
+        }
+        return msg_text;
+    }
+
+
+
+</script>

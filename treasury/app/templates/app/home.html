@@ -239,10 +239,6 @@
         },
         type: 'post',
         url: "{% url 'app:fx_data_graph' %}",
-        data: JSON.stringify({
-            'function_name': 'account_password_change',
-            'source_caller': document.location.href,
-        }),
         success: function (output) {
             let response_json = JSON.parse(output);
             let data = response_json.data;

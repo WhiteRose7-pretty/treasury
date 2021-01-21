@@ -342,30 +342,183 @@ canvas {
 }
 
 .login-container {
-    max-width: 580px;
+    max-width: 530px;
     margin-top: 50px;
 }
 
-.login-container .changes-detail-main{
-    padding: 60px 40px;
+.login-container .changes-detail-main {
+    padding: 50px 28px;
 }
 
-.login-container span{
-    color: grey;
+.login-container span {
+    color: #465373a8;
 }
 
-.login-container .description{
-    padding-top:30px;
+.login-container .description {
+    padding-top: 30px;
+    margin-bottom: 10px;
+    display: none;
 }
 
-.flag{
+.login-container form {
+    margin-top: 30px;
+}
+
+.flag {
     width: 30px;
+}
+
+.custom-control-input-green:focus ~ .custom-control-label::before {
+    border-color: #4f78e0 !important;
+    /*box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;*/
+}
+
+.custom-control-input-green:checked ~ .custom-control-label::before {
+    border-color: #4f78e0 !important;
+    background-color: #4f78e0 !important;
+}
+
+.custom-control-input-green:focus:not(:checked) ~ .custom-control-label::before {
+    border-color: #4f78e0 !important;
+}
+
+.custom-control-input-green:not(:disabled):active ~ .custom-control-label::before {
+    background-color: #d6f5dd !important;
+    border-color: #4f78e0 !important;
+}
+
+.custom-control-label:focus {
+    outline: -webkit-focus-ring-color auto 0;
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, .25);
+}
+
+.license-main video {
+    object-fit: cover;
+    background: black;
+}
+
+video:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+}
+
+.input-group-text {
+    background: #fff;
+    font-size: 1rem;
+}
+
+.input-group-text i {
+    color: #4653734a;
+}
+
+.input-group .form-control, a {
+    border-left-width: 0;
+    padding-left: 0;
+    font-size: 1rem;
+    color: #465373a8;
+}
+
+.input-group .form-control::placeholder, .custom-control-label {
+    color: #465373a8;
+}
+
+.form-control:focus {
+    border-color: #ced4da;
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, .25);
+}
+
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: #465373a8 !important;
+}
+
+input:-webkit-autofill::first-line {
+    font-size: 1rem;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+label:before {
+    outline: 0 !important;
+    -webkit-appearance: none;
+    box-shadow: none !important;
+}
+
+span.spinner-border-sm {
+    color: white;
+    margin-left: 10px;
+}
+
+#loading-icon, #loading-icon-ip, #loading-icon-password {
+    display: none;
+}
+
+#msg {
+    color: black;
+}
+
+i {
+    width: 1rem;
+}
+
+.text-primary{
+    color: #4f78e0 !important;
+}
+
+.form-control:disabled, .form-control[readonly] {
+     background-color: #fff;
+    opacity: 1;
+}
+
+.profile-table{
+    width: 100%;
+    max-width: 960px;
+}
+
+table, tr, td{
+    border-top: 1px solid #80808040;
+    border-bottom: 1px solid #80808040;
+    vertical-align: center;
+    padding: 24px 0px;
+}
+
+td{
+    padding: 24px 10px 24px 0;
+}
+
+.modal-header, .modal-body{
+    padding: 1.2rem 2rem;
+}
+
+@media(min-width: 640px){
+    .pull-right-md{
+        float: right;
+    }
 }
 
 @media (max-width: 1800px) {
 
     .headings-section div {
         font-size: 12px;
+    }
+
+    .license-main video {
+        object-fit: contain;
     }
 
 }

@@ -44,6 +44,9 @@ def account_active():
         "}, \"source_caller\":\"front-end-function3\"}"))
 
 
+def check():
+    print(api_gateway(
+        "{\"function_name\":\"account_token_create\", \"arguments\":{\"email\":\"valya.varechkina.76@bk.ru\",\"password\":\"test.account\"}, \"source_caller\":\"front-end-function10\"}"))
 
 
 # def call_web_api(request):

@@ -86,3 +86,6 @@ def get_market_data():
     return data_list
 
 
+@register.simple_tag
+def get_element_array_index(array, index):
+    return array[index]

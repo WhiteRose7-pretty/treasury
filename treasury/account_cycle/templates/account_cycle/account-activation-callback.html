@@ -4,24 +4,13 @@
 <html lang="pl">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="TG Code">
     <title>Treasury</title>
-
-    <link rel="icon" href="{% static 'assets/img/brand/favicon.png' %}" type="image/png">
-    <link rel="stylesheet" href="{% static 'assets/libs/animate.css/animate.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/libs/@fortawesome/fontawesome-free/css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
-
-
-    <link rel="stylesheet" href="{% static 'assets/libs/swiper/dist/css/swiper.min.css' %}">
-
-    <!-- Custom style -->
-    <link rel="stylesheet" href="{% static 'assets/css/mega/style.css' %}" id="stylesheet">
-    <link rel="stylesheet" href="{% static 'assets/css/quick-website.css' %}" id="stylesheet">
-    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" id="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}">
 
 </head>
 
@@ -29,105 +18,62 @@
 
 {% include 'app/basic/navbar.html' %}
 
-<section class="page-banner" style="background: #181717; padding-bottom: 0;">
-    <div class="container-fluid">
-        <div class="page-title"> Change reset </div>
-        <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
+<section class="mid">
+    <section class="middle-office">
+        <div class="container-fluid">
+            <h2>Your Middle Office</h2>
         </div>
-    </div>
-</section>
-
-<section class="container-fluid page-subtitle">
-
-    {% block tab_menu %}
-    <div style="text-align: center">
-         <a href="{% url 'app:login' %}">
-             <span class="px-2 d-md-inline-flex d-sm-block tab active">
-                Login
-             </span>
-         </a>
-        <a href="{% url 'app:login' %}">
-            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
-                 Create Account
-            </span>
-        </a>
-        <a href="{% url 'app:password_reset' %}">
-            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
-                 Reset Password
-            </span>
-        </a>
-    </div>
-    {% endblock %}
-
-</section>
+    </section>
 
 
-<section class="body">
+    <section style=" margin-top: 10px">
+        <div class="container d-flex justify-content-center ">
+            <div class="profile-table mt-4">
+                <h3 class="font-weight-bold">Activate Account</h3>
 
-    <div class="container p-lg-20-60" style="max-width: 400px;">
+                    {% if result_dic.error != '' %}
+                        <div id="error-msg">{{ result_dic.error }}</div>
+                    {% else %}
+                        {% if not result_dic.results.is_exist == "True" %}
+                            <div id="init-msg">Your Key doesn't exist.</div>
+                        {% elif not result_dic.results.is_active == "True" %}
+                            <div id="init-msg">Your Key is expired.</div>
+                        {% else %}
+                            <div id="init-msg"></div>
+                        {% endif %}
+                    {% endif %}
 
-        {% block tab_body %}
+                <div id="msg"></div>
+            </div>
 
-            {% if result_dic.error != '' %}
-                <div id="error-msg">{{ result_dic.error }}</div>
-            {% else %}
-                {% if not result_dic.results.is_exist == "True" %}
-                    <div id="init-msg">Your Key doesn't exist.</div>
-                {% elif not result_dic.results.is_active == "True" %}
-                    <div id="init-msg">Your Key is expired.</div>
-                {% else %}
-                    <div id="init-msg"></div>
-                {% endif %}
-            {% endif %}
+        </div>
 
-        {% endblock %}
-        <div id="msg"></div>
-    </div>
+    </section>
 
+    {% include "app/basic/license.html" %}
 
 </section>
-
 
 
 {% include "app/basic/footer.html" %}
 
 <!-- Core JS  -->
-<script src="{% static 'assets/js/jquery.js' %}"></script>
-<script src="{% static 'assets/js/jquery.migrate.js' %}"></script>
-
-<script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'assets/libs/svg-injector/dist/svg-injector.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-2.1.3.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
-<!-- Optional JS -->
-<script src="{% static 'assets/libs/in-view/dist/in-view.min.js' %}"></script>
-<script src="{% static 'assets/libs/sticky-kit/dist/sticky-kit.min.js' %}"></script>
-<script src="{% static 'assets/libs/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
-<!-- Page JS -->
-<script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
-<script src="{% static 'assets/libs/autosize/dist/autosize.min.js' %}"></script>
-<script src="{% static 'assets/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
-<script src="{% static 'assets/libs/easescroll/jquery.easeScroll.js' %}"></script>
-<script src="{% static 'assets/libs/owl.carousel/owl.carousel.js' %}"></script>
-<!-- Quick JS -->
+<script src="{% static 'assets/libs/ip_input/ipInput.js' %}"></script>
 
-<script src="{% static 'assets/js/e-magz.js' %}"></script>
-<script src="{% static 'assets/js/quick-website.js' %}"></script>
+{% include "app/basic/js.html" %}
 
 
 <!-- Feather Icons -->
 <script>
 
-    feather.replace({
-        'width': '1em',
-        'height': '1em'
-    });
-
-
     account_activate();
 
-    function account_activate(){
+    function account_activate() {
 
-        if($('#init-msg').text()){
+        if ($('#init-msg').text()) {
             return false;
         }
 
@@ -138,22 +84,25 @@
             },
             type: 'post',
             url: "{% url 'account_cycle:account_api' %}",
-            data:JSON.stringify({
+            data: JSON.stringify({
                 'function_name': 'account_activate',
                 'arguments': {
                     'activation_key': '{{ key }}'
                 },
                 'source_caller': document.location.href,
             }),
-            success: function (data){
-               if (data.error){
-                      $('#msg').text(data['error']);
-               }
-               else{
-                      $('#msg').html(`Account activated. <a href="{% url 'app:login' %}">Login. </a>`)
+            success: function (data) {
+                if (data.error) {
+                    msg_show($('#msg'), data['error']);
+                } else {
+                    msg_show($('#msg'),`Account activated. <a class="text-primary" href="{% url 'account_cycle:login' %}">Login. </a>`);
+                }
+            },
 
-               }
-            }
+            error: function (jqXhr, textStatus, errorMessage) {
+                msg_show($('#msg'), "Error: " + errorMessage);
+            },
+
         });
 
     }

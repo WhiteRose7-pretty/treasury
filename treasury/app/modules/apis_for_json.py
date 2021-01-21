@@ -379,7 +379,7 @@ class AccountTokenCreate(functionCall):
         return True, ''
 
     def call(self, connection, is_test):
-        status, results = apis.account_token_create(connection, self.email)
+        status, results = apis.account_token_generate(connection, self.email)
         return self._make_response(status, results)
 
     def create_new(self):

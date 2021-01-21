@@ -36,10 +36,12 @@ def profile(request):
     }
     result = account_api(json.dumps(post_data))
     result_dic = json.loads(result)
+    icons = ['user', 'credit-card', 'dollar-sign', 'share-2', 'clock']
     context = {
         'result_dic': result_dic,
         'user_email': request.session['user_email'],
         'password': request.session['password'],
+        'icons': icons,
     }
 
     return render(request, 'account_cycle/profile.html', context)
@@ -63,6 +65,7 @@ def call_account_api(request):
             request.session['login'] = True
             request.session['user_email'] = data['arguments']['user_email']
             request.session['password'] = data['arguments']['password']
+
         else:
             request.session['login'] = False
             request.session['user_email'] = ''
@@ -86,18 +89,35 @@ def check_activation_key(key):
     result = account_api(json.dumps(post_data))
     print(result)
     result_dic = json.loads(result)
-    return result_dic
+    if result_dic['error']:
+        output_str = result_dic['error']
+    elif result_dic['results']['is_exist'] == 'False':
+        output_str = 'The key is not exist.'
+    elif result_dic['results']['is_active'] == 'False':
+        output_str = 'The key expired.'
+    else:
+        output_str = ''
+
+    if output_str != '':
+        input_disabled = 'disabled'
+    else:
+        input_disabled = ''
+
+    return output_str, input_disabled
 
 
 def password_reset_call_back(request):
     key = request.GET.get("activation_key", False)
+
     if not key:
         return HttpResponseRedirect(reverse('account_cycle:invalid_page-call'))
 
-    result_dic = check_activation_key(key)
+    result_dic, input_disabled = check_activation_key(key)
+
     context = {
         'result_dic': result_dic,
         'key': key,
+        'input_disabled': input_disabled
     }
     return render(request, 'account_cycle/password-reset-call-back.html', context)
 
@@ -115,12 +135,16 @@ def account_activation_callback(request):
     if not key:
         return HttpResponseRedirect(reverse('account_cycle:invalid_page-call'))
 
-    result_dic = check_activation_key(key)
+    result_dic, input_disabled = check_activation_key(key)
     context = {
         'result_dic': result_dic,
         'key': key,
     }
     return render(request, 'account_cycle/account-activation-callback.html', context)
+
+
+def confirm_email_activate_account(request):
+    return render(request, 'account_cycle/confirm-email-activate-account.html')
 
 
 def get_client_ip(request):

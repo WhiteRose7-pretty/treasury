@@ -1,7 +1,7 @@
 #
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
-email_default = "web.user@treasuryquants.com" #prod
+email_default = "valya.varechkina.76@bk.ru" #prod
 #email_default = "test.account@treasuryquants.com" #for local testing
 
 
@@ -18,7 +18,7 @@ url_server = "http://operations.treasuryquants.com"
 # 2) use is_test=True for the api calls
 # 3) ... ?
 #
-is_development=False
+is_development = True
 
 
 #

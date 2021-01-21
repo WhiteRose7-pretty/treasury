@@ -41,17 +41,17 @@
 
     {% block tab_menu %}
     <div style="text-align: center">
-         <a href="{% url 'app:login' %}">
+         <a href="{% url 'account_cycle:login' %}">
              <span class="px-2 d-md-inline-flex d-sm-block tab active">
                 Login
              </span>
          </a>
-        <a href="{% url 'app:login' %}">
+        <a href="{% url 'account_cycle:login' %}">
             <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
                  Create Account
             </span>
         </a>
-        <a href="{% url 'app:password_reset' %}">
+        <a href="{% url 'account_cycle:password_reset' %}">
             <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
                  Reset Password
             </span>

@@ -14,22 +14,38 @@ from django.core import serializers
 
 
 def home(request):
-    return render(request, 'app/home.html')
+    context = {
+        'navbar': 'home',
+    }
+    return render(request, 'app/home.html', context)
 
 
 def about_us(request):
-    return render(request, 'app/about_us.html')
+    context = {
+        'navbar': 'about_us',
+    }
+    return render(request, 'app/about_us.html', context)
+
 
 def workbench(request):
-    return render(request, 'app/workbench.html')
+    context = {
+        'navbar': 'workbench',
+    }
+    return render(request, 'app/workbench.html', context)
 
 
 def policy_notice(request):
-    return render(request, 'app/policy_notice.html')
+    context = {
+        'navbar': 'policy_notice',
+    }
+    return render(request, 'app/policy_notice.html', context)
 
 
 def terms_service(request):
-    return render(request, 'app/terms.html')
+    context = {
+        'navbar': 'terms',
+    }
+    return render(request, 'app/terms.html', context)
 
 
 def fx_data_graph(request):
@@ -47,6 +63,7 @@ def fx_data_graph(request):
     json_string = json.dumps({'data': query_temp})
 
     return JsonResponse(json_string, safe=False)
+
 
 def api_gateway(request):
     data = json.loads(request.body)

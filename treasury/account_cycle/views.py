@@ -10,9 +10,12 @@ def home(request):
 
 
 def login(request):
+    context = {
+        'navbar': 'login'
+    }
     if request.session.get('login', False):
         return HttpResponseRedirect(reverse('account_cycle:profile'))
-    return render(request, 'account_cycle/login.html')
+    return render(request, 'account_cycle/login.html', context)
 
 
 def logout(request):
@@ -38,6 +41,7 @@ def profile(request):
     result_dic = json.loads(result)
     icons = ['user', 'credit-card', 'dollar-sign', 'share-2', 'clock']
     context = {
+        'navbar': 'profile',
         'result_dic': result_dic,
         'user_email': request.session['user_email'],
         'password': request.session['password'],
@@ -45,14 +49,6 @@ def profile(request):
     }
 
     return render(request, 'account_cycle/profile.html', context)
-
-
-def policy_notice(request):
-    return render(request, 'account_cycle/policy_notice.html')
-
-
-def terms_service(request):
-    return render(request, 'account_cycle/terms.html')
 
 
 def call_account_api(request):
@@ -127,7 +123,10 @@ def invalid_page_call(request):
 
 
 def create_account(request):
-    return render(request, 'account_cycle/create_account.html')
+    context = {
+        'navbar': 'create_account'
+    }
+    return render(request, 'account_cycle/create_account.html', context)
 
 
 def account_activation_callback(request):

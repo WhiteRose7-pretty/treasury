@@ -17,14 +17,15 @@ fx_file = 'app/media/currency_data/FX.csv'
 
 
 def read_data(file_path):
-    obj = CurrencyData('', ['', '', ''], [[0, 0, 0, 0]], [0], [0])  # to ensure we do not crash and we always return something
+    obj = CurrencyData('', ['', '', ''], [[0, 0, 0, 0]], [0],
+                       [0])  # to ensure we do not crash and we always return something
     grid = utility_grids.Grid()
     status, message = grid.load(file_path)
     if not status:
         return obj
     elements = list()
     tenors = list()  # for graph
-    data1 = list() # for graph
+    data1 = list()  # for graph
     data2 = list()  # for graph
 
     for i in range(0, len(grid.y1)):
@@ -89,3 +90,18 @@ def get_market_data():
 @register.simple_tag
 def get_element_array_index(array, index):
     return array[index]
+
+
+@register.simple_tag
+def check_navbar(navbar, page_name):
+    if navbar == page_name:
+        return 'active'
+    else:
+        return ''
+
+
+@register.simple_tag
+def authenticated(request):
+    if request.session.get('login', False):
+        return True
+    return False

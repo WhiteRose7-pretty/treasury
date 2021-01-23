@@ -12,26 +12,44 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'app:home' %}">markets</a>
+                        <a class="nav-link {% check_navbar navbar 'home' %}" aria-current="page"
+                           href="{% url 'app:home' %}">markets</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page"  href="{% url 'app:workbench' %}">workbench</a>
+                        <a class="nav-link {% check_navbar navbar 'workbench' %}" aria-current="page"
+                           href="{% url 'app:workbench' %}">workbench</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'app:about_us' %}">about</a>
-                    </li>
-{#                    <li class="nav-item">#}
-{#                        <form class="search-form">#}
-{#                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
-{#                            <button class="btn" type="submit"><i class="fa fa-search"></i></button>#}
-{#                        </form>#}
-{#                    </li>#}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_cycle:login' %}">Login</a>
+                        <a class="nav-link {% check_navbar navbar 'about_us' %}"
+                           href="{% url 'app:about_us' %}">About&nbsp;us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-primary " href="{% url 'account_cycle:create_account' %}">Create&nbsp;Account</a>
+                        <a class="nav-link {% check_navbar navbar 'policy_notice' %}"
+                           href="{% url 'app:policy_notice' %}">Policy&nbsp;notice</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% check_navbar navbar 'terms' %}"
+                           href="{% url 'app:terms_of_service' %}">Terms</a>
+                    </li>
+                    {% authenticated request as user_flag%}
+                    {% if user_flag %}
+                        <li class="nav-item">
+                            <a class="nav-link {% check_navbar navbar 'profile' %}" href="{% url 'account_cycle:profile' %}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary"
+                               href="{% url 'account_cycle:logout' %}">Log&nbsp;out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link  {% check_navbar navbar 'login' %}" href="{% url 'account_cycle:login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary  {% check_navbar navbar 'create_account' %}"
+                               href="{% url 'account_cycle:create_account' %}">Create&nbsp;Account</a>
+                        </li>
+                    {% endif %}
+
                 </ul>
 
             </div>

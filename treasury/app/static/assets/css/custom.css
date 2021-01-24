@@ -46,7 +46,7 @@ canvas {
 }
 
 .header .navbar .nav-item {
-    padding: 23px 15px;
+    padding: 12px 7px;
 }
 
 .header .navbar .nav-link {
@@ -58,7 +58,7 @@ canvas {
 .header .navbar .nav-link:before {
     position: absolute;
     left: 0;
-    bottom: -33px;
+    bottom: -22px;
     width: 0%;
     height: 3px;
     background: #4f78e0;

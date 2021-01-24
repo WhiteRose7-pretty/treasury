@@ -40,8 +40,9 @@ This is the process we need to follow to ensure once the new package is released
 - explain the way the codes, files and folders are structured so someone new can start helping out on 
 Production fix process
 
-## Development
+## Note to developers
 All that one needs to get started with collaboration on development.
+
 ### Coding Standard
 Small coding standards so (python, js) different people write the same way.
 

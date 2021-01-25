@@ -78,36 +78,53 @@
 
 
 var data_type_spec = {
-      'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': []}
-    , 'TYPE_STRING': {'type': 'string', 'width': '10', 'init_values': []}
-    , 'TYPE_DATE': {'type': 'date', 'width': '10', 'init_values': []}
-    , 'TYPE_BOOLEAN': {'type': 'combo', 'width': '10', 'init_values': ['true', 'false']}
+      'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': [], 'default':''}
+    , 'TYPE_STRING': {'type': 'string', 'width': '10', 'init_values': [], 'default':''}
+    , 'TYPE_DATE': {'type': 'date', 'width': '10', 'init_values': [], 'default':''}
+    , 'TYPE_BOOLEAN': {'type': 'combo', 'width': '10', 'init_values': ['true', 'false'], 'default':'0'}
     , 'TYPE_BUSINESS_CENTRE': {'type': 'combo', 'width': '10',
                                 'init_values': ['none', 'frankfort', 'london', 'milan', 'newyork', 'paris', 'target',
-                                                'tokyo', 'zurich']}
+                                                'tokyo', 'zurich'],'default':'0'}
     , 'TYPE_DISCOUNT_CURVE': {'type': 'combo', 'width': '10',
-                               'init_values': ['chf.ois', 'eur.ois', 'gbp.ois', 'jpy.ois', 'usd.ois']}
+                               'init_values': ['usd.ois','chf.ois', 'eur.ois', 'gbp.ois', 'jpy.ois' ],'default':'0'}
     , 'TYPE_LIBOR_CURVE': {'type': 'combo', 'width': '10',
-                            'init_values': ['chf.libor3m', 'chf.libor6m', 'eur.libor3m', 'eur.libor6m', 'gbp.libor3m',
-                                            'gbp.libor6m', 'jpy.libor3m', 'jpy.libor6m', 'usd.libor3m', 'usd.libor6m']}
-    , 'TYPE_CURRENCY': {'type': 'combo', 'width': '10', 'init_values': ['usd', 'gbp', 'eur', 'chf', 'jpy']}
+                            'init_values': ['usd.libor6m','chf.libor3m', 'chf.libor6m', 'eur.libor3m', 'eur.libor6m', 'gbp.libor3m',
+                                            'gbp.libor6m', 'jpy.libor3m', 'jpy.libor6m', 'usd.libor3m' ],'default':'0'}
+    , 'TYPE_CURRENCY': {'type': 'combo', 'width': '10', 'init_values': ['usd', 'gbp', 'eur', 'chf', 'jpy'],'default':'0'}
     , 'TYPE_ELEMENT_DESCRIBE': {'type': 'combo', 'width': '10',
-                                 'init_values': [' ','book', 'describe', 'formatted_grid_swap_rates', 'market_fx_rates',
+                                 'init_values': ['','book', 'describe', 'formatted_grid_swap_rates', 'market_fx_rates',
                                                  'market_swap_rates', 'pnl_attribute', 'pnl_predict', 'price',
                                                  'price_fx_forward', 'price_vanilla_swap', 'risk_ladder',
-                                                 'show_available', 'workspace']}
+                                                 'show_available', 'workspace'],'default':'0'}
     , 'TYPE_ELEMENT_SHOW_AVAILABLE': {'type': 'combo', 'width': '10',
-                                       'init_values': [' ','asof_dates', 'daycounts', 'calendar', 'business_day_rule',
-                                                       'libor_curves', 'discount_curves']}
+                                       'init_values': ['','asof_dates', 'daycounts', 'calendar', 'business_day_rule',
+                                                       'libor_curves', 'discount_curves'],'default':'0'}
     , 'TYPE_MARKET_DATES': {'type': 'combo', 'width': '10',
-                               'init_values': []}
+                               'init_values': [],'default':'last'}
     , 'TYPE_TRADE_LIST': {'type': 'combo', 'width': '10',
-                               'init_values': []}
+                               'init_values': [],'default':'0'}
     , 'TYPE_SWAP_TYPES': {'type': 'combo', 'width': '10',
-                               'init_values': ['ir_vanilla_swap']}
+                               'init_values': ['ir_vanilla_swap'],'default':'0'}
     , 'TYPE_FXFWD_TYPES': {'type': 'combo', 'width': '10',
-                               'init_values': ['fx_forward']}
+                               'init_values': ['fx_forward'],'default':'0'}
+    , 'TYPE_PERIOD': {'type': 'combo', 'width': '10',
+                               'init_values': ['3m', '6m', '1y'],'default':'0'}
+    , 'TYPE_DAYCOUNT': {'type': 'combo', 'width': '10',
+                               'init_values': ['act/360','act/365','30/360', 'act/act', '30/360eu','30/360_us','30/360_isda' ],'default':'0'}
+    , 'TYPE_BUSINESS_DAY_RULE': {'type': 'combo', 'width': '10',
+                               'init_values': ['none','modified_following','modified_precedent', 'following', 'precedent'],'default':'0'}
     };
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -171,17 +188,17 @@ var _price_vanilla_swap={
     'TYPE_MARKET_DATES',
     'TYPE_NUMBER',
     'TYPE_DATE',
-    'TYPE_DATE',
+    'TYPE_STRING',
     'TYPE_LIBOR_CURVE',
     'TYPE_DISCOUNT_CURVE',
     'TYPE_PERIOD',
     'TYPE_PERIOD',
-    'TYPE_STRING',
-    'TYPE_STRING',
+    'TYPE_DAYCOUNT',
+    'TYPE_DAYCOUNT',
     'TYPE_NUMBER',
     'TYPE_NUMBER',
     'TYPE_BOOLEAN',
-    'TYPE_STRING',
+    'TYPE_BUSINESS_DAY_RULE',
     'TYPE_BUSINESS_CENTRE',
     'TYPE_NUMBER',
     'TYPE_STRING']
@@ -238,20 +255,26 @@ api_specs={'pnl_attribute':_pnl_attribute,
     }
 
 
-function get_list(id,list){
+function get_list(id,list, default_value){
+
     var content= "<select id=\""+id+"\" name=\""+id+"\">";
     for ( j=0; j<list.length; ++j){
+
         content+="<option value=\""+list[j]+"\"";
-        if (j==list.length-1){
+        if (default_value=='last' && j==list.length-1){
+            content += " selected ";
+        }
+        else if (default_value == j){
             content += " selected ";
         }
         content+=">"+list[j]+"</option>";
     }
     content+="</select>";
+
     return content;
 }
 
-function get_input_object(argument,argument_text,argument_optional,argument_type){
+function get_input_object(argument,argument_text,argument_optional,argument_type, argument_default){
     var simple_type_content="<input ";
         simple_type_content+=" class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\"";
         simple_type_content+= " type=\"email\"";
@@ -266,41 +289,53 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
         content="<input class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\" type=\"text\">";
         break;
     case 'TYPE_BOOLEAN':
-        content=get_list(argument,data_type_spec['TYPE_BOOLEAN']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_BOOLEAN']['init_values'],argument_default);
         break;
     case 'TYPE_BUSINESS_CENTRE':
-        content=get_list(argument,data_type_spec['TYPE_BUSINESS_CENTRE']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_BUSINESS_CENTRE']['init_values'],argument_default);
         break;
     case 'TYPE_DISCOUNT_CURVE':
-        content=get_list(argument,data_type_spec['TYPE_DISCOUNT_CURVE']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_DISCOUNT_CURVE']['init_values'],argument_default);
         break;
     case 'TYPE_LIBOR_CURVE':
-        content=get_list(argument,data_type_spec['TYPE_LIBOR_CURVE']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_LIBOR_CURVE']['init_values'],argument_default);
         break;
     case 'TYPE_CURRENCY':
-        content=get_list(argument,data_type_spec['TYPE_CURRENCY']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_CURRENCY']['init_values'],argument_default);
         break;
     case 'TYPE_TRADE_LIST':
-        content=get_list(argument,data_type_spec['TYPE_TRADE_LIST']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_TRADE_LIST']['init_values'],argument_default);
         break;
     case 'TYPE_ELEMENT_DESCRIBE':
-        content=get_list(argument,data_type_spec['TYPE_ELEMENT_DESCRIBE']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_ELEMENT_DESCRIBE']['init_values'],argument_default);
         break;
     case 'TYPE_MARKET_DATES':
-        content=get_list(argument,data_type_spec['TYPE_MARKET_DATES']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_MARKET_DATES']['init_values'],argument_default);
         break;
     case 'TYPE_ELEMENT_SHOW_AVAILABLE':
-        content=get_list(argument,data_type_spec['TYPE_ELEMENT_SHOW_AVAILABLE']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_ELEMENT_SHOW_AVAILABLE']['init_values'],argument_default);
         break;
     case 'TYPE_SWAP_TYPES':
-        content=get_list(argument,data_type_spec['TYPE_SWAP_TYPES']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_SWAP_TYPES']['init_values'],argument_default);
         break;
     case 'TYPE_FXFWD_TYPES':
-        content=get_list(argument,data_type_spec['TYPE_FXFWD_TYPES']['init_values']);
+        content=get_list(argument,data_type_spec['TYPE_FXFWD_TYPES']['init_values'],argument_default);
+        break;
+    case 'TYPE_PERIOD':
+        content=get_list(argument,data_type_spec['TYPE_PERIOD']['init_values'],argument_default);
+        break;
+    case 'TYPE_DAYCOUNT':
+        content=get_list(argument,data_type_spec['TYPE_DAYCOUNT']['init_values'],argument_default);
+        break;
+    case 'TYPE_BUSINESS_DAY_RULE':
+        content=get_list(argument,data_type_spec['TYPE_BUSINESS_DAY_RULE']['init_values'],argument_default);
         break;
     default:
         content="<input class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\" type=\"text\">";
     }
+
+
+
     return content;
 }
 
@@ -316,6 +351,10 @@ function get_api_list(){
 
 
 function print_form(choice){
+
+    clear_output()
+
+
     var chosen_function_name=choice;
 
     var function_spec=api_specs[chosen_function_name];
@@ -330,28 +369,24 @@ function print_form(choice){
 
 
 
+
     var form_content="";
     for ( i = 0 ; i < arguments.length; i++){
 
         var argument=arguments[i];
-
         var argument_label=argument_labels[i];
-
         var argument_optional=argument_optionals[i];
-
         var argument_type=argument_types[i];
 
 
 
-       form_content+="<label class=\"form-control-label\">"+argument_label+"</label>";
-
-
-
-       form_content+= get_input_object(argument,argument_label,argument_optional,argument_type);
+        var default_value=data_type_spec[argument_type]['default'];
+        form_content+="<label class=\"form-control-label\">"+argument_label+"</label>";
+        form_content+= get_input_object(argument,argument_label,argument_optional,argument_type,default_value);
         form_content+="<br>";
 
-    }
 
+    }
     document.getElementById("api-entries").innerHTML =form_content;
 }
 
@@ -374,7 +409,6 @@ function calculate(){
     var argument_types=function_spec['argument_types'];
 
 
-    clear_output()
 
 
     if (function_name.trim()==''){
@@ -404,19 +438,17 @@ function calculate(){
             break;
         }
 
-        if (argument_types[i]=='TYPE_NUMBER' && !isNan(value)){
+        if (argument_types[i]=='TYPE_NUMBER' && !is_valid_number(value)){
             is_error=true;
             $('#msg').text(argument_labels[i]+" should be numeric.");
             break;
         }
 
 
-        if (argument_types[i]=='TYPE_DATE'){
-            if (!is_valid_date(value)){
-                is_error=true;
-                $('#msg').text(argument_labels[i]+" should be a valid date in the following format: yyyymmdd.");
-                break;
-                }
+        if (argument_types[i]=='TYPE_DATE' && (value=='' || !is_valid_date(value))){
+            is_error=true;
+            $('#msg').text(argument_labels[i]+" should be a valid date in the following format: yyyymmdd.");
+            break;
         }
 
         argument_values.push(argument_value);
@@ -519,6 +551,9 @@ function load_trade_ids(){
     create_user_request(function_name,arguments, callback_fill_trade_ids);
 }
 
+function is_valid_number(value){
+     return !isNaN(value * 1);
+}
 
 function is_valid_date(str){
     //str is assumed to be YYYYMMDD
@@ -531,7 +566,7 @@ function is_valid_date(str){
       var day = str.substring(6, 8);
       var str_reformatted=year+"-"+month+"-"+day+" 00:00";
       var date = new Date(str_reformatted);
-      return !isNaN(date.getTime());
+      return is_valid_number(date.getTime());
       }
     catch(err){
       return false;
@@ -545,8 +580,6 @@ load_market_data();
 load_trade_ids();
 
 document.getElementById("api-list").innerHTML =get_api_list();
-
-
 
 </script>
 {% include "app/basic/footer.html" %}

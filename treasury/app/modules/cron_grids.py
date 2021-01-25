@@ -10,7 +10,7 @@ connection = utility_connection.WebConnection(settings.email_default, settings.u
 
 def download_fx_data():
     (status, results) = utility_grids.utility_download_formatted_grid_fx(
-        ['USD', 'GBP', 'CHF', 'EUR', 'JPY', 'AUD', 'SGD', 'NZD'], "USD", settings.grid_folder)
+        ['USD', 'GBP', 'EUR', 'CHF', 'JPY','CAD', 'AUD', 'SGD', 'NZD'], "USD", settings.grid_folder)
     if not status:
         # Do Failure
         utility_common.process_fata_error(utility_common.dict_to_string(results),settings.is_development)
@@ -29,6 +29,6 @@ def download_rates_data():
 
 
 
-# print(download_fx_data())
-# print(download_rates_data())
+#print(download_fx_data())
+#print(download_rates_data())
 

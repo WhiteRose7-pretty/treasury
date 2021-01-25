@@ -518,6 +518,10 @@ strong {
     font-weight: 700;
     color: black;
 }
+
+.maxWidth840{
+    max-width: 840px;
+}
 @media(min-width: 640px){
     .pull-right-md{
         float: right;

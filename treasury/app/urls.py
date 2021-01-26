@@ -11,5 +11,6 @@ urlpatterns = [
     path('fx-data_graph/', views.fx_data_graph, name='fx_data_graph'),
     path('workbench/', views.workbench, name='workbench'),
     path('api_gateway/', views.api_gateway, name='api_gateway'),
+    path('post_message/', views.post_message, name='post_message'),
 ]
 

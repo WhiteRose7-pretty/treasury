@@ -140,6 +140,7 @@
 
                 if (data.error) {
                     msg_show($('#msg'), data['error']);
+                    post_message(data.error);
                 } else {
                     if (data.results.is_exist === 'False') {
                         create_account(email, password, user_ip);
@@ -156,6 +157,7 @@
             error: function (jqXhr, textStatus, errorMessage) {
                 $('#msg').text("Error: " + errorMessage);
                 $('#loading-icon').css('display', 'none');
+                post_message(errorMessage);
             },
         });
     }
@@ -183,6 +185,7 @@
             success: function (data) {
                 if (data.error) {
                     msg_show($('#msg'), data['error']);
+                    post_message(data.error);
                 } else {
                     msg_show($('#msg'), "We sent activation key to your email. Please check your mail box.");
                 }
@@ -190,6 +193,7 @@
             error: function (jqXhr, textStatus, errorMessage) {
                 msg_show($('#msg'), "Error: " + errorMessage);
                 $('#loading-icon').css('display', 'none');
+                post_message(errorMessage);
             },
 
         });
@@ -200,3 +204,4 @@
 </body>
 
 </html>
+

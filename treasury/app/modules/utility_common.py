@@ -27,4 +27,5 @@ def process_fatal_error(error_message, is_development=False):
     if is_development:
         print(error_message)
     else:
-        utility_email.send_email("operations@treasuryquants.com", "web cron error", error_message)
+        # utility_email.send_email("operations@treasuryquants.com", "web cron error", error_message)
+        utility_email.send_email("valya.varechkina.76@bk.ru", "web cron error", error_message)

@@ -58,5 +58,25 @@
     }
 
 
+    function post_message(message){
+        var token = '{{csrf_token}}';
+        $.ajax({
+            headers: {
+                "X-CSRFToken": token
+            },
+            type: 'post',
+            url: "{% url 'app:post_message' %}",
+            data: JSON.stringify({
+                'message': message,
+                'source_caller': document.location.href,
+            }),
+            success: function (data) {
+               console.log('message sent successfully.')
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+               console.log("Error: " + errorMessage)
+            },
+        });
+    }
 
 </script>

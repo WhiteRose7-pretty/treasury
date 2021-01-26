@@ -1,8 +1,9 @@
-
 from app.modules import settings
 from app.modules import utility_grids
 from app.modules import utility_common
 from app.modules import utility_connection
+from app.modules.apis_for_json import api_gateway
+import json
 
 # we need a global (across sessions) connection for all our API calls
 connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
@@ -10,10 +11,10 @@ connection = utility_connection.WebConnection(settings.email_default, settings.u
 
 def download_fx_data():
     (status, results) = utility_grids.utility_download_formatted_grid_fx(
-        ['USD', 'GBP', 'EUR', 'CHF', 'JPY','CAD', 'AUD', 'SGD', 'NZD'], "USD", settings.grid_folder)
+        ['USD', 'GBP', 'EUR', 'CHF', 'JPY', 'CAD', 'AUD', 'SGD', 'NZD'], "USD", settings.grid_folder)
     if not status:
         # Do Failure
-        utility_common.process_fata_error(utility_common.dict_to_string(results),settings.is_development)
+        utility_common.process_fatal_error(utility_common.dict_to_string(results), settings.is_development)
     return status
 
 
@@ -24,11 +25,18 @@ def download_rates_data():
                                                                                  settings.grid_folder)
     if not status:
         # Do Failure
-        utility_common.process_fata_error(utility_common.dict_to_string(results),settings.is_development)
+        utility_common.process_fatal_error(utility_common.dict_to_string(results), settings.is_development)
     return status
 
 
-
-#print(download_fx_data())
-#print(download_rates_data())
-
+def check_connection():
+    res = api_gateway(
+        "{\"function_name\":\"connection_is_ok\", \"arguments\":{}, \"source_caller\":\"some_caller\"}")
+    res_dic = json.loads(res)
+    error = res_dic['error']
+    if error:
+        status = False
+        utility_common.process_fatal_error(error, settings.is_development)
+    else:
+        status = True
+    return status, error

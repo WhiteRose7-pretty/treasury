@@ -1,14 +1,8 @@
 # Initial comments from Daria [needs to be moved to the rest of the documents]
 
 treasury folder is django project
-Vuengo_vue folder is vue project for checking restAPI.
-
 
 To run Django project, run command 'python manage.py runserver 9100'.
-
-
-for run vue project, do to Vuengo_vue folder
-run "npm run serve"
 
 
 # Keeping the Site Working and the Code up to Standard
@@ -57,3 +51,15 @@ What are the steps we need to make sure the site continues to work in production
 # Common issues:
 ## Server not working:
 ## next Issue (add here)
+
+
+#Structure
+##project setting folder
+app_rama/
+##app structure
+app, account_cycle
+###app
+   This app is main app of project. There are Market(Home), About us, Policy Notice, Terms of Service.
+###account_cycle
+   This app is for account management. This does the functions like django-allauth.
+    

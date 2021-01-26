@@ -71,8 +71,6 @@
                     <span id="msg"></span>
                 </div>
             </form>
-
-
         </div>
     </div>
 
@@ -114,6 +112,7 @@
             success: function (data) {
                 if (data.error) {
                     msg_show($('#msg'), data['error']);
+                    post_message(data['error']);
                 } else {
                     if (data.results.is_exist === 'False') {
                         msg_show($('#msg'), 'Account does not exist. <a class="text-primary" href="{% url 'account_cycle:create_account' %}">Create Account</a>  ');
@@ -129,6 +128,7 @@
             },
 
             error: function (jqXhr, textStatus, errorMessage) {
+                post_message(errorMessage);
                 $('#msg').text("Error: " + errorMessage);
                 $('#loading-icon').css('display', 'none');
             },
@@ -159,6 +159,7 @@
 
                 if (data.error) {
                     msg_show($('#msg'), data['error']);
+                    post_message(data.error);
                 } else {
                     document.location.href = "{% url 'account_cycle:profile' %}";
                 }
@@ -168,6 +169,7 @@
             error: function (jqXhr, textStatus, errorMessage) {
                 msg_show($('#msg'), "Error: " + errorMessage);
                 $('#loading-icon').css('display', 'none');
+                post_message(errorMessage);
             },
         });
     }

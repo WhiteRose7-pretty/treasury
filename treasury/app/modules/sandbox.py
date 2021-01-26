@@ -60,11 +60,11 @@ def call_web_api(request):
     post_data = json.dumps(data)
     result = api_gateway(post_data, general_apis_factory)
     result_dic = json.loads(result)
-    return result_dic#JsonResponse(result_dic)
+    return result_dic  # JsonResponse(result_dic)
 
 string="{\"function_name\":\"describe\", \"arguments\":{" \
     "\"user_email\":\"test.account@treasuryquants.com\"" \
     "}, \"source_caller\":\"front-end-function3\"}"
 
-print(string)
-print(call_web_api(string))
+# print(string)
+# print(call_web_api(string))

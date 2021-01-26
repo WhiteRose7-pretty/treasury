@@ -1,16 +1,11 @@
-from django.shortcuts import render, get_list_or_404
-from .models import CurrencyData, DataFile
-from .modules import settings
-from .modules import utility_grids
-from .modules import apis
-from .modules import utility_connection
-import app.modules.apis_for_json   as apis_for_json
+from django.shortcuts import render
+import app.modules.apis_for_json as apis_for_json
 import json
-from .modules import sandbox
+from .modules import sandbox, utility_common, settings
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from app.templatetags.app_tags import get_market_data
-from django.core import serializers
+
 
 
 def home(request):
@@ -71,3 +66,8 @@ def api_gateway(request):
     result = apis_for_json.api_gateway(post_data, apis_for_json.general_apis_factory)
     result_dic = json.loads(result)
     return JsonResponse(result_dic, safe=False)
+
+
+def post_message(request):
+    utility_common.process_fatal_error(request.body.decode('utf-8'), settings.is_development)
+    return JsonResponse('success', safe=False)

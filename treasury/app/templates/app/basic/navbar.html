@@ -5,6 +5,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'app:home' %}"><img src="{% static 'assets/images/logo.png' %}" alt=""
                                                                      class="img-fluid"></a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
@@ -21,15 +22,15 @@
 <!--                    </li>-->
                     <li class="nav-item">
                         <a class="nav-link {% check_navbar navbar 'about_us' %}"
-                           href="{% url 'app:about_us' %}">About&nbsp;us</a>
+                           href="{% url 'app:about_us' %}">about&nbsp;us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% check_navbar navbar 'policy_notice' %}"
-                           href="{% url 'app:policy_notice' %}">Policy&nbsp;notice</a>
+                           href="{% url 'app:policy_notice' %}">policy&nbsp;notice</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% check_navbar navbar 'terms' %}"
-                           href="{% url 'app:terms_of_service' %}">Terms</a>
+                           href="{% url 'app:terms_of_service' %}">terms of service</a>
                     </li>
                     {% authenticated request as user_flag%}
                     {% if user_flag %}

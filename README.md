@@ -2,9 +2,6 @@
 
 treasury folder is django project
 
-To run Django project, run command 'python manage.py runserver 9100'.
-
-
 # Keeping the Site Working and the Code up to Standard
 This is a living document: It is continuously updated. It is a short and itemized text providing help and support as to how to interact with the code base / library.
 
@@ -63,3 +60,40 @@ app, account_cycle
 ###account_cycle
    This app is for account management. This does the functions like django-allauth.
     
+#Cron work
+##How to test on a local host.
+###Requirements
+  ####Celery's installation
+    pip install celery
+  ####RabbitMQ installation
+    1. Install in Windows
+        1) https://www.youtube.com/watch?v=3sEPqKrFQf8
+        2) Run the RabbitMQ service executable - start    
+    2. Install in Ubuntu
+        apt-get install rabbitmq
+        rabbitmq-server
+###how to test
+    1. Open cmd and go to project folder, and run below command
+        celery -A app_rama beat -l info
+    2. Open other cmd and go to project folder, and run below command
+        celery -A app_rama worker --pool=solo -l info
+###how to add cron work
+  ####Please confirm below files.
+    app_rama/celery.py
+    app_rama/__init__.py
+    app_rama/settings.py
+  ####Add tasks.py in app folder
+    for example, app/task.py
+  ####Add code in tasks.py
+    from celery.task.schedules import crontab
+    from celery.decorators import periodic_task
+    
+    @periodic_task(run_every=(crontab(minute='*/10')))
+    def get_all_weather_data():
+        print("See you in ten seconds!")
+  
+    
+ 
+    
+   
+  

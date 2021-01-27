@@ -7,7 +7,6 @@ from django.urls import reverse
 from app.templatetags.app_tags import get_market_data
 
 
-
 def home(request):
     context = {
         'navbar': 'home',

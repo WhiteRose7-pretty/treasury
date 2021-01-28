@@ -3,14 +3,14 @@
 #
 
 email_default = "valya.varechkina.76@bk.ru" #prod
-#email_default = "test.account@treasuryquants.com" #for local testing
+email_default = "test.account@treasuryquants.com" #for local testing
 
 
 #
 # server's url
 #
 url_server = "http://operations.treasuryquants.com"
-#url_server="http://192.168.1.80:8080" #Shahram's local server
+url_server="http://192.168.1.80:8080" #Place local server here
 
 #
 # this means set the backend for the dev environment. i.e.
@@ -18,7 +18,7 @@ url_server = "http://operations.treasuryquants.com"
 # 2) use is_test=True for the api calls
 # 3) ... ?
 #
-is_development = True
+is_development = False
 
 
 #

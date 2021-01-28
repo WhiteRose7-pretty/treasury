@@ -24,6 +24,8 @@ def about_us(request):
 def workbench(request):
     context = {
         'navbar': 'workbench',
+        'user_email': request.session['user_email'],
+        'target_url': settings.url_server
     }
     return render(request, 'app/workbench.html', context)
 

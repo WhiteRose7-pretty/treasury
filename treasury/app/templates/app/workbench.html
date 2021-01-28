@@ -21,8 +21,6 @@
 <section class="page-banner" style="background: #181717; padding-bottom: 0;">
     <div class="container-fluid">
         <div class="page-title">Workbench</div>
-        <div class="user-email"><span class="font-weight-bolder">Email</span>: test@gmail.com
-        </div>
     </div>
 </section>
 
@@ -53,7 +51,7 @@
 
 <section class="body">
 
-    <div class="container p-lg-20-60" style="max-width: 400px;" >
+    <div class="container p-lg-20-60" style="max-width: 800px;" >
     {% block tab_body %}
             <p id="api-names">
         <select id="api-list" name="api-list" onchange="print_form(this.value)">
@@ -70,6 +68,7 @@
         <div id="msg"></div>
         <div id="request"></div>
         <div id="result"></div>
+        <div id="email"></div>
     </div>
 </section>
 
@@ -84,7 +83,7 @@ Notes
 This page is meant to be a simple workbench exposing our apis to the user.
 Like any function, our apis will have different number of input arguments as well as output results.
 Furthermore, each argument and each result can, and most of the time will, have different types.
-The objective of the design is to introduce these api in a cohesive and intuitive mannor
+The objective of the design is to introduce these api in a cohesive and intuitive manner 
 The design is simple. User selects an api name (function name) from the main combo list from the top.
 A dynamic form is then created based on the chosen api's specification. Once the final submission
 button is clicked, there will be a validation, request creation and api call over http. The results
@@ -115,9 +114,9 @@ Each type covers type, width, init_values and default.
 
 
 
-//
-//declaring  the data type specifications
-//
+// 
+// declaring  the data type specifications
+// 
 var data_type_spec = {
       'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': [], 'default':''}
     , 'TYPE_STRING': {'type': 'string', 'width': '10', 'init_values': [], 'default':''}
@@ -161,14 +160,14 @@ var data_type_spec = {
 
 
 
-//
-//declaring each api specification separately (rather than all of the together for readability)
-//
+// 
+// declaring each api specification separately (rather than all of the together for readability)
+// 
 
 
-//
-//api:show_available
-//
+// 
+// api:show_available
+// 
 var _show_available={
     'name':'show_available'
     ,'arguments': ['element']
@@ -177,9 +176,9 @@ var _show_available={
     ,'argument_types': ['TYPE_ELEMENT_SHOW_AVAILABLE']
     }
 
-//
-//api:describe
-//
+// 
+// api:describe
+// 
 var _describe={
     'name':'describe'
     ,'arguments': ['element']
@@ -188,9 +187,9 @@ var _describe={
     ,'argument_types': ['TYPE_ELEMENT_DESCRIBE']
     }
 
-//
-//api:market_swap_rates
-//
+// 
+// api:market_swap_rates
+// 
 var _market_swap_rates={
     'name':'market_swap_rates'
     ,'arguments': ['asof', 'currency']
@@ -200,9 +199,9 @@ var _market_swap_rates={
     }
 
 
-//
-//api:market_fx_rates
-//
+// 
+// api:market_fx_rates
+// 
 var _market_fx_rates={
     'name':'market_fx_rates'
     ,'arguments': ['asof', 'to_date', 'base_currency']
@@ -212,9 +211,9 @@ var _market_fx_rates={
     }
 
 
-//
-//api:price_fx_forward
-//
+// 
+// api:price_fx_forward
+// 
 var _price_fx_forward={
     'name':'price_fx_forward'
     ,'arguments': ['type','asof',  'trade_date', 'trade_expiry', 'pay_amount', 'pay_currency',
@@ -225,9 +224,9 @@ var _price_fx_forward={
     ,'argument_types': ['TYPE_FXFWD_TYPES','TYPE_MARKET_DATES','TYPE_DATE','TYPE_DATE','TYPE_NUMBER','TYPE_CURRENCY','TYPE_NUMBER','TYPE_CURRENCY','TYPE_STRING']
     }
 
-//
-//api:price_vanilla_swap
-//
+// 
+// api:price_vanilla_swap
+// 
 var _price_vanilla_swap={
     'name':'price_vanilla_swap'
     ,'arguments': ['type','asof', 'notional', 'trade_date', 'trade_maturity', 'index_id',
@@ -260,9 +259,9 @@ var _price_vanilla_swap={
     'TYPE_STRING']
     }
 
-//
-//api:price
-//
+// 
+// api:price
+// 
 var _price={
     'name':'price'
     ,'arguments': ['asof', 'load_as']
@@ -272,9 +271,9 @@ var _price={
     }
 
 
-//
-//api:risk_ladder
-//
+// 
+// api:risk_ladder
+// 
 var _risk_ladder={
     'name':'risk_ladder'
     ,'arguments': ['asof', 'load_as']
@@ -284,9 +283,9 @@ var _risk_ladder={
     }
 
 
-//
-//api:pnl_predict
-//
+// 
+// api:pnl_predict
+// 
 var _pnl_predict={
     'name':'pnl_predict'
     ,'arguments': ['from_date', 'to_date', 'load_as']
@@ -296,9 +295,9 @@ var _pnl_predict={
     }
 
 
-//
-//api:pnl_attribute
-//
+// 
+// api:pnl_attribute
+// 
 var _pnl_attribute={
     'name':'pnl_attribute'
     ,'arguments': ['from_date', 'to_date', 'load_as']
@@ -308,9 +307,9 @@ var _pnl_attribute={
     }
 
 
-//
-//create a dictionary of all api specification
-//
+// 
+// create a dictionary of all api specification
+// 
 api_specs={'pnl_attribute':_pnl_attribute,
    'pnl_predict':_pnl_predict,
    'risk_ladder':_risk_ladder,
@@ -323,9 +322,9 @@ api_specs={'pnl_attribute':_pnl_attribute,
    'show_available':_show_available
     }
 
-//
-//Populates the list for any type that contains a selection
-//
+// 
+// Populates the list for any type that contains a selection
+// 
 function get_list(id,list, default_value){
 
     var content= "<select id=\""+id+"\" name=\""+id+"\">";
@@ -345,9 +344,9 @@ function get_list(id,list, default_value){
     return content;
 }
 
-//
-//Provides an input object such as a text box or a list, etc. depending on the type of the input (see data_type_spec)
-//
+// 
+// Provides an input object such as a text box or a list, etc. depending on the type of the input (see data_type_spec)
+// 
 function get_input_object(argument,argument_text,argument_optional,argument_type, argument_default){
     var simple_type_content="<input ";
         simple_type_content+=" class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\"";
@@ -413,9 +412,9 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
     return content;
 }
 
-//
-//Provides the original api list combo for the user to select
-//
+// 
+// Provides the original api list combo for the user to select
+// 
 function get_api_list(){
     var content="";
     for (var key in api_specs) {
@@ -428,9 +427,9 @@ function get_api_list(){
 
 
 
-//
-//This is the dynamic form to be created when the use changes the selection in the api list.
-//
+// 
+// This is the dynamic form to be created when the use changes the selection in the api list.
+// 
 function print_form(choice){
 
     clear_output()
@@ -466,15 +465,15 @@ function print_form(choice){
 
     }
 
-    // finished building the form for this given api. Expose it in the page.
+    //  finished building the form for this given api. Expose it in the page.
     document.getElementById("api-entries").innerHTML =form_content;
 }
 
 
-//
-//A general function to clear the output once an api is
-//selected to ensure all previous messages are reset.
-//
+// 
+// A general function to clear the output once an api is
+// selected to ensure all previous messages are reset.
+// 
 function clear_output(){
  $('#msg').text('');
  $('#request').text('');
@@ -483,10 +482,10 @@ function clear_output(){
 
 
 
-//
-//Performs the validation and processes the form. starts by validating the each field,
-//building a request, sending it and treat the ouput results
-//
+// 
+// Performs the validation and processes the form. starts by validating the each field,
+// building a request, sending it and treat the ouput results
+// 
 function calculate(){
 
 
@@ -501,9 +500,9 @@ function calculate(){
     var argument_types=function_spec['argument_types'];
 
 
-    //
-    // validation section
-    //
+    // 
+    //  validation section
+    // 
 
     if (function_name.trim()==''){
         return;
@@ -522,9 +521,9 @@ function calculate(){
         var argument_value=$('#'+argument).val();
 
 
-        //
-        //    validate argument_value by type and optional
-        //
+        // 
+        //     validate argument_value by type and optional
+        // 
         var value=argument_value.trim();
         if (argument_optionals[i]!=1 && value==''){
             is_error=true;
@@ -549,9 +548,9 @@ function calculate(){
         arguments_dictionary[arguments[i]]=argument_value;
     }
 
-    //
-    // If no error, we call the api with the corresponding callback function to consume the results
-    //
+    // 
+    //  If no error, we call the api with the corresponding callback function to consume the results
+    // 
 
     if (!is_error){
         api_call(function_name,arguments_dictionary, callback_nothing);
@@ -559,18 +558,18 @@ function calculate(){
 }
 
 
-//
-//Market dates callback function to treat the response
-//
+// 
+// Market dates callback function to treat the response
+// 
 function callback_fill_market_dates(data, request){
     results=data['Response']['Results'];
     keys=Object.keys(results);
     data_type_spec['TYPE_MARKET_DATES']['init_values']=keys;
 }
 
-//
-//Trade id's callback function to treat the response
-//
+// 
+// Trade id's callback function to treat the response
+// 
 function callback_fill_trade_ids(data, request){
     results=data['Response']['Results'];
     keys=Object.keys(results);
@@ -578,16 +577,23 @@ function callback_fill_trade_ids(data, request){
 }
 
 
-//
-//General callback function to treat the response
-//
+// 
+// General callback function to treat the response
+// 
 
 function callback_nothing(data, request){
 
  var output_div = document.getElementById('msg');
  var request_div = document.getElementById('request');
  var result_div = document.getElementById('result');
- var results=data['Response']['Results'];
+ var results={};
+ if (data['Response']['focus']=='errors'){
+  results=data['Response']['Errors'];
+ }
+ else{
+  results=data['Response']['Results'];
+ }
+
  var cntr=0;
  var output_content='';
  var keys=Object.keys(results);
@@ -599,29 +605,34 @@ function callback_nothing(data, request){
  result_div.innerHTML=JSON.stringify(data);
 }
 
-//
-//Token Create callback function to treat the response
-//
+// 
+// Token Create callback function to treat the response
+// 
 function callback_account_token_create(data, request){
+    if (data['Response']['focus']=='errors'){
+
+        callback_nothing(data, request);
+        return;
+    }
    var token=data['Response']['Results']['account_token_create'];
    $('#token').text(token);
    var expiry_in_minutes=data['Response']['expiry_minutes'];
    expiry_in_minutes = Math.floor(expiry_in_minutes);
    var now = new Date();
-   now.setMinutes(now.getMinutes() + expiry_in_minutes); // timestamp
-   now = new Date(now); // Date object
+   now.setMinutes(now.getMinutes() + expiry_in_minutes); //  timestamp
+   now = new Date(now); //  Date object
    $('#token_expiry').text(now.toISOString ());
 }
 
 
 
 //
-// ** DEPRICATED **
-//This function is called after a successful validation of the input data.
+//  ** DEPRICATED **
+// This function is called after a successful validation of the input data.
 //
 function create_user_request(function_name,arguments, callback_function){
-    arguments['user_email']=sessionStorage.getItem('email');
-    arguments['user_email']="test.account@treasuryquants.com";
+    arguments['user_email']=sessionStorage.getItem('user_email');
+    //arguments['user_email']="test.account@treasuryquants.com";
 
     var request={   'function_name':function_name,
                     'arguments':arguments,
@@ -698,7 +709,7 @@ function is_valid_number(value){
 }
 
 function is_valid_date(str){
-    //str is assumed to be YYYYMMDD
+    // str is assumed to be YYYYMMDD
 
     str = str.toString();
 
@@ -745,9 +756,10 @@ function argument_make_string(function_name,arguments){
 
 
 function obtain_or_refresh_token(){
+    var email= "{{ user_email|safe }}";
 
     if ($('#token').text().trim()==''){
-        var arguments={'email':'test.account@treasuryquants.com'};
+        var arguments={'email':email};
         api_call('account_token_create',arguments,callback_account_token_create);
         return $('#token').text();
     }
@@ -755,9 +767,13 @@ function obtain_or_refresh_token(){
     var diff_second =(expiry - new Date()) / 1000;
     var diff_minutes=Math.round( diff_second/60);
     if ($('#token').text().trim()==''|| diff_minutes<2){
-        var arguments={'email':'test.account@treasuryquants.com'};
+        var arguments={'email':email};
         api_call('account_token_create',arguments,callback_account_token_create);
     }
+
+     var email_div = document.getElementById('email');
+     email_div.innerHTML=JSON.stringify(email);
+
 
     return $('#token').text();
 }
@@ -769,14 +785,13 @@ async function asyncFetch(url, requestOptions,callback_function) {
     let response = await fetch(url,requestOptions);
     let data = await response.json();
     callback_function(data,requestOptions.body);
-    console.log("Result:"+JSON.stringify(data));
+    //console.log("Result:"+JSON.stringify(data));
 }
 
 
 
 function api_call(function_name,arguments,callback_function){
-    url='http://192.168.1.80:8080';  // internal ip of the ubuntu dev server.
-
+    var url= "{{ target_url|safe }}";
     arguments['function_name']=function_name;
     if(function_name!='account_token_create'){
         var token = obtain_or_refresh_token();
@@ -785,7 +800,7 @@ function api_call(function_name,arguments,callback_function){
     }
 
     var arguments_string=argument_make_string(function_name,arguments);
-    console.log("request:"+JSON.stringify(arguments_string));
+    //console.log("request:"+JSON.stringify(arguments_string));
     const requestOptions = {
             method: 'POST',
             headers: {
@@ -807,6 +822,8 @@ setTimeout(obtain_or_refresh_token,1000);
 setTimeout(load_asof_dates,2000);
 setTimeout(load_trade_ids,2000);
 setTimeout(function (){document.getElementById("api-list").innerHTML =get_api_list();},2000);
+
+
 
 
 

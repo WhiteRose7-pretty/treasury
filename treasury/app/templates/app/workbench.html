@@ -12,6 +12,40 @@
     <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
     <link rel="icon" href="{% static 'assets/images/favicon.png' %}">
+
+<style>
+.item1 { grid-area: header; }
+.item2 { grid-area: menu; }
+.item3 { grid-area: main; }
+.item4 { grid-area: right; }
+.item5 { grid-area: footer; }
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header'
+    'menu main right'
+    'footer footer footer';
+  grid-gap: 10px;
+  justify-content: center;
+  grid-template-columns: 500px 500px 500px;
+  background-color: #FAF0F0;
+  grid-width=1000px;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 10px 0;
+  font-size: 20px;
+   text-align:left;
+}
+
+
+</style>
+
+
 </head>
 
 <body>
@@ -24,52 +58,32 @@
     </div>
 </section>
 
-<section class="container-fluid page-subtitle">
-
-    {% block tab_menu %}
-    <div style="text-align: center">
-         <a href="{% url 'account_cycle:login' %}">
-             <span class="px-2 d-md-inline-flex d-sm-block tab active">
-                Login
-             </span>
-         </a>
-        <a href="{% url 'account_cycle:login' %}">
-            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
-                 Create Account
-            </span>
-        </a>
-        <a href="{% url 'account_cycle:password_reset' %}">
-            <span class="px-2 d-md-inline-flex d-sm-block tab " style="border-left: 1px solid grey;">
-                 Reset Password
-            </span>
-        </a>
-    </div>
-    {% endblock %}
-
-</section>
-
-
 <section class="body">
-
-    <div class="container p-lg-20-60" style="max-width: 800px;" >
-    {% block tab_body %}
-            <p id="api-names">
-        <select id="api-list" name="api-list" onchange="print_form(this.value)">
+<div class="grid-container">
+  <div class="item1">
+  <div>
+    <label >Email:  </label><label id="email"></label>
+    <label >Balance:</label><label id="balance"></label>
+    <label >user-id:</label><label id="client_id"></label>
+    <label >IP:     </label><label id="ip"></label>
+    <label >Token:  </label><label id="token"></label>
+    <label >Token expiry: </label><label id="token_expiry"></label>
+  </div>
+ </div>
+  <div style="text-align:left;width:500px;">
+              <select id="api-list" name="api-list" onchange="print_form(this.value)">
         </select>
-        <form action="" method="post" enctype="multipart/form-data" id="api-form">
+          <form action="" method="post" enctype="multipart/form-data" id="api-form" >
             <p id="api-entries">
             </p>
-            <button class="btn btn-primary mt-4 pull-right" style="float: right" type="button" onclick="calculate()">Calculate</button>
-            <div style="clear: both"></div>
+            <button  style="float: centre" type="button" onclick="calculate()">Calculate</button>
+
         </form>
-    {% endblock %}
-        <div id="token"></div>
-        <div id="token_expiry"></div>
-        <div id="msg"></div>
-        <div id="request"></div>
-        <div id="result"></div>
-        <div id="email"></div>
-    </div>
+  </div>
+  <div class="item3" id="output" style="width:500px;" >Output</div>
+  <div class="item4" style="width:500px;">Description</div>
+  <div class="item5" id="log" >Logs</div>
+</div>
 </section>
 
 
@@ -120,7 +134,7 @@ Each type covers type, width, init_values and default.
 var data_type_spec = {
       'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': [], 'default':''}
     , 'TYPE_STRING': {'type': 'string', 'width': '10', 'init_values': [], 'default':''}
-    , 'TYPE_DATE': {'type': 'date', 'width': '10', 'init_values': [], 'default':''}
+    , 'TYPE_DATE': {'type': 'date', 'width': '8', 'init_values': [], 'default':''}
     , 'TYPE_BOOLEAN': {'type': 'combo', 'width': '10', 'init_values': ['true', 'false'], 'default':'0'}
     , 'TYPE_BUSINESS_CENTRE': {'type': 'combo', 'width': '10',
                                 'init_values': ['none', 'frankfort', 'london', 'milan', 'newyork', 'paris', 'target',
@@ -359,7 +373,9 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
     case 'TYPE_NUMBER':
     case 'TYPE_STRING':
     case 'TYPE_DATE':
-        content="<input class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\" type=\"text\">";
+        var argument_width=data_type_spec['TYPE_BOOLEAN']['width'];
+        content="<input id=\""+argument+"\" name=\""+argument+" type=\"text\""+" maxlength="+"\""+argument_width+"\""+" size="+"\""+argument_width+"\""+" style=\"direction: rtl;\">";
+        console.log(content);
         break;
     case 'TYPE_BOOLEAN':
         content=get_list(argument,data_type_spec['TYPE_BOOLEAN']['init_values'],argument_default);
@@ -432,6 +448,7 @@ function get_api_list(){
 // 
 function print_form(choice){
 
+
     clear_output()
 
 
@@ -446,7 +463,6 @@ function print_form(choice){
     var argument_types=function_spec['argument_types'];
 
 
-
     var form_content="";
     for ( i = 0 ; i < arguments.length; i++){
 
@@ -454,6 +470,7 @@ function print_form(choice){
         var argument_label=argument_labels[i];
         var argument_optional=argument_optionals[i];
         var argument_type=argument_types[i];
+
 
 
 
@@ -475,7 +492,7 @@ function print_form(choice){
 // selected to ensure all previous messages are reset.
 // 
 function clear_output(){
- $('#msg').text('');
+ $('#output').text('');
  $('#request').text('');
 }
 
@@ -527,20 +544,20 @@ function calculate(){
         var value=argument_value.trim();
         if (argument_optionals[i]!=1 && value==''){
             is_error=true;
-            $('#msg').text(argument_labels[i]+" cannot be empty.");
+            $('#output').text(argument_labels[i]+" cannot be empty.");
             break;
         }
 
         if (argument_types[i]=='TYPE_NUMBER' && !is_valid_number(value)){
             is_error=true;
-            $('#msg').text(argument_labels[i]+" should be numeric.");
+            $('#output').text(argument_labels[i]+" should be numeric.");
             break;
         }
 
 
         if (argument_types[i]=='TYPE_DATE' && (value=='' || !is_valid_date(value))){
             is_error=true;
-            $('#msg').text(argument_labels[i]+" should be a valid date in the following format: yyyymmdd.");
+            $('#output').text(argument_labels[i]+" should be a valid date in the following format: yyyymmdd.");
             break;
         }
 
@@ -583,9 +600,6 @@ function callback_fill_trade_ids(data, request){
 
 function callback_nothing(data, request){
 
- var output_div = document.getElementById('msg');
- var request_div = document.getElementById('request');
- var result_div = document.getElementById('result');
  var results={};
  if (data['Response']['focus']=='errors'){
   results=data['Response']['Errors'];
@@ -600,10 +614,21 @@ function callback_nothing(data, request){
  for (cntr=0;cntr<keys.length;++cntr){
     output_content+=keys[cntr]+":"+results[keys[cntr]]+ "<br>"
  }
- output_div.innerHTML=output_content;
- request_div.innerHTML=request;
- result_div.innerHTML=JSON.stringify(data);
+ document.getElementById('output').innerHTML=output_content;
+ print_summary(data, request);
+return;
 }
+
+function print_summary(data, request){
+ document.getElementById('balance').innerHTML=data['Response']['balance'];
+ document.getElementById('client_id').innerHTML=data['client_id'];
+ document.getElementById('ip').innerHTML=data['source_id'];
+ log_div=document.getElementById('log');
+ log_div.innerHTML="<div>Request:</div><div>"+request+"</div>" + "<div>Response:</div><div>"+JSON.stringify(data)+"</div><br>" +  log_div.innerHTML;
+ return;
+}
+
+
 
 // 
 // Token Create callback function to treat the response
@@ -622,6 +647,7 @@ function callback_account_token_create(data, request){
    now.setMinutes(now.getMinutes() + expiry_in_minutes); //  timestamp
    now = new Date(now); //  Date object
    $('#token_expiry').text(now.toISOString ());
+   print_summary(data, request);
 }
 
 
@@ -658,7 +684,7 @@ function create_user_request(function_name,arguments, callback_function){
 
 
                if (data.error){
-                   $('#msg').text(JSON.stringify(data['error']));
+                   $('#output').text(JSON.stringify(data['error']));
                }
                else{
                    var results=data['results'];
@@ -758,6 +784,7 @@ function argument_make_string(function_name,arguments){
 function obtain_or_refresh_token(){
     var email= "{{ user_email|safe }}";
 
+
     if ($('#token').text().trim()==''){
         var arguments={'email':email};
         api_call('account_token_create',arguments,callback_account_token_create);
@@ -772,7 +799,7 @@ function obtain_or_refresh_token(){
     }
 
      var email_div = document.getElementById('email');
-     email_div.innerHTML=JSON.stringify(email);
+     email_div.innerHTML=email;
 
 
     return $('#token').text();
@@ -792,6 +819,7 @@ async function asyncFetch(url, requestOptions,callback_function) {
 
 function api_call(function_name,arguments,callback_function){
     var url= "{{ target_url|safe }}";
+
     arguments['function_name']=function_name;
     if(function_name!='account_token_create'){
         var token = obtain_or_refresh_token();
@@ -817,12 +845,13 @@ function api_call(function_name,arguments,callback_function){
 
 
 
-
-setTimeout(obtain_or_refresh_token,1000);
-setTimeout(load_asof_dates,2000);
-setTimeout(load_trade_ids,2000);
+var email= "{{ user_email }}";
+if(email!='' && email!=null){
+    setTimeout(obtain_or_refresh_token,1000);
+    setTimeout(load_asof_dates,2000);
+    setTimeout(load_trade_ids,2000);
+}
 setTimeout(function (){document.getElementById("api-list").innerHTML =get_api_list();},2000);
-
 
 
 

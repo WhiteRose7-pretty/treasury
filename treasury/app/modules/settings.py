@@ -18,7 +18,7 @@ url_server = "http://operations.treasuryquants.com"
 # 2) use is_test=True for the api calls
 # 3) ... ?
 #
-is_development = True
+is_development = False
 
 
 #

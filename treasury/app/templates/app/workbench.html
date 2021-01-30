@@ -75,7 +75,7 @@
         <select style=" display: table;margin: 0 auto;" id="api-list" name="api-list" onchange="print_form(this.value)"></select>
           <form action="" method="post" enctype="multipart/form-data" id="api-form" style="margin-top:20px;">
             <p id="api-entries"></p>
-            <button style="display: table;margin: 0 auto;" type="button" onclick="calculate()">Calculate</button>
+            <button id="calculate-button" style="display: table;margin: 0 auto;" type="button" onclick="calculate()">Calculate</button>
         </form>
   </div>
   <div class="item3" id="output" style="width:500px;" >Output</div>
@@ -334,6 +334,7 @@ var _pnl_attribute={
 // 
 api_specs={
    'price_fx_forward':_price_fx_forward,
+   'price_fx_forward':_price_fx_forward,
    'price_vanilla_swap':_price_vanilla_swap,
    'price':_price,
    'risk_ladder':_risk_ladder,
@@ -404,7 +405,7 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
         simple_type_content+= " type=\"email\"";
         simple_type_content+= " >";
 
-    console.log(argument+":"+argument_default);
+    //console.log(argument+":"+argument_default);
 
     var content="";
     var place_holder="";
@@ -482,7 +483,7 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
 // Provides the original api list combo for the user to select
 // 
 function get_api_list(){
-    var content="";
+    var content="<option value=\"x\">Select API</option>";
     for (var key in api_specs) {
         if (api_specs.hasOwnProperty(key)) {
             content+= "<option value=\""+key+"\">"+key+"</option>";
@@ -505,7 +506,9 @@ function print_form(choice){
     var chosen_function_name=choice;
 
     var function_spec=api_specs[chosen_function_name];
-
+    if(function_spec==undefined ){
+        return;
+    }
     var name=function_spec['name'];
     var arguments=function_spec['arguments'];
     var argument_labels=function_spec['argument_labels'];
@@ -549,10 +552,13 @@ function print_form(choice){
 function clear_output(){
  $('#output').text('');
  $('#request').text('');
+  document.getElementById("api-entries").innerHTML=''
 }
 
 
-
+function clear_form(){
+    document.getElementById("api-entries").innerHTML=''
+}
 
 // 
 // Performs the validation and processes the form. starts by validating the each field,
@@ -561,10 +567,14 @@ function clear_output(){
 function calculate(){
 
 
+
     var function_name=$('#api-list').val();
 
     var function_spec=api_specs[function_name];
 
+    if(function_spec==undefined ){
+        return;
+    }
     var name=function_spec['name'];
     var arguments=function_spec['arguments'];
     var argument_labels=function_spec['argument_labels'];
@@ -683,7 +693,8 @@ function print_summary(data, request){
  document.getElementById('client_id').innerHTML=data['client_id'];
  document.getElementById('ip').innerHTML=data['source_id'];
  log_div=document.getElementById('log');
- log_div.innerHTML="<div>Request:</div><div>"+request+"</div>" + "<div>Response:</div><div>"+JSON.stringify(data)+"</div><br>" +  log_div.innerHTML;
+ var request_id=data['id']
+ log_div.innerHTML="<div>Request:"+request_id+"</div><div>"+request+"</div>" + "<div>Response:"+request_id+"</div><div>"+JSON.stringify(data)+"</div><br>" +  log_div.innerHTML;
  return;
 }
 
@@ -751,15 +762,6 @@ function is_valid_date(str){
 }
 
 
-
-
-
-
-
-
-
-
-
 function argument_make_string(function_name,arguments){
    arguments['function_name']=function_name;
    var i=0;
@@ -785,6 +787,7 @@ function obtain_or_refresh_token(){
 
     if ($('#token').text().trim()==''){
         var arguments={'email':email};
+
         api_call('account_token_create',arguments,callback_account_token_create);
         return $('#token').text();
     }
@@ -807,6 +810,7 @@ function obtain_or_refresh_token(){
 
 
 async function asyncFetch(url, requestOptions,callback_function) {
+    console.log("Request:"+JSON.stringify(requestOptions));
     let response = await fetch(url,requestOptions);
     let data = await response.json();
     callback_function(data,requestOptions.body);
@@ -818,6 +822,7 @@ async function asyncFetch(url, requestOptions,callback_function) {
 
 function api_call(function_name,arguments,callback_function){
     var url= "{{ target_url|safe }}";
+
 
     arguments['function_name']=function_name;
     if(function_name!='account_token_create'){
@@ -857,18 +862,18 @@ function format_date(date){
 }
 
 function initialize_page(){
-// set the default for the trade date
-var date = new Date();
-var today_date_formatted=format_date(date);
-date.setMonth(date.getMonth()+3);
-var three_month_date_formatted=format_date(date);
+    // set the default for the trade date
+    var date = new Date();
+    var today_date_formatted=format_date(date);
+    date.setMonth(date.getMonth()+3);
+    var three_month_date_formatted=format_date(date);
 
-// trade date for vanilla swap
-api_specs['price_vanilla_swap']['argument_values'][3]=today_date_formatted;
+    // trade date for vanilla swap
+    api_specs['price_vanilla_swap']['argument_values'][3]=today_date_formatted;
 
-// trade date for FX swap
-api_specs['price_fx_forward']['argument_values'][2]=today_date_formatted;
-api_specs['price_fx_forward']['argument_values'][3]=three_month_date_formatted;
+    // trade date for FX swap
+    api_specs['price_fx_forward']['argument_values'][2]=today_date_formatted;
+    api_specs['price_fx_forward']['argument_values'][3]=three_month_date_formatted;
 
 
 }
@@ -876,13 +881,19 @@ api_specs['price_fx_forward']['argument_values'][3]=three_month_date_formatted;
 
 var email= "{{ user_email }}";
 if(email!='' && email!=null){
-    setTimeout(obtain_or_refresh_token,1000);
-    setTimeout(load_asof_dates,1500);
-    setTimeout(load_trade_ids,1500);
-    setTimeout(initialize_page,500);
-
+    setTimeout(obtain_or_refresh_token,0);
+    setTimeout(load_asof_dates,2000);
+    setTimeout(load_trade_ids,2000);
+    setTimeout(initialize_page,300);
+    setTimeout(function (){document.getElementById("api-list").innerHTML =get_api_list();},1000);
+}else{
+ $('#output').text('Your not Logged in.');
+ document.getElementById("calculate-button").disabled = true
+ document.getElementById("api-list").disabled = true
 }
-setTimeout(function (){document.getElementById("api-list").innerHTML =get_api_list();},2000);
+
+
+
 
 
 

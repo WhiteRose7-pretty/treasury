@@ -81,9 +81,9 @@ def utility_download_formatted_grid_swap_rates(connection, currencies, tenors, f
         #
         request_describe = TQRequests.request_function_show_available("asof_dates")
         message = connection.send_web(request_describe)
-
+        print(message.content)
         if not message.is_OK:
-            return (False, {'utility_download_formatted_grid_swap_rates': 'failed on connection.send'})
+            return False, {'utility_download_formatted_grid_swap_rates': message.content}
         asof_dates = connection.response.results
         if len(asof_dates) < 2:
             return (False, {'utility_download_formatted_grid_swap_rates': 'too few dates'})

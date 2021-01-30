@@ -75,7 +75,7 @@ def post_message(request):
 
 
 def cron_test(request):
-    status = cron_grids.download_fx_data()
+    status = cron_grids.download_rates_data()
     print(status)
     context = {
         'navbar': 'terms',

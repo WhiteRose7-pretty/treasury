@@ -3,7 +3,7 @@
 #
 
 # email_default = "valya.varechkina.76@bk.ru" #prod
-email_default = "test.account@treasuryquants.com" #for local testing
+email_default = "web.user@treasuryquants.com" #for local testing
 
 
 #

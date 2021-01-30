@@ -12,5 +12,6 @@ urlpatterns = [
     path('workbench/', views.workbench, name='workbench'),
     path('api_gateway/', views.api_gateway, name='api_gateway'),
     path('post_message/', views.post_message, name='post_message'),
+    path('cron_test/', views.cron_test, name='cron_test'),
 ]
 

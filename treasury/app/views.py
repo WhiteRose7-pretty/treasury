@@ -5,9 +5,11 @@ from .modules import sandbox, utility_common, settings
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from app.templatetags.app_tags import get_market_data
+from app.modules import cron_grids
 
 
 def home(request):
+
     context = {
         'navbar': 'home',
     }
@@ -70,3 +72,12 @@ def api_gateway(request):
 def post_message(request):
     utility_common.process_fatal_error(request.body.decode('utf-8'), settings.is_development)
     return JsonResponse('success', safe=False)
+
+
+def cron_test(request):
+    status = cron_grids.download_fx_data()
+    print(status)
+    context = {
+        'navbar': 'terms',
+    }
+    return render(request, 'app/terms.html', context)

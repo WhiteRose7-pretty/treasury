@@ -4,7 +4,7 @@
 <html lang="en">
 
 
-<head>
+<head >
     <title>Treasury</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,10 +28,11 @@
     'footer footer footer';
   grid-gap: 10px;
   justify-content: center;
-  grid-template-columns: 500px 500px 500px;
+  grid-template-columns: 400px 500px 500px;
   background-color: #FAF0F0;
   grid-width=1000px;
   padding: 10px;
+
 }
 
 .grid-container > div {
@@ -62,22 +63,19 @@
 <div class="grid-container">
   <div class="item1">
   <div>
-    <label >Email:  </label><label id="email"></label>
-    <label >Balance:</label><label id="balance"></label>
-    <label >user-id:</label><label id="client_id"></label>
-    <label >IP:     </label><label id="ip"></label>
-    <label >Token:  </label><label id="token"></label>
-    <label >Token expiry: </label><label id="token_expiry"></label>
+    <label style="font-weight: bold;">IP:     </label><label id="ip"></label>&nbsp;&nbsp;
+    <label style="font-weight: bold;">Token:  </label><label id="token"></label>&nbsp;&nbsp;
+    <label style="font-weight: bold;">Token expiry: </label><label id="token_expiry"></label><br>
+    <label style="font-weight: bold;">Email:  </label><label id="email"></label>&nbsp;&nbsp;
+    <label style="font-weight: bold;">Balance:</label><label id="balance"></label>&nbsp;&nbsp;
+    <label style="font-weight: bold;">user-id:</label><label id="client_id"></label>&nbsp;&nbsp;
   </div>
  </div>
-  <div style="text-align:left;width:500px;">
-              <select id="api-list" name="api-list" onchange="print_form(this.value)">
-        </select>
-          <form action="" method="post" enctype="multipart/form-data" id="api-form" >
-            <p id="api-entries">
-            </p>
-            <button  style="float: centre" type="button" onclick="calculate()">Calculate</button>
-
+  <div style="text-align:left;width:370px;height:650px">
+        <select style=" display: table;margin: 0 auto;" id="api-list" name="api-list" onchange="print_form(this.value)"></select>
+          <form action="" method="post" enctype="multipart/form-data" id="api-form" style="margin-top:20px;">
+            <p id="api-entries"></p>
+            <button style="display: table;margin: 0 auto;" type="button" onclick="calculate()">Calculate</button>
         </form>
   </div>
   <div class="item3" id="output" style="width:500px;" >Output</div>
@@ -96,11 +94,11 @@ Notes
 =====
 This page is meant to be a simple workbench exposing our apis to the user.
 Like any function, our apis will have different number of input arguments as well as output results.
-Furthermore, each argument and each result can, and most of the time will, have different types.
-The objective of the design is to introduce these api in a cohesive and intuitive manner 
+Furthermore, each argument and each result will have different types: some numbers, some strings, list, etc.
+The objective of the design is to introduce these apis in a cohesive and intuitive manner
 The design is simple. User selects an api name (function name) from the main combo list from the top.
-A dynamic form is then created based on the chosen api's specification. Once the final submission
-button is clicked, there will be a validation, request creation and api call over http. The results
+A dynamic Form is then created based on the chosen api's specification. Once the final submission
+button is clicked, there will be a validation, request creation and an api call over http. The results
 are then parsed and placed in various locations on the screen.
 
 API Specification
@@ -188,6 +186,7 @@ var _show_available={
     ,'argument_labels': ['element']
     ,'argument_optionals': [1]
     ,'argument_types': ['TYPE_ELEMENT_SHOW_AVAILABLE']
+    ,'argument_values': ['']
     }
 
 // 
@@ -199,6 +198,7 @@ var _describe={
     ,'argument_labels': ['element']
     ,'argument_optionals': [1]
     ,'argument_types': ['TYPE_ELEMENT_DESCRIBE']
+    ,'argument_values': ['']
     }
 
 // 
@@ -210,6 +210,7 @@ var _market_swap_rates={
     ,'argument_labels': ['As of', 'Currency']
     ,'argument_optionals': [0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_CURRENCY']
+    ,'argument_values': ['','']
     }
 
 
@@ -222,6 +223,7 @@ var _market_fx_rates={
     ,'argument_labels': ['As of', 'To Date','Base Currency']
     ,'argument_optionals': [0,0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_DATE','TYPE_CURRENCY']
+    ,'argument_values': ['','','']
     }
 
 
@@ -236,6 +238,7 @@ var _price_fx_forward={
                            'Receive Amount', 'Receive Currency','Save as']
     ,'argument_optionals': [0,0,0,0,0,0,0,0,1]
     ,'argument_types': ['TYPE_FXFWD_TYPES','TYPE_MARKET_DATES','TYPE_DATE','TYPE_DATE','TYPE_NUMBER','TYPE_CURRENCY','TYPE_NUMBER','TYPE_CURRENCY','TYPE_STRING']
+    ,'argument_values': ['','','','','1000000','','1000000','','']
     }
 
 // 
@@ -253,24 +256,25 @@ var _price_vanilla_swap={
                              'Business Centre', 'Spot Lag(days)','Save as']
     ,'argument_optionals': [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
     ,'argument_types': [
-    'TYPE_SWAP_TYPES',
-    'TYPE_MARKET_DATES',
-    'TYPE_NUMBER',
-    'TYPE_DATE',
-    'TYPE_STRING',
-    'TYPE_LIBOR_CURVE',
-    'TYPE_DISCOUNT_CURVE',
-    'TYPE_PERIOD',
-    'TYPE_PERIOD',
-    'TYPE_DAYCOUNT',
-    'TYPE_DAYCOUNT',
-    'TYPE_NUMBER',
-    'TYPE_NUMBER',
-    'TYPE_BOOLEAN',
-    'TYPE_BUSINESS_DAY_RULE',
-    'TYPE_BUSINESS_CENTRE',
-    'TYPE_NUMBER',
-    'TYPE_STRING']
+            'TYPE_SWAP_TYPES',
+            'TYPE_MARKET_DATES',
+            'TYPE_NUMBER',
+            'TYPE_DATE',
+            'TYPE_STRING',
+            'TYPE_LIBOR_CURVE',
+            'TYPE_DISCOUNT_CURVE',
+            'TYPE_PERIOD',
+            'TYPE_PERIOD',
+            'TYPE_DAYCOUNT',
+            'TYPE_DAYCOUNT',
+            'TYPE_NUMBER',
+            'TYPE_NUMBER',
+            'TYPE_BOOLEAN',
+            'TYPE_BUSINESS_DAY_RULE',
+            'TYPE_BUSINESS_CENTRE',
+            'TYPE_NUMBER',
+            'TYPE_STRING']
+    ,'argument_values': ['','','100000000','','30y','','','','','','','0','0.01','','','','0','']
     }
 
 // 
@@ -282,6 +286,7 @@ var _price={
     ,'argument_labels': ['As of', 'Load as']
     ,'argument_optionals': [0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_TRADE_LIST']
+    ,'argument_values': ['','']
     }
 
 
@@ -294,6 +299,7 @@ var _risk_ladder={
     ,'argument_labels': ['As of', 'Load as']
     ,'argument_optionals': [0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_TRADE_LIST']
+    ,'argument_values': ['','']
     }
 
 
@@ -306,6 +312,7 @@ var _pnl_predict={
     ,'argument_labels': ['Date(from)', 'Date (to)', 'Load as']
     ,'argument_optionals': [0,0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_TRADE_LIST']
+    ,'argument_values': ['','','']
     }
 
 
@@ -318,20 +325,22 @@ var _pnl_attribute={
     ,'argument_labels': ['Date(from)', 'Date (to)', 'Load as']
     ,'argument_optionals': [0,0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_TRADE_LIST']
+    ,'argument_values': ['','','']
     }
 
 
 // 
 // create a dictionary of all api specification
 // 
-api_specs={'pnl_attribute':_pnl_attribute,
-   'pnl_predict':_pnl_predict,
-   'risk_ladder':_risk_ladder,
-   'price':_price,
-   'price_vanilla_swap':_price_vanilla_swap,
+api_specs={
    'price_fx_forward':_price_fx_forward,
-   'market_fx_rates':_market_fx_rates,
+   'price_vanilla_swap':_price_vanilla_swap,
+   'price':_price,
+   'risk_ladder':_risk_ladder,
+   'pnl_attribute':_pnl_attribute,
+   'pnl_predict':_pnl_predict,
    'market_swap_rates':_market_swap_rates,
+   'market_fx_rates':_market_fx_rates,
    'describe':_describe,
    'show_available':_show_available
     }
@@ -341,7 +350,7 @@ api_specs={'pnl_attribute':_pnl_attribute,
 // 
 function get_list(id,list, default_value){
 
-    var content= "<select id=\""+id+"\" name=\""+id+"\">";
+    var content= "<select  style=\"direction: rtl; height:25px; margin-left:10px; float:right;\" id=\""+id+"\" name=\""+id+"\">";
     for ( j=0; j<list.length; ++j){
 
         content+="<option value=\""+list[j]+"\"";
@@ -357,6 +366,34 @@ function get_list(id,list, default_value){
 
     return content;
 }
+function build_input_text_box(argument,type_attribute='text',value='',placeholder='', size='', maxlength=''){
+
+        var style_attrib=" style=\"height:25px; margin-left:10px; float:right;\" ";
+        var placeholder_attrib=" placeholder="+" \""+placeholder+"\" ";
+        var size_attrib=" size="+"\""+size+"\"  ";
+        var maxlength_attrib=" maxlength="+" \""+maxlength+"\" ";
+        var value_attrib= " value="+" \""+value+"\" ";
+
+        var content="<input id=\""+argument+"\" name=\""+argument+" type=\""+type_attribute+"\"";
+
+        if(value!=''){
+            content+=value_attrib;
+        }
+        if(placeholder!=''){
+            content+=placeholder_attrib;
+        }
+        if(size!=''){
+            content+=size_attrib;
+        }
+        if(maxlength!=''){
+            content+=maxlength_attrib;
+        }
+        content+=style_attrib + " >";
+
+        return content;
+
+}
+
 
 // 
 // Provides an input object such as a text box or a list, etc. depending on the type of the input (see data_type_spec)
@@ -367,16 +404,29 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
         simple_type_content+= " type=\"email\"";
         simple_type_content+= " >";
 
-    var content="";
+    console.log(argument+":"+argument_default);
 
+    var content="";
+    var place_holder="";
     switch(argument_type){
-    case 'TYPE_NUMBER':
-    case 'TYPE_STRING':
     case 'TYPE_DATE':
-        var argument_width=data_type_spec['TYPE_BOOLEAN']['width'];
-        content="<input id=\""+argument+"\" name=\""+argument+" type=\"text\""+" maxlength="+"\""+argument_width+"\""+" size="+"\""+argument_width+"\""+" style=\"direction: rtl;\">";
-        console.log(content);
+        place_holder="YYYYMMDD";
+        var argument_width=data_type_spec['TYPE_DATE']['width'];
+        content=build_input_text_box(argument,'number',argument_default,place_holder, argument_width, argument_width);
         break;
+
+    case 'TYPE_NUMBER':
+        place_holder="";
+        var argument_width=data_type_spec['TYPE_NUMBER']['width'];
+        content=build_input_text_box(argument,'number',argument_default,place_holder, argument_width, '');
+        break;
+
+    case 'TYPE_STRING':
+        place_holder="";
+        var argument_width=data_type_spec['TYPE_STRING']['width'];
+        content=build_input_text_box(argument,'number',argument_default,place_holder, argument_width, '');
+        break;
+
     case 'TYPE_BOOLEAN':
         content=get_list(argument,data_type_spec['TYPE_BOOLEAN']['init_values'],argument_default);
         break;
@@ -461,6 +511,7 @@ function print_form(choice){
     var argument_labels=function_spec['argument_labels'];
     var argument_optionals=function_spec['argument_optionals'];
     var argument_types=function_spec['argument_types'];
+    var argument_values=function_spec['argument_values'];
 
 
     var form_content="";
@@ -472,12 +523,16 @@ function print_form(choice){
         var argument_type=argument_types[i];
 
 
-
-
+        //get default value for the input we provide
         var default_value=data_type_spec[argument_type]['default'];
-        form_content+="<label class=\"form-control-label\">"+argument_label+"</label>";
+        if (argument_type=='TYPE_NUMBER' || argument_type=='TYPE_STRING' || argument_type=='TYPE_DATE'){ // the same as if input is not list
+           default_value= argument_values[i];
+        }
+
+
+        form_content+="<div style=\"margin-left:5px;margin-right:5px;line-height: 30px;\"<label>"+argument_label+":"+"</label>";
         form_content+= get_input_object(argument,argument_label,argument_optional,argument_type,default_value);
-        form_content+="<br>";
+        form_content+="<br></div>";
 
 
     }
@@ -541,16 +596,20 @@ function calculate(){
         // 
         //     validate argument_value by type and optional
         // 
-        var value=argument_value.trim();
+        var value=''
+        if (argument_value !=null){
+            value=argument_value.trim();
+        }
+
         if (argument_optionals[i]!=1 && value==''){
             is_error=true;
-            $('#output').text(argument_labels[i]+" cannot be empty.");
+            $('#output').text("'"+argument_labels[i]+"' cannot be empty.");
             break;
         }
 
         if (argument_types[i]=='TYPE_NUMBER' && !is_valid_number(value)){
             is_error=true;
-            $('#output').text(argument_labels[i]+" should be numeric.");
+            $('#output').text("'"+argument_labels[i]+"' should be numeric.");
             break;
         }
 
@@ -649,67 +708,6 @@ function callback_account_token_create(data, request){
    $('#token_expiry').text(now.toISOString ());
    print_summary(data, request);
 }
-
-
-
-//
-//  ** DEPRICATED **
-// This function is called after a successful validation of the input data.
-//
-function create_user_request(function_name,arguments, callback_function){
-    arguments['user_email']=sessionStorage.getItem('user_email');
-    //arguments['user_email']="test.account@treasuryquants.com";
-
-    var request={   'function_name':function_name,
-                    'arguments':arguments,
-                    'source_caller': document.location.href + ":"+function_name
-                    };
-
-    let token = '{{csrf_token}}';
-
-
-    $.ajax({
-            headers: {
-                "X-CSRFToken": token
-            },
-            type:    'post',
-            url:     "{% url 'app:api_gateway' %}",
-            data:    JSON.stringify(request),
-
-            success: function (data){
-
-
-               var keys=[];
-               var values=[];
-
-
-               if (data.error){
-                   $('#output').text(JSON.stringify(data['error']));
-               }
-               else{
-                   var results=data['results'];
-                   for (var key in results) {
-                        keys.push(key);
-                        if (results.hasOwnProperty(key)) {
-                            values.push(results[key]);
-                        }
-                    }
-
-
-                    callback_function(keys,values);
-
-               }
-
-
-            }
-    });
-
-}
-
-
-
-
-
 
 
 function load_asof_dates(){
@@ -812,8 +810,9 @@ async function asyncFetch(url, requestOptions,callback_function) {
     let response = await fetch(url,requestOptions);
     let data = await response.json();
     callback_function(data,requestOptions.body);
-    //console.log("Result:"+JSON.stringify(data));
+    console.log("Result:"+JSON.stringify(data));
 }
+
 
 
 
@@ -843,13 +842,45 @@ function api_call(function_name,arguments,callback_function){
 }
 
 
+function format_date(date){
+    var month=date.getMonth()+1;
+    var day=date.getDate();
+    var year=date.getFullYear();
+    if (day<10)
+       day="0"+day;
+
+    if (month<10)
+       month="0"+month;
+
+    var today_date_formatted=year.toString()+month+day;
+    return today_date_formatted;
+}
+
+function initialize_page(){
+// set the default for the trade date
+var date = new Date();
+var today_date_formatted=format_date(date);
+date.setMonth(date.getMonth()+3);
+var three_month_date_formatted=format_date(date);
+
+// trade date for vanilla swap
+api_specs['price_vanilla_swap']['argument_values'][3]=today_date_formatted;
+
+// trade date for FX swap
+api_specs['price_fx_forward']['argument_values'][2]=today_date_formatted;
+api_specs['price_fx_forward']['argument_values'][3]=three_month_date_formatted;
+
+
+}
 
 
 var email= "{{ user_email }}";
 if(email!='' && email!=null){
     setTimeout(obtain_or_refresh_token,1000);
-    setTimeout(load_asof_dates,2000);
-    setTimeout(load_trade_ids,2000);
+    setTimeout(load_asof_dates,1500);
+    setTimeout(load_trade_ids,1500);
+    setTimeout(initialize_page,500);
+
 }
 setTimeout(function (){document.getElementById("api-list").innerHTML =get_api_list();},2000);
 

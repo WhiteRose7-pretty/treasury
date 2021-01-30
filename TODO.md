@@ -64,14 +64,15 @@ rename cron_grids to crons(Shahram)
 
 
 ## Website Improvements 1
+- the name on the tab of the browser shows up as "treasury" can we please change it do "Treasury Quants"?
+- Markets page fit my screen (from the top of the logo to the bottom of the charts) at 75%. Can we make sure it happens at 100%. 
 - In profile screen-> change IP, please populate the field with user's IP as default.
 - In profile screen, replace "welcome, logout" with a new row on the top to show email.
-- In profile screen, replace "welcome, logout" with a new row on the top to show email.
+- In profile screen, can we change the cursor type when hovering over "change ip" and change "password"?
 - View More in video section to redirect to about us page.
-- the video object in video section reduces as the page size reduces but not the black screen that holds it.
-- remove the default "test.account@treasuryquants.com" from all email entries.
-- Currency in profile page should be rounded to two decimals.
-- A simple cookie consent banner (do we need James for this?)
+- The video object in video section reduces as the page size reduces but not the black screen that holds it.
+- Remove the default "test.account@treasuryquants.com" from all email entries.
+- A simple cookie consent popup (do we need James for this?)
 - Following text to be places at the bottom of the charts (in markets page) in italic, left justified:
 
     **Swap rates are shown in percentage points using market conventions for each currency market. The swap rate market data is sourced from various OTC clearing houses' closing settlement rates for the dates shown. FX rates are source directly from ECB, periodically.*

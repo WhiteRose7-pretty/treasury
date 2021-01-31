@@ -78,9 +78,11 @@
             <button id="calculate-button" style="display: table;margin: 0 auto;" type="button" onclick="calculate()">Calculate</button>
         </form>
   </div>
-  <div class="item3" id="output" style="width:500px;" >Output</div>
-  <div class="item4" style="width:500px;">Description</div>
-  <div class="item5" id="log" >Logs</div>
+
+
+  <div class="item3" id="output" style="overflow:auto;width:500px;height:650px;scrollbar-base-color:gold;font-family:sans-serif;padding:10px" >Output</div>
+  <div class="item4" style="overflow:auto;width:500px;">Description</div>
+  <div class="item5" id="log" style="overflow:auto;height:250px;">Logs</div>
 </div>
 </section>
 
@@ -210,7 +212,7 @@ var _market_swap_rates={
     ,'argument_labels': ['As of', 'Currency']
     ,'argument_optionals': [0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_CURRENCY']
-    ,'argument_values': ['','']
+    ,'argument_values': ['last','0']
     }
 
 
@@ -223,7 +225,7 @@ var _market_fx_rates={
     ,'argument_labels': ['As of', 'To Date','Base Currency']
     ,'argument_optionals': [0,0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_DATE','TYPE_CURRENCY']
-    ,'argument_values': ['','','']
+    ,'argument_values': ['last','','0']
     }
 
 
@@ -238,7 +240,7 @@ var _price_fx_forward={
                            'Receive Amount', 'Receive Currency','Save as']
     ,'argument_optionals': [0,0,0,0,0,0,0,0,1]
     ,'argument_types': ['TYPE_FXFWD_TYPES','TYPE_MARKET_DATES','TYPE_DATE','TYPE_DATE','TYPE_NUMBER','TYPE_CURRENCY','TYPE_NUMBER','TYPE_CURRENCY','TYPE_STRING']
-    ,'argument_values': ['','','','','1000000','','1000000','','']
+    ,'argument_values': ['0','last','','','1000000','0','1000000','1','']
     }
 
 // 
@@ -274,7 +276,7 @@ var _price_vanilla_swap={
             'TYPE_BUSINESS_CENTRE',
             'TYPE_NUMBER',
             'TYPE_STRING']
-    ,'argument_values': ['','','100000000','','30y','','','','','','','0','0.01','','','','0','']
+    ,'argument_values': ['0','last','100000000','','30y','0','0','0','0','0','0','0','0.01','0','0','0','0','']
     }
 
 // 
@@ -286,7 +288,7 @@ var _price={
     ,'argument_labels': ['As of', 'Load as']
     ,'argument_optionals': [0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_TRADE_LIST']
-    ,'argument_values': ['','']
+    ,'argument_values': ['last','0']
     }
 
 
@@ -299,7 +301,7 @@ var _risk_ladder={
     ,'argument_labels': ['As of', 'Load as']
     ,'argument_optionals': [0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_TRADE_LIST']
-    ,'argument_values': ['','']
+    ,'argument_values': ['last','0']
     }
 
 
@@ -312,7 +314,7 @@ var _pnl_predict={
     ,'argument_labels': ['Date(from)', 'Date (to)', 'Load as']
     ,'argument_optionals': [0,0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_TRADE_LIST']
-    ,'argument_values': ['','','']
+    ,'argument_values': ['last','last','0']
     }
 
 
@@ -325,7 +327,7 @@ var _pnl_attribute={
     ,'argument_labels': ['Date(from)', 'Date (to)', 'Load as']
     ,'argument_optionals': [0,0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_TRADE_LIST']
-    ,'argument_values': ['','','']
+    ,'argument_values': ['last','last','0']
     }
 
 
@@ -527,10 +529,10 @@ function print_form(choice){
 
 
         //get default value for the input we provide
-        var default_value=data_type_spec[argument_type]['default'];
-        if (argument_type=='TYPE_NUMBER' || argument_type=='TYPE_STRING' || argument_type=='TYPE_DATE'){ // the same as if input is not list
+       // var default_value=data_type_spec[argument_type]['default'];
+      //  if (argument_type=='TYPE_NUMBER' || argument_type=='TYPE_STRING' || argument_type=='TYPE_DATE'){ // the same as if input is not list
            default_value= argument_values[i];
-        }
+       // }
 
 
         form_content+="<div style=\"margin-left:5px;margin-right:5px;line-height: 30px;\"<label>"+argument_label+":"+"</label>";
@@ -681,7 +683,7 @@ function callback_nothing(data, request){
  var output_content='';
  var keys=Object.keys(results);
  for (cntr=0;cntr<keys.length;++cntr){
-    output_content+=keys[cntr]+":"+results[keys[cntr]]+ "<br>"
+    output_content+=keys[cntr]+":"+"<b>"+results[keys[cntr]]+ "</b><br>"
  }
  document.getElementById('output').innerHTML=output_content;
  print_summary(data, request);
@@ -689,12 +691,21 @@ return;
 }
 
 function print_summary(data, request){
+ var url= "{{ target_url|safe }}";
+
  document.getElementById('balance').innerHTML=data['Response']['balance'];
  document.getElementById('client_id').innerHTML=data['client_id'];
  document.getElementById('ip').innerHTML=data['source_id'];
  log_div=document.getElementById('log');
- var request_id=data['id']
- log_div.innerHTML="<div>Request:"+request_id+"</div><div>"+request+"</div>" + "<div>Response:"+request_id+"</div><div>"+JSON.stringify(data)+"</div><br>" +  log_div.innerHTML;
+ var request_id=data['id'];
+ var request_text="<b>Request:"+request_id+"</b><br>";
+ request_text+="<b>URL:</b>"+url+"<br>";
+ request_text+="<b>Method:</b> POST"+"<br>";
+ request_text+="<em>"+request+"</em>";
+
+ var response_text="<br><b>Response:"+request_id+"</b><br><em>"+JSON.stringify(data)+"</em>";
+
+ log_div.innerHTML=request_text+request+ response_text+"<hr>" +  log_div.innerHTML;
  return;
 }
 

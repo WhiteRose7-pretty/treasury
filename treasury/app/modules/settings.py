@@ -2,15 +2,15 @@
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
 
-email_default = "valya.varechkina.76@bk.ru" #prod
-email_default = "test.account@treasuryquants.com" #for local testing
+# email_default = "valya.varechkina.76@bk.ru" #prod
+email_default = "web.user@treasuryquants.com" #for local testing
 
 
 #
 # server's url
 #
 url_server = "http://operations.treasuryquants.com"
-url_server="http://192.168.1.80:8080" #Place local server here
+#url_server="http://192.168.1.80:8080" #Shahram's local server
 
 #
 # this means set the backend for the dev environment. i.e.
@@ -18,7 +18,7 @@ url_server="http://192.168.1.80:8080" #Place local server here
 # 2) use is_test=True for the api calls
 # 3) ... ?
 #
-is_development = False
+is_development = True
 
 
 #

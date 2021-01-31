@@ -25,7 +25,7 @@ SECRET_KEY = '!pmg-%o7%(cyd-!w3p56hx!bamixqqxu#q7eh9du3%qocig+7g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '77.68.6.27']
+ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
@@ -121,7 +121,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'static')
 
 MEDIA_URL = '/media/'
 

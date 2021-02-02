@@ -26,7 +26,7 @@ def download_rates_data():
     if not status:
         # Do Failure
         utility_common.process_fatal_error(utility_common.dict_to_string(results), settings.is_development)
-    return status
+    return status, results
 
 
 def check_connection():

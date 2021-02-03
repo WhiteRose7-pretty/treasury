@@ -10,3 +10,5 @@ treasury/env/**
 **/migrations/**
 *.*.pyc
 vuengo_vue/node_modules/**
+!/.gitignore
+

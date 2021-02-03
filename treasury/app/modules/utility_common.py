@@ -2,7 +2,8 @@
 # common and generic utilities
 #
 from app.modules import utility_email
-
+import os
+import json
 
 def dict_to_string(results):
     message = ""
@@ -23,9 +24,24 @@ def list_to_csv(l):
     return s
 
 
-def process_fatal_error(error_message, is_development=False):
+def process_fatal_error(subject,error_message, is_development=False):
     if is_development:
         print(error_message)
     else:
-        # utility_email.send_email("operations@treasuryquants.com", "web cron error", error_message)
-        utility_email.send_email("valya.varechkina.76@bk.ru", "web cron error", error_message)
+
+        utility_email.send_email("valya.varechkina.76@bk.ru", subject, error_message)
+
+
+def get_workbench_descriptions_json_string(api_names):
+    descriptions = dict()
+    for api_name in api_names:
+        descriptions[api_name] = ''
+        file_path = os.path.join("app/modules/workbench/descriptions/", api_name + ".html")
+        try:
+            input_file= open(file_path, "r")
+            descriptions[api_name] = input_file.read().encode("utf-8").hex()
+            input_file.close()
+        except:
+            continue
+
+    return descriptions

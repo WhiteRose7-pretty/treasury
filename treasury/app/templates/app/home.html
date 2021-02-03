@@ -5,7 +5,7 @@
 
 
 <head>
-    <title>Treasury</title>
+    <title>Treasury Quants</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
@@ -76,7 +76,6 @@
                             {% endif %}
                         {% endfor %}
                     </li>
-
                     <li>
                         <div class="headings-section">
                             {% for head in fx_data.head_data %}
@@ -193,7 +192,9 @@
             </ul>
         </div>
     </section>
-
+    <section>
+        <div><em>Swap rates are shown in percentage points using market conventions for each currency market. The swap rate market data is sourced from various OTC clearing houses' closing settlement rates for the dates shown. FX rates are source directly from ECB, periodically.</em></div>
+    </section>
     {% include "app/basic/license.html" %}
 
 </section>
@@ -256,7 +257,7 @@
             "X-CSRFToken": token
         },
         type: 'post',
-        url: "{% url 'app:fx_data_graph' %}",
+        url: "{% url 'app:rates_data_graph' %}",
         success: function (output) {
             let response_json = JSON.parse(output);
             let data = response_json.data;

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="TG Code">
-    <title>Treasury</title>
+    <title>Treasury Quants</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
@@ -140,7 +140,7 @@
 
                 if (data.error) {
                     msg_show($('#msg'), data['error']);
-                    post_message(data.error);
+                    post_message("account_status",data.error);
                 } else {
                     if (data.results.is_exist === 'False') {
                         create_account(email, password, user_ip);
@@ -157,7 +157,7 @@
             error: function (jqXhr, textStatus, errorMessage) {
                 $('#msg').text("Error: " + errorMessage);
                 $('#loading-icon').css('display', 'none');
-                post_message(errorMessage);
+                post_message("account_status",errorMessage);
             },
         });
     }
@@ -185,7 +185,7 @@
             success: function (data) {
                 if (data.error) {
                     msg_show($('#msg'), data['error']);
-                    post_message(data.error);
+                    post_message("create_account",data.error);
                 } else {
                     msg_show($('#msg'), "We sent activation key to your email. Please check your mail box.");
                 }
@@ -193,7 +193,7 @@
             error: function (jqXhr, textStatus, errorMessage) {
                 msg_show($('#msg'), "Error: " + errorMessage);
                 $('#loading-icon').css('display', 'none');
-                post_message(errorMessage);
+                post_message("create_account",errorMessage);
             },
 
         });

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from app.modules.apis_for_json import account_api
+from app.modules.apis_for_json import api_gateway
 import json
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -37,8 +37,9 @@ def profile(request):
         },
         'source_caller': 'front-end-function10',
     }
-    result = account_api(json.dumps(post_data))
+    result = api_gateway(json.dumps(post_data))
     result_dic = json.loads(result)
+
     icons = ['user', 'credit-card', 'dollar-sign', 'share-2', 'clock']
     context = {
         'navbar': 'profile',
@@ -46,6 +47,7 @@ def profile(request):
         'user_email': request.session['user_email'],
         'password': request.session['password'],
         'icons': icons,
+        'current_ip': get_client_ip(request)
     }
 
     return render(request, 'account_cycle/profile.html', context)
@@ -54,7 +56,7 @@ def profile(request):
 def call_account_api(request):
     data = json.loads(request.body)
     post_data = json.dumps(data)
-    result = account_api(post_data)
+    result = api_gateway(post_data)
     result_dic = json.loads(result)
     if result_dic['source_caller'] == 'account_profile':
         if result_dic['error'] == '' and result_dic['results']['id']:
@@ -82,7 +84,7 @@ def check_activation_key(key):
         },
         'source_caller': 'password_reset_call_back_function',
     }
-    result = account_api(json.dumps(post_data))
+    result = api_gateway(json.dumps(post_data))
     print(result)
     result_dic = json.loads(result)
     if result_dic['error']:
@@ -155,3 +157,6 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+
+

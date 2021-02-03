@@ -58,7 +58,7 @@
     }
 
 
-    function post_message(message){
+    function post_message(subject,message){
         var token = '{{csrf_token}}';
         $.ajax({
             headers: {
@@ -67,6 +67,7 @@
             type: 'post',
             url: "{% url 'app:post_message' %}",
             data: JSON.stringify({
+                'subject': subject,
                 'message': message,
                 'source_caller': document.location.href,
             }),

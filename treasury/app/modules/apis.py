@@ -268,8 +268,8 @@ def market_swap_rates(connection, user_email,asof, currency):
     return make_results(message, connection)
 
 
-def market_fx_rates(connection, user_email,base_date,to_date,base_currency):
-    request_function_market_fx_rates = TQRequests.request_function_market_fx_rates(base_date,to_date,base_currency)
-    request_function_market_fx_rates.params['email'] = user_email
-    message = connection.send_web(request_function_market_fx_rates)
-    return make_results(message, connection)
+# def market_fx_rates(connection, user_email,base_date,to_date,base_currency):
+#     request_function_market_fx_rates = TQRequests.request_function_market_fx_rates(base_date,to_date,base_currency)
+#     request_function_market_fx_rates.params['email'] = user_email
+#     message = connection.send_web(request_function_market_fx_rates)
+#     return make_results(message, connection)

@@ -53,22 +53,22 @@ rename cron_grids to crons(Shahram)
 
 ### For Daria
 
-## Website Improvements 1
-
-- In profile screen, replace "welcome, logout" with a new row on the top to show email.
-- In profile screen, can we change the cursor type when hovering over "change ip" and change "password"?
+## Website Improvements 1 (Shahram)
 - The video object in video section reduces as the page size reduces but not the black screen that holds it.
-- Following text to be placed at the bottom of the charts (in markets page) in italic, left justified:
-    **Swap rates are shown in percentage points using market conventions for each currency market. The swap rate market data is sourced from various OTC clearing houses' closing settlement rates for the dates shown. FX rates are source directly from ECB, periodically.*
+   
 
-## Website Improvements 2
+## Website Improvements 2 (Daria)
 - A simple cookie consent popup (I have asked James to design one following your suggestion)
 - In the navigation bar, replace About Us, Policy notice and Terms with "about" and place about us, policy notice and terms of service under about as sub-menu
 
-## Website Improvements 3
+## Website Improvements 3 (Daria)
+- workbench design 
+
+
+## Website Improvements 3 (?)
 - Incorporate Google Analytics with the site.
  
-
+## 
 
 
 

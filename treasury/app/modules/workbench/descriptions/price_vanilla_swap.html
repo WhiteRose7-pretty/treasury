@@ -1,0 +1,32 @@
+<div>
+    <b>API</b>: price_vanilla_swap <br><hr>
+<b>Summary</b>:It prices a new vanilla interest rate swap. It can also be used as a way of booking your swap trade by entering a unique name in the "Save As" input field. The pricer will fail to save the trade if there were any error during pricing. The currency associated with the price would be the currency associated with that index. For example, libor.usd3m will return a price of usd, etc.
+<br><br>
+
+        <b>Arguments</b>:<br><hr>
+
+<b>Type</b>: The only swap type, at the moment, is ir_vanilla_swap<br>
+<b>As of</b>: This is the date as of when you are pricing the trade. Note that you can only price the trade for a date whose market data is available.<br>
+<b>Notional</b>: one single notional amount to be applied to both legs.<br>
+<b>Trade Date</b>: This can be any date. During weekend and holidays, the market data will be interpolated between two market dates. If the trade date is in the future of the last market date, forward values from the last market date will be used.<br>
+<b>Trade Maturity</b>: The date at which the last coupon is paid. It can be entered as period (30y, 360m, etc. from Trade Date)  or as date (YYYYMMDD).<br>
+<b>Index Id</b>: The name of the floating leg's reference index.<br>
+<b>Discount Curve</b>: Discounting curve used to discount cash-flows of both legs.<br>
+<b>Floating Leg Period</b>: Coupon period of the floating leg.<br>
+<b>Fixed Leg Period</b>: Coupon period of the fixed leg.<br>
+<b>Floating Leg Daycount</b>: Day-count convention for calculating the year fraction of the floating leg coupon.<br>
+<b>Fixed Leg Daycount</b>:Day-count convention for calculating the year fraction of the fixed leg coupon.<br>
+<b>Spread</b>: The added rate to be added to the forward rates of the floating leg (1 basis point = 0.0001).<br>
+<b>Fixed Rate</b>: Rate for the fixed leg's coupons (1%=0.01).<br>
+<b>Is Payer</b>: Whether the swap pays the fixed leg (true) or not (false)<br>
+<b>Business Day Rule</b>: Business day rule dictating how the non-business days are to be adjusted. Use "none" for no business rule (weekends are still considered a non-business day).<br>
+<b>Business Centre</b>: Business centers whose holidays are to be used as reference for Business Day Rule. Use "none" for no business centre.<br>
+<b>Spot Lag(days)</b>: The difference (in days) between the starting date of the index period and the fixing date.<br>
+<b>Save as</b>: This is an optional argument. If enter an id, the trade will then be saved under that id. You can then use that id to price (api:price), risk (api:risk_ladder), calculate the p&l attribution (api:pnl_attribute) and calculate the p&l predict (api:pnl_predict)<br>
+<br>
+<b>See Also</b>:<br><hr>
+For Business Day Rules: See  <a href="https://en.wikipedia.org/wiki/Date_rolling" target="_blank">here</a> <br>
+For Day-count conventions: See <a href="https://en.wikipedia.org/wiki/Day_count_convention" target="_blank">here</a><br>
+For swap market conventions, see api:market_swap_rates<br>
+
+</div>

@@ -863,7 +863,7 @@ async function asyncFetch(url, requestOptions,callback_function) {
 
 
 function api_call(function_name,arguments,callback_function){
-    var url= "{{ target_url|safe }}";
+    var url= "{{ target_ip|safe }}";
 
 
     arguments['function_name']=function_name;

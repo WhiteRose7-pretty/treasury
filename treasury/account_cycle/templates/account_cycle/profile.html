@@ -30,8 +30,7 @@
         <div class="container d-flex justify-content-center ">
             <div class="profile-table mt-4">
                 <h3 class="font-weight-bold">My Account</h3>
-                <div>Welcome, <a href="{% url 'account_cycle:logout' %}"
-                                 class="text-primary">Logout</a></div>
+                <div>Email: <a>{{ user_email }}</a></div>
                 <table class="profile-table mt-2">
 
                     {% for key,value in result_dic.results.items %}

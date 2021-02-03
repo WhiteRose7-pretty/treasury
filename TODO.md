@@ -55,8 +55,6 @@ rename cron_grids to crons(Shahram)
 
 ## Website Improvements 1
 
-- the name on the tab of the browser shows up as "treasury" can we please change it do "Treasury Quants"?
-- In profile screen-> change IP, please populate the field with user's IP (the one they are calling from) as default.
 - In profile screen, replace "welcome, logout" with a new row on the top to show email.
 - In profile screen, can we change the cursor type when hovering over "change ip" and change "password"?
 - The video object in video section reduces as the page size reduces but not the black screen that holds it.

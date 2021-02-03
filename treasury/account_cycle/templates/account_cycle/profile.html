@@ -44,8 +44,7 @@
                             </td>
                             <td>{{ value }}
                                 {% if key == 'ip' %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="pull-right-md text-primary" onclick="open_change_ip_window()"><i
-                                            class="mr-1" data-feather="edit"></i>change&nbsp;Ip</span>
+                                    <span class="pull-right-md text-primary" onclick="open_change_ip_window()"><i class="mr-1" data-feather="edit"></i>change&nbsp;Ip</span>
                                 {% elif key == 'last_login' %}
                                     <span class="pull-right-md text-primary" onclick="open_change_password_window()"><i
                                             class="mr-1" data-feather="edit"></i>change&nbsp;Password</span>
@@ -87,8 +86,7 @@
                 </button>
             </div>
             <div class="modal-body mb-3">
-                <div class="text-muted pt-2 pb-4">If you input new Ip and click 'Change' button, You will logout. After
-                    that, you can't access with old IP and can access with only new Ip.
+                <div class="text-muted pt-2 pb-4">Changing your existing IP to a new one means that you will only be able to use our services from the new IP.
                 </div>
                 <div class="row px-3">
                     <span class="text-muted" style="line-height: 2">New Ip</span>
@@ -164,7 +162,10 @@
         'height': '1em'
     });
 
-    var ipInput = $('#ip').ipInput();
+    var ip = '{{current_ip}}';
+    var ipInput = $('#ip').ipInput(ip);
+
+
 
     function open_change_ip_window() {
         $('#change-ip-modal').modal('show');
@@ -175,7 +176,9 @@
     }
 
 
+
     function change_ip() {
+
         let ip = ipInput.getIp();
         var token = '{{csrf_token}}';
         if (!ip) {

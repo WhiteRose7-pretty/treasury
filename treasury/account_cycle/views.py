@@ -39,6 +39,7 @@ def profile(request):
     }
     result = api_gateway(json.dumps(post_data))
     result_dic = json.loads(result)
+
     icons = ['user', 'credit-card', 'dollar-sign', 'share-2', 'clock']
     context = {
         'navbar': 'profile',
@@ -46,6 +47,7 @@ def profile(request):
         'user_email': request.session['user_email'],
         'password': request.session['password'],
         'icons': icons,
+        'current_ip': get_client_ip(request)
     }
 
     return render(request, 'account_cycle/profile.html', context)
@@ -155,3 +157,6 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+
+

@@ -28,15 +28,15 @@
     'footer footer footer';
   grid-gap: 10px;
   justify-content: center;
-  grid-template-columns: 400px 500px 500px;
-  background-color: #FAF0F0;
-  grid-width=1000px;
+  grid-template-columns: 400px 400px 500px;
+  background-color: #f0f0f5;
+  grid-width=870px;
   padding: 10px;
 
 }
 
 .grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #fcfdff;
   text-align: center;
   padding: 10px 0;
   font-size: 20px;
@@ -65,24 +65,32 @@
   <div>
     <label style="font-weight: bold;">IP:     </label><label id="ip"></label>&nbsp;&nbsp;
     <label style="font-weight: bold;">Token:  </label><label id="token"></label>&nbsp;&nbsp;
-    <label style="font-weight: bold;">Token expiry: </label><label id="token_expiry"></label><br>
+    <label style="font-weight: bold;">Token expiry: </label><label id="token_expiry"></label>
     <label style="font-weight: bold;">Email:  </label><label id="email"></label>&nbsp;&nbsp;
     <label style="font-weight: bold;">Balance:</label><label id="balance"></label>&nbsp;&nbsp;
     <label style="font-weight: bold;">user-id:</label><label id="client_id"></label>&nbsp;&nbsp;
   </div>
  </div>
-  <div style="text-align:left;width:370px;height:650px">
+  <div style="text-align:left;width:370px;height:730px">
+        <div align="center"><b>API</b><br><hr></div>
         <select style=" display: table;margin: 0 auto;" id="api-list" name="api-list" onchange="print_form(this.value)"></select>
           <form action="" method="post" enctype="multipart/form-data" id="api-form" style="margin-top:20px;">
             <p id="api-entries"></p>
             <button id="calculate-button" style="display: table;margin: 0 auto;" type="button" onclick="calculate()">Calculate</button>
         </form>
   </div>
-
-
-  <div class="item3" id="output" style="overflow:auto;width:500px;height:650px;scrollbar-base-color:gold;font-family:sans-serif;padding:10px" >Output</div>
-  <div class="item4" style="overflow:auto;width:500px;">Description</div>
-  <div class="item5" id="log" style="overflow:auto;height:250px;">Logs</div>
+  <div class="item3" style="overflow:auto;width:370px;height:730px;scrollbar-base-color:gold;font-family:sans-serif;padding:10px">
+      <div align="center"><b>Output</b><br><hr></div>
+      <div  id="output" style="overflow:auto;height:630px;"></div>
+  </div>
+  <div class="item4"  style="width:500px;height:730px;scrollbar-base-color:gold;font-family:sans-serif;padding:10px">
+      <div align="center"><b>Descripion</b><br><hr></div>
+      <div  id="description" style="overflow:auto;height:630px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. <br><br>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.<br><br> Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean Phasellus viverra nulla ut<br><br> metus varius laoreet. Quisque rutrum. Aenean i  </div>
+  </div>
+  <div class="item5" style="overflow:auto;height:350px;">
+      <div align="center" ><b>Log</b><br><hr></div>
+      <div id="log" style="overflow:auto;height:250px;"></div>
+  </div>
 </div>
 </section>
 
@@ -110,6 +118,7 @@ Each api specification provides the arguments, argument_labels, argument_types a
 - argument_labels are used to print the argument names in a more user friendly manner
 - argument_types are used to create the appropriate input fields as well as validating the input values
 - argument_optionals are used for validating the input and accepting empty values.
+- argument_values are the initial values to be set at. When it is set at "last" we will set the last entry as selected .When it is set at "previous" we will set the one before the last entry as selected.
 
 Data Type Specification
 =======================
@@ -119,7 +128,6 @@ Each type covers type, width, init_values and default.
 - type is the type name that is used to distinguish this type from others.
 - width is the width of the input filed that is meant to be the same for each type all its instantiations.
 - init_values are used for combo list.
-- default is either used for list. it takes an integer or the tag "last". When the default value is an integer, we show the list selected on that entry. When the default is set at "last" we will set the last entry as selected.
 * note: there are two types that are dynamic: 1) TYPE_MARKET_DATES and 2) TYPE_TRADE_LIST. TYPE_MARKET_DATES should be populated only once and only when the page is loaded. TYPE_TRADE_LIST is populated at the beginning and at each time a trade is saved.
 */
 
@@ -140,10 +148,10 @@ var data_type_spec = {
                                 'init_values': ['none', 'frankfort', 'london', 'milan', 'newyork', 'paris', 'target',
                                                 'tokyo', 'zurich'],'default':'0'}
     , 'TYPE_DISCOUNT_CURVE': {'type': 'combo', 'width': '10',
-                               'init_values': ['usd.ois','chf.ois', 'eur.ois', 'gbp.ois', 'jpy.ois' ],'default':'0'}
+                               'init_values': ['usd.ois','eur.ois','gbp.ois','chf.ois',   'jpy.ois' ],'default':'0'}
     , 'TYPE_LIBOR_CURVE': {'type': 'combo', 'width': '10',
-                            'init_values': ['usd.libor6m','chf.libor3m', 'chf.libor6m', 'eur.libor3m', 'eur.libor6m', 'gbp.libor3m',
-                                            'gbp.libor6m', 'jpy.libor3m', 'jpy.libor6m', 'usd.libor3m' ],'default':'0'}
+                            'init_values': ['usd.libor3m','usd.libor6m','eur.libor3m', 'eur.libor6m','gbp.libor3m',
+                                            'gbp.libor6m','chf.libor3m', 'chf.libor6m',   'jpy.libor3m', 'jpy.libor6m' ],'default':'0'}
     , 'TYPE_CURRENCY': {'type': 'combo', 'width': '10', 'init_values': ['usd', 'gbp', 'eur', 'chf', 'jpy'],'default':'0'}
     , 'TYPE_ELEMENT_DESCRIBE': {'type': 'combo', 'width': '10',
                                  'init_values': ['','book', 'describe', 'formatted_grid_swap_rates', 'market_fx_rates',
@@ -314,7 +322,7 @@ var _pnl_predict={
     ,'argument_labels': ['Date(from)', 'Date (to)', 'Load as']
     ,'argument_optionals': [0,0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_TRADE_LIST']
-    ,'argument_values': ['last','last','0']
+    ,'argument_values': ['previous','last','0']
     }
 
 
@@ -327,7 +335,7 @@ var _pnl_attribute={
     ,'argument_labels': ['Date(from)', 'Date (to)', 'Load as']
     ,'argument_optionals': [0,0,0]
     ,'argument_types': ['TYPE_MARKET_DATES','TYPE_MARKET_DATES','TYPE_TRADE_LIST']
-    ,'argument_values': ['last','last','0']
+    ,'argument_values': ['previous','last','0']
     }
 
 
@@ -335,7 +343,6 @@ var _pnl_attribute={
 // create a dictionary of all api specification
 // 
 api_specs={
-   'price_fx_forward':_price_fx_forward,
    'price_fx_forward':_price_fx_forward,
    'price_vanilla_swap':_price_vanilla_swap,
    'price':_price,
@@ -348,6 +355,24 @@ api_specs={
    'show_available':_show_available
     }
 
+
+
+//
+// create a dictionary of all api text description
+//
+api_descriptions={
+   'price_fx_forward':'',
+   'price_vanilla_swap':'',
+   'price':'',
+   'risk_ladder':'',
+   'pnl_attribute':'',
+   'pnl_predict':'',
+   'market_swap_rates':'',
+   'market_fx_rates':'',
+   'describe':'',
+   'show_available':'',
+    }
+
 // 
 // Populates the list for any type that contains a selection
 // 
@@ -358,6 +383,9 @@ function get_list(id,list, default_value){
 
         content+="<option value=\""+list[j]+"\"";
         if (default_value=='last' && j==list.length-1){
+            content += " selected ";
+        }
+        if (default_value=='previous' && j==list.length-2){
             content += " selected ";
         }
         else if (default_value == j){
@@ -544,6 +572,11 @@ function print_form(choice){
 
     //  finished building the form for this given api. Expose it in the page.
     document.getElementById("api-entries").innerHTML =form_content;
+
+
+    // place the description
+    document.getElementById("description").innerHTML =api_descriptions[name];
+
 }
 
 
@@ -564,7 +597,7 @@ function clear_form(){
 
 // 
 // Performs the validation and processes the form. starts by validating the each field,
-// building a request, sending it and treat the ouput results
+// building a request, sending it and treat the output results
 // 
 function calculate(){
 
@@ -791,17 +824,15 @@ function argument_make_string(function_name,arguments){
 }
 
 
-
+//this function should be run with setInterval
 function obtain_or_refresh_token(){
     var email= "{{ user_email|safe }}";
-
-
     if ($('#token').text().trim()==''){
         var arguments={'email':email};
-
         api_call('account_token_create',arguments,callback_account_token_create);
         return $('#token').text();
     }
+
     var expiry=Date.parse($('#token_expiry').text());
     var diff_second =(expiry - new Date()) / 1000;
     var diff_minutes=Math.round( diff_second/60);
@@ -821,11 +852,11 @@ function obtain_or_refresh_token(){
 
 
 async function asyncFetch(url, requestOptions,callback_function) {
-    console.log("Request:"+JSON.stringify(requestOptions));
+  //  console.log("Request:"+JSON.stringify(requestOptions));
     let response = await fetch(url,requestOptions);
     let data = await response.json();
     callback_function(data,requestOptions.body);
-    console.log("Result:"+JSON.stringify(data));
+  //  console.log("Result:"+JSON.stringify(data));
 }
 
 
@@ -838,7 +869,6 @@ function api_call(function_name,arguments,callback_function){
     arguments['function_name']=function_name;
     if(function_name!='account_token_create'){
         var token = obtain_or_refresh_token();
-
         arguments['token']=token;
     }
 
@@ -883,20 +913,58 @@ function initialize_page(){
     api_specs['price_vanilla_swap']['argument_values'][3]=today_date_formatted;
 
     // trade date for FX swap
+    api_specs['market_fx_rates']['argument_values'][1]=three_month_date_formatted;
+
+
+
+    // expiry date for market FX rate
     api_specs['price_fx_forward']['argument_values'][2]=today_date_formatted;
     api_specs['price_fx_forward']['argument_values'][3]=three_month_date_formatted;
 
 
 }
 
+function hex_to_ascii(str1)
+ {
+	var hex  = str1.toString();
+	var str = '';
+	for (var n = 0; n < hex.length; n += 2) {
+		str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+	}
+	return str;
+ }
 
-var email= "{{ user_email }}";
+//
+// load the description text from the session
+//
+function load_descriptions(){
+    var descriptions_html="{{ descriptions  }}";
+    console.log(descriptions_html);
+    var descriptions = JSON.parse(descriptions_html);
+
+    if (descriptions.length==0){
+      return;
+    }
+
+    var i = 0 ;
+    var api_names=Object.keys(descriptions);
+    for(i=0;i<api_names.length;++i){
+        api_descriptions[api_names[i]]=hex_to_ascii(descriptions[api_names[i]]);
+    }
+}
+
+
+var email= "{{ user_email|default:"" }}";
 if(email!='' && email!=null){
+
+
     setTimeout(obtain_or_refresh_token,0);
+    setTimeout(load_descriptions,0);
     setTimeout(load_asof_dates,2000);
     setTimeout(load_trade_ids,2000);
     setTimeout(initialize_page,300);
-    setTimeout(function (){document.getElementById("api-list").innerHTML =get_api_list();},1000);
+    setTimeout(function (){document.getElementById("api-list").innerHTML =get_api_list();},2000);
+
 }else{
  $('#output').text('Your not Logged in.');
  document.getElementById("calculate-button").disabled = true

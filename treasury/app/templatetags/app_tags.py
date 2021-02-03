@@ -68,23 +68,9 @@ def get_fx_rates_data():
     return obj
 
 
-# TODO: Shahram to remove below once the new market page has been completed.
-files = [
-    'app/media/currency_data/EUR.csv',
-    'app/media/currency_data/USD.csv',
-    'app/media/currency_data/GBP.csv',
-    'app/media/currency_data/CHF.csv',
-    'app/media/currency_data/JPY.csv',
-]
-
-
 @register.simple_tag
 def get_market_data():
-    data_list = []
-    for item in files:
-        obj = read_data(item)
-        data_list.append(obj)
-    return data_list
+    return get_swap_rates_data()
 
 
 @register.simple_tag

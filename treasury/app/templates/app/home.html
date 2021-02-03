@@ -237,7 +237,7 @@
             "X-CSRFToken": token
         },
         type: 'post',
-        url: "{% url 'app:fx_data_graph' %}",
+        url: "{% url 'app:rates_data_graph' %}",
         success: function (output) {
             let response_json = JSON.parse(output);
             let data = response_json.data;

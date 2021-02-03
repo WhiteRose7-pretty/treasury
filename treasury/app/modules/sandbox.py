@@ -1,11 +1,6 @@
-from TQapis import TQConnection  # version 0.12.4 and above
-from app.modules import settings
-from app.modules import utility_grids
-from app.modules import utility_email
-from app.modules import utility_common
-from app.modules.apis_for_json import api_gateway
+
 import json
-from django.http import JsonResponse
+
 from app.modules.apis_for_json import general_apis_factory, api_gateway, account_apis_factory
 
 
@@ -62,9 +57,14 @@ def call_web_api(request):
     result_dic = json.loads(result)
     return result_dic  # JsonResponse(result_dic)
 
-string="{\"function_name\":\"describe\", \"arguments\":{" \
-    "\"user_email\":\"test.account@treasuryquants.com\"" \
+string="{\"function_name\":\"account_status\", \"arguments\":{" \
+    "\"email\":\"test.account@treasuryquants.com\"" \
     "}, \"source_caller\":\"front-end-function3\"}"
 
 # print(string)
 # print(call_web_api(string))
+
+
+
+
+

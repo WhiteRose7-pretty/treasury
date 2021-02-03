@@ -951,8 +951,8 @@ general_apis_factory[MarketFxRates().name] = MarketFxRates()
 general_apis_factory[Workspace().name] = Workspace()
 
 
-def account_api(json_request_string, is_test=settings.is_development):
-    return api_gateway(json_request_string, account_apis_factory)
+# def account_api(json_request_string, is_test=settings.is_development):
+#     return api_gateway(json_request_string, account_apis_factory)
 
 
 def api_gateway(json_request_string, factory=None):

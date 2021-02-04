@@ -35,18 +35,18 @@ def workbench(request):
                  'show_available']
 
     descriptions = utility_common.get_workbench_descriptions_json_string(api_names)
-    user_email=''
+    user_email = ''
     if 'user_email' in request.session:
-        user_email=request.session['user_email']
+        user_email = request.session['user_email']
 
     context = {
         'navbar': 'workbench',
         'user_email': user_email,
         'target_url': settings.url_server,
-        'target_ip' : "http://77.68.119.98/",
-        'descriptions':"{}"# json.dumps(descriptions)
+        'target_ip': "http://77.68.119.98/",
+        'descriptions': "{}"  # json.dumps(descriptions)
     }
-   # print(context)
+    # print(context)
     return render(request, 'app/workbench.html', context)
 
 
@@ -90,10 +90,11 @@ def api_gateway(request):
 
 
 def post_message(request):
-    subject="post_message"
+    data = request.body.decode('utf-8')
+    subject = "post_message"
     if 'subject' in request:
-        subject=request['subject']
-    utility_common.process_fatal_error(subject,request.body.decode('utf-8'), settings.is_development)
+        subject = request['subject']
+    utility_common.process_fatal_error(subject, data, settings.is_development)
     return JsonResponse('success', safe=False)
 
 

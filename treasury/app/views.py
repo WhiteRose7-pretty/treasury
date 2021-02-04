@@ -35,10 +35,13 @@ def workbench(request):
                  'show_available']
 
     descriptions = utility_common.get_workbench_descriptions_json_string(api_names)
+    user_email=''
+    if 'user_email' in request.session:
+        user_email=request.session['user_email']
 
     context = {
         'navbar': 'workbench',
-        'user_email': request.session['user_email'],
+        'user_email': user_email,
         'target_url': settings.url_server,
         'target_ip' : "http://77.68.119.98/",
         'descriptions':"{}"# json.dumps(descriptions)

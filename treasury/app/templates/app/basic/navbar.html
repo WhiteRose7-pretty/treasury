@@ -1,5 +1,22 @@
 {% load static %}
 {% load app_tags %}
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-cookies" data-backdrop="true"
+     aria-labelledby="modal-cookies" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-aside left-4 right-4 bottom-4">
+        <div class="modal-content bg-dark-dark">
+            <div class="modal-body">
+                <p class="text-sm text-white mb-3 line-height-15">
+                    We use cookies to ensure the highest level of performance of our website. By using our website, you consent to their use.
+                </p>
+                <a href="{% url 'app:policy_notice' %}" class="btn btn-sm btn-white" target="_blank">See Policy</a>
+                <button type="button" class="btn btn-sm btn-primary ml-2" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <header class="header">
     <nav class="navbar navbar-expand-lg ">
         <div class="container-fluid">
@@ -20,22 +37,32 @@
                         <a class="nav-link {% check_navbar navbar 'workbench' %}" aria-current="page"
                            href="{% url 'app:workbench' %}">workbench</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% check_navbar navbar 'about_us' %}"
-                           href="{% url 'app:about_us' %}">about&nbsp;us</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">About<span
+                                class="caret ml-2"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item1">
+                                <a class="nav-link"
+                                   href="{% url 'app:about_us' %}">about&nbsp;us</a>
+                            </li>
+                            <li class="nav-item1">
+                                <a class="nav-link"
+                                   href="{% url 'app:policy_notice' %}">policy&nbsp;notice</a>
+                            </li>
+                            <li class="nav-item1">
+                                <a class="nav-link"
+                                   href="{% url 'app:terms_of_service' %}">terms&nbsp;of&nbsp;service</a>
+                            </li>
+
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% check_navbar navbar 'policy_notice' %}"
-                           href="{% url 'app:policy_notice' %}">policy&nbsp;notice</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% check_navbar navbar 'terms' %}"
-                           href="{% url 'app:terms_of_service' %}">terms of service</a>
-                    </li>
-                    {% authenticated request as user_flag%}
+
+
+                    {% authenticated request as user_flag %}
                     {% if user_flag %}
                         <li class="nav-item">
-                            <a class="nav-link {% check_navbar navbar 'profile' %}" href="{% url 'account_cycle:profile' %}">Profile</a>
+                            <a class="nav-link {% check_navbar navbar 'profile' %}"
+                               href="{% url 'account_cycle:profile' %}">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-primary"
@@ -43,7 +70,8 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link  {% check_navbar navbar 'login' %}" href="{% url 'account_cycle:login' %}">Login</a>
+                            <a class="nav-link  {% check_navbar navbar 'login' %}"
+                               href="{% url 'account_cycle:login' %}">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-primary"

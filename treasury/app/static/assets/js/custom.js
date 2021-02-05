@@ -13,12 +13,8 @@ var Cookies = (function() {
         var cookies = localStorage.getItem('modal_cookies');
 
         if(! cookies) {
-            $this.modal('show')
+            $this.modal({backdrop: 'static', keyboard: false})
         }
-	}
-
-	function hide($this) {
-		$this.modal('hide')
 	}
 
 	// Events

@@ -4,99 +4,168 @@
 <html lang="en">
 
 
-<head >
+<head>
     <title>Treasury Quants</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
-    <link rel="icon" href="{% static 'assets/images/favicon.png' %}">
-
-<style>
-.item1 { grid-area: header; }
-.item2 { grid-area: menu; }
-.item3 { grid-area: main; }
-.item4 { grid-area: right; }
-.item5 { grid-area: footer; }
-
-.grid-container {
-  display: grid;
-  grid-template-areas:
-    'header header header'
-    'menu main right'
-    'footer footer footer';
-  grid-gap: 10px;
-  justify-content: center;
-  grid-template-columns: 400px 400px 500px;
-  background-color: #f0f0f5;
-  grid-width=870px;
-  padding: 10px;
-
-}
-
-.grid-container > div {
-  background-color: #fcfdff;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 20px;
-   text-align:left;
-}
-
-
-</style>
-
-
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
 </head>
 
 <body>
 
 {% include 'app/basic/navbar.html' %}
 
-<section class="page-banner" style="background: #181717; padding-bottom: 0;">
-    <div class="container-fluid">
-        <div class="page-title">Workbench</div>
-    </div>
+<section class="mid">
+    <section class="middle-office">
+        <div class="container-fluid" style="max-width: 1600px;">
+            <h2>Your Middle Office</h2>
+            <div class="user-information">
+                <div class="grid-mother">
+                    <div>
+                        <p>IP:</p>
+                        <p id="ip">123.232.123.121</p>
+                    </div>
+                    <div>
+                        <p>Token:</p>
+                        <p id="token">l757hwhsnt57k1unz_w_mg</p>
+                    </div>
+                    <div>
+                        <p>Token Expiry:</p>
+                        <p id="token_expiry">2021-02-04T19:21:13.446Z</p>
+                    </div>
+                    <div>
+                        <p>Email:</p>
+                        <p id="email">valya.varechkina.76@bk.ru</p>
+                    </div>
+                    <div>
+                        <p>Balance:</p>
+                        <p id="balance">998.25</p>
+                    </div>
+                    <div>
+                        <p>User-id:</p>
+                        <p id="client_id">00000860</p>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="data-table">
+                <div class="grid-board">
+                    <div>
+                        <div class="board-title">API</div>
+                        <div class="board-list">
+                            <div>
+                                <select id="api-list" name="api-list">
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="board-main">
+                            {% for item in list %}
+                                <div class="form-group row">
+                                    <label for="type-{{ item }}"
+                                           class="col-6 col-form-label font-weight-bold">Type{{ item }}:</label>
+                                    <div class="col-6">
+                                        <select class="form-control" id="type={{ item }}">
+                                            <option selected value="price">Price{{ item }}</option>
+                                            <option value="price1">Price</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            <div class="form-group row">
+                                <label for="fixed-rate"
+                                       class="col-6 col-form-label font-weight-bold">Fixed Rate:</label>
+                                <div class="col-6">
+                                    <input id="fixed-rate" type="text" placeholder="0.01" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-6 col-form-label font-weight-bold">Save as:</label>
+                                <div class="col-3">
+                                    <input id="fixed-rate" type="text" class="form-control">
+                                </div>
+                                <div class="col-3">
+                                    <input id="fixed-rate" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="board-footer">
+                            <button class="btn btn-primary btn-block">CALCULATE</button>
+                        </div>
+
+                    </div>
+                    <div class="board-output">
+                        <div class="board-title">Output</div>
+                        <div class="board-main">
+                            {% for item in list %}
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label font-weight-bold">price{{ item }}:</label>
+                                    <label class="col-6 col-form-label ">16205189.025432</label>
+                                </div>
+                            {% endfor %}
+                            {% for item in list %}
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label font-weight-bold">price{{ item }}:</label>
+                                    <label class="col-6 col-form-label ">16205189.025432</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    <div class="board-output">
+                        <div class="board-title">Description</div>
+                        <div class="board-main">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+                            ridiculus mus. <br><br>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+                            Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
+                            eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+                            felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper
+                            nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae,
+                            eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.<br><br>
+                            Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean Phasellus viverra
+                            nulla ut<br><br> metus varius laoreet. Quisque rutrum. Aenean i
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="log">
+                <div class="board-title">Log</div>
+                <div class="board-main" id="log">
+                    Request:34657244356413
+                    URL:http://operations.treasuryquants.com
+                    Method: POST
+                    asof=20210203&load_as=test_ir_swap.xml&function_name=price&token=i1zzm91kgbaxxr7cgv-v8aasof=20210203&load_as=test_ir_swap.xml&function_name=price&token=i1zzm91kgbaxxr7cgv-v8a
+                    Response:34657244356413
+                    {"client_id":"00000890","session_id":"na","id":"34657244356413","version":"1.0","note":"na","source_id":"158.255.2.2","Response":{"cost":"0.35","balance":"997.55","focus":"results","id":"34657244356413","expiry_minutes":"22.76","Results":{"Price":"-5194136.805349633098","Currency":"eur"},"Errors":{},"Logs":{},"Notes":[]}}
+                    Request:34656810462013
+                    URL:http://operations.treasuryquants.com
+                    Method: POST
+                    email=valya.varechkina.76@bk.ru&function_name=account_token_createemail=valya.varechkina.76@bk.ru&function_name=account_token_create
+                    Response:34656810462013
+                    {"client_id":"","session_id":"","id":"34656810462013","version":"1.0","note":"na","source_id":"158.255.2.2","Response":{"cost":"0.00","balance":"997.90","focus":"results","id":"34656810462013","expiry_minutes":"29.99","Results":{"account_token_create":"i1zzm91kgbaxxr7cgv-v8a"},"Errors":{},"Logs":{},"Notes":[]}}
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
 </section>
 
-<section class="body">
-<div class="grid-container">
-  <div class="item1">
-  <div>
-    <label style="font-weight: bold;">IP:     </label><label id="ip"></label>&nbsp;&nbsp;
-    <label style="font-weight: bold;">Token:  </label><label id="token"></label>&nbsp;&nbsp;
-    <label style="font-weight: bold;">Token expiry: </label><label id="token_expiry"></label>
-    <label style="font-weight: bold;">Email:  </label><label id="email"></label>&nbsp;&nbsp;
-    <label style="font-weight: bold;">Balance:</label><label id="balance"></label>&nbsp;&nbsp;
-    <label style="font-weight: bold;">user-id:</label><label id="client_id"></label>&nbsp;&nbsp;
-  </div>
- </div>
-  <div style="text-align:left;width:370px;height:730px">
-        <div align="center"><b>API</b><br><hr></div>
-        <select style=" display: table;margin: 0 auto;" id="api-list" name="api-list" onchange="print_form(this.value)"></select>
-          <form action="" method="post" enctype="multipart/form-data" id="api-form" style="margin-top:20px;">
-            <p id="api-entries"></p>
-            <button id="calculate-button" style="display: table;margin: 0 auto;" type="button" onclick="calculate()">Calculate</button>
-        </form>
-  </div>
-  <div class="item3" style="overflow:auto;width:370px;height:730px;scrollbar-base-color:gold;font-family:sans-serif;padding:10px">
-      <div align="center"><b>Output</b><br><hr></div>
-      <div  id="output" style="overflow:auto;height:630px;"></div>
-  </div>
-  <div class="item4"  style="width:500px;height:730px;scrollbar-base-color:gold;font-family:sans-serif;padding:10px">
-      <div align="center"><b>Descripion</b><br><hr></div>
-      <div  id="description" style="overflow:auto;height:630px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. <br><br>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.<br><br> Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean Phasellus viverra nulla ut<br><br> metus varius laoreet. Quisque rutrum. Aenean i  </div>
-  </div>
-  <div class="item5" style="overflow:auto;height:350px;">
-      <div align="center" ><b>Log</b><br><hr></div>
-      <div id="log" style="overflow:auto;height:250px;"></div>
-  </div>
-</div>
-</section>
 
-
+<!-- Core JS  -->
 <script src="{% static 'assets/js/jquery-2.1.3.min.js' %}"></script>
 <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/chart.js' %}"></script>
 <script src="{% static 'assets/js/custom.js' %}"></script>
 <script>
 
@@ -137,9 +206,9 @@ Each type covers type, width, init_values and default.
 
 
 
-// 
+//
 // declaring  the data type specifications
-// 
+//
 var data_type_spec = {
       'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': [], 'default':''}
     , 'TYPE_STRING': {'type': 'string', 'width': '10', 'init_values': [], 'default':''}
@@ -179,13 +248,13 @@ var data_type_spec = {
     };
 
 
-// 
+//
 // declaring each api specification separately (rather than all of the together for readability)
-// 
+//
 
-// 
+//
 // api:show_available
-// 
+//
 var _show_available={
     'name':'show_available'
     ,'arguments': ['element']
@@ -195,9 +264,9 @@ var _show_available={
     ,'argument_values': ['']
     }
 
-// 
+//
 // api:describe
-// 
+//
 var _describe={
     'name':'describe'
     ,'arguments': ['element']
@@ -207,9 +276,9 @@ var _describe={
     ,'argument_values': ['']
     }
 
-// 
+//
 // api:market_swap_rates
-// 
+//
 var _market_swap_rates={
     'name':'market_swap_rates'
     ,'arguments': ['asof', 'currency']
@@ -220,9 +289,9 @@ var _market_swap_rates={
     }
 
 
-// 
+//
 // api:market_fx_rates
-// 
+//
 var _market_fx_rates={
     'name':'market_fx_rates'
     ,'arguments': ['asof', 'to_date', 'base_currency']
@@ -233,9 +302,9 @@ var _market_fx_rates={
     }
 
 
-// 
+//
 // api:price_fx_forward
-// 
+//
 var _price_fx_forward={
     'name':'price_fx_forward'
     ,'arguments': ['type','asof',  'trade_date', 'trade_expiry', 'pay_amount', 'pay_currency',
@@ -247,9 +316,9 @@ var _price_fx_forward={
     ,'argument_values': ['0','last','','','1000000','0','1000000','1','']
     }
 
-// 
+//
 // api:price_vanilla_swap
-// 
+//
 var _price_vanilla_swap={
     'name':'price_vanilla_swap'
     ,'arguments': ['type','asof', 'notional', 'trade_date', 'trade_maturity', 'index_id',
@@ -283,9 +352,9 @@ var _price_vanilla_swap={
     ,'argument_values': ['0','last','100000000','','30y','0','0','0','0','0','0','0','0.01','0','0','0','0','']
     }
 
-// 
+//
 // api:price
-// 
+//
 var _price={
     'name':'price'
     ,'arguments': ['asof', 'load_as']
@@ -296,9 +365,9 @@ var _price={
     }
 
 
-// 
+//
 // api:risk_ladder
-// 
+//
 var _risk_ladder={
     'name':'risk_ladder'
     ,'arguments': ['asof', 'load_as']
@@ -309,9 +378,9 @@ var _risk_ladder={
     }
 
 
-// 
+//
 // api:pnl_predict
-// 
+//
 var _pnl_predict={
     'name':'pnl_predict'
     ,'arguments': ['from_date', 'to_date', 'load_as']
@@ -322,9 +391,9 @@ var _pnl_predict={
     }
 
 
-// 
+//
 // api:pnl_attribute
-// 
+//
 var _pnl_attribute={
     'name':'pnl_attribute'
     ,'arguments': ['from_date', 'to_date', 'load_as']
@@ -335,9 +404,9 @@ var _pnl_attribute={
     }
 
 
-// 
+//
 // create a dictionary of all api specification
-// 
+//
 api_specs={
    'price_fx_forward':_price_fx_forward,
    'price_vanilla_swap':_price_vanilla_swap,
@@ -369,9 +438,9 @@ api_descriptions={
    'show_available':'',
     }
 
-// 
+//
 // Populates the list for any type that contains a selection
-// 
+//
 function get_list(id,list, default_value){
 
     var content= "<select  style=\"direction: rtl; height:25px; margin-left:10px; float:right;\" id=\""+id+"\" name=\""+id+"\">";
@@ -422,9 +491,9 @@ function build_input_text_box(argument,type_attribute='text',value='',placeholde
 }
 
 
-// 
+//
 // Provides an input object such as a text box or a list, etc. depending on the type of the input (see data_type_spec)
-// 
+//
 function get_input_object(argument,argument_text,argument_optional,argument_type, argument_default){
     var simple_type_content="<input ";
         simple_type_content+=" class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\"";
@@ -505,9 +574,9 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
     return content;
 }
 
-// 
+//
 // Provides the original api list combo for the user to select
-// 
+//
 function get_api_list(){
     var content="<option value=\"x\">Select API</option>";
     for (var key in api_specs) {
@@ -520,9 +589,9 @@ function get_api_list(){
 
 
 
-// 
+//
 // This is the dynamic form to be created when the use changes the selection in the api list.
-// 
+//
 function print_form(choice){
 
 
@@ -576,10 +645,10 @@ function print_form(choice){
 }
 
 
-// 
+//
 // A general function to clear the output once an api is
 // selected to ensure all previous messages are reset.
-// 
+//
 function clear_output(){
  $('#output').text('');
  $('#request').text('');
@@ -591,10 +660,10 @@ function clear_form(){
     document.getElementById("api-entries").innerHTML=''
 }
 
-// 
+//
 // Performs the validation and processes the form. starts by validating the each field,
 // building a request, sending it and treat the output results
-// 
+//
 function calculate(){
 
 
@@ -613,9 +682,9 @@ function calculate(){
     var argument_types=function_spec['argument_types'];
 
 
-    // 
+    //
     //  validation section
-    // 
+    //
 
     if (function_name.trim()==''){
         return;
@@ -634,9 +703,9 @@ function calculate(){
         var argument_value=$('#'+argument).val();
 
 
-        // 
+        //
         //     validate argument_value by type and optional
-        // 
+        //
         var value=''
         if (argument_value !=null){
             value=argument_value.trim();
@@ -665,9 +734,9 @@ function calculate(){
         arguments_dictionary[arguments[i]]=argument_value;
     }
 
-    // 
+    //
     //  If no error, we call the api with the corresponding callback function to consume the results
-    // 
+    //
 
     if (!is_error){
         api_call(function_name,arguments_dictionary, callback_nothing);
@@ -675,18 +744,18 @@ function calculate(){
 }
 
 
-// 
+//
 // Market dates callback function to treat the response
-// 
+//
 function callback_fill_market_dates(data, request){
     results=data['Response']['Results'];
     keys=Object.keys(results);
     data_type_spec['TYPE_MARKET_DATES']['init_values']=keys;
 }
 
-// 
+//
 // Trade id's callback function to treat the response
-// 
+//
 function callback_fill_trade_ids(data, request){
     results=data['Response']['Results'];
     keys=Object.keys(results);
@@ -694,9 +763,9 @@ function callback_fill_trade_ids(data, request){
 }
 
 
-// 
+//
 // General callback function to treat the response
-// 
+//
 
 function callback_nothing(data, request){
 
@@ -740,9 +809,9 @@ function print_summary(data, request){
 
 
 
-// 
+//
 // Token Create callback function to treat the response
-// 
+//
 function callback_account_token_create(data, request){
     if (data['Response']['focus']=='errors'){
 

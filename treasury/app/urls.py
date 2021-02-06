@@ -10,8 +10,10 @@ urlpatterns = [
     path('terms-of-service/', views.terms_service, name='terms_of_service'),
     path('fx-data_graph/', views.rates_data_graph, name='rates_data_graph'),
     path('workbench/', views.workbench, name='workbench'),
+    path('workbench2/', views.workbench2, name='workbench2'),
     path('api_gateway/', views.api_gateway, name='api_gateway'),
     path('post_message/', views.post_message, name='post_message'),
     path('cron_test/', views.cron_test, name='cron_test'),
+    path('connection_test/', views.connection_test, name='connection_test'),
 ]
 

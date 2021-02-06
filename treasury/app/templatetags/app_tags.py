@@ -1,5 +1,5 @@
 from django import template
-from app.models import CurrencyData
+from app.models import CurrencyData, ApiStatus
 from app.modules import utility_grids
 from app.modules import settings
 
@@ -14,6 +14,15 @@ swap_rate_files = [
 ]
 
 fx_file = 'app/media/currency_data/FX.csv'
+
+
+@register.simple_tag
+def get_api_status():
+    api_status = ApiStatus.objects.first()
+    if api_status:
+        return api_status.status
+    else:
+        return False
 
 
 def read_data(file_path):

@@ -3,6 +3,7 @@ from celery.decorators import periodic_task
 from app.modules import cron_grids
 import datetime
 import pytz
+from app.models import ApiStatus
 
 
 @periodic_task(run_every=(crontab(minute='*/15')))
@@ -16,7 +17,15 @@ def main():
 
 @periodic_task(run_every=(crontab(minute='*/5')))
 def check_connection():
-    return cron_grids.check_connection()
+    (status, error) = cron_grids.check_connection()
+    api_status = ApiStatus.objects.first()
+    if api_status:
+        api_status.status = status
+    else:
+        api_status = ApiStatus()
+        api_status.status = status
+    api_status.save()
+    return status, error
 
 
 @periodic_task(run_every=(crontab(minute='*/180')))

@@ -22,6 +22,17 @@
     <section class="middle-office">
         <div class="container-fluid">
             <h2>Your Middle Office</h2>
+            {% get_api_status as api_status %}
+            <div class="api-status">Api Server :
+                {% if api_status %}
+                <img src="{% static 'assets/img/Button-Green.svg'%}" width="20px"> </div>
+            {% else %}
+                <img src="{% static 'assets/img/grey-circle.svg'%}" width="20px"> </div>
+            {% endif %}
+        </div>
+    </section>
+    <section class="middle-office">
+        <div class="container-fluid">
             <h4>Swap & FX Market Rates</h4>
             <div class="one-usd">
                 {% get_fx_rates_data as fx_data %}
@@ -169,13 +180,11 @@
                         </div>
                     </li>
                 {% endfor %}
-
-
             </ul>
         </div>
     </section>
     <section>
-        <div><em>Swap rates are shown in percentage points using market conventions for each currency market. The swap rate market data is sourced from various OTC clearing houses' closing settlement rates for the dates shown. FX rates are source directly from ECB, periodically.</em></div>
+        <div class="px-2"><em>Swap rates are shown in percentage points using market conventions for each currency market. The swap rate market data is sourced from various OTC clearing houses' closing settlement rates for the dates shown. FX rates are source directly from ECB, periodically.</em></div>
     </section>
     {% include "app/basic/license.html" %}
 

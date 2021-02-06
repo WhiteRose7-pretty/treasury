@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from app.templatetags.app_tags import get_market_data
 from app.modules import cron_grids
+from app.models import ApiStatus
 
 
 def home(request):
@@ -48,6 +49,36 @@ def workbench(request):
     }
     # print(context)
     return render(request, 'app/workbench.html', context)
+
+
+def workbench2(request):
+    api_names = ['price_fx_forward',
+                 'price_vanilla_swap',
+                 'price',
+                 'risk_ladder',
+                 'pnl_attribute',
+                 'pnl_predict',
+                 'market_swap_rates',
+                 'market_fx_rates',
+                 'describe',
+                 'show_available']
+
+    descriptions = utility_common.get_workbench_descriptions_json_string(api_names)
+    user_email = ''
+    if 'user_email' in request.session:
+        user_email = request.session['user_email']
+    arrays = range(1, 10)
+
+    context = {
+        'navbar': 'workbench',
+        'user_email': user_email,
+        'target_url': settings.url_server,
+        'target_ip': "http://77.68.119.98/",
+        'descriptions': "{}",  # json.dumps(descriptions),
+        'list': arrays,
+    }
+
+    return render(request, 'app/workbench2.html', context)
 
 
 def policy_notice(request):
@@ -101,6 +132,23 @@ def post_message(request):
 def cron_test(request):
     (status, result) = cron_grids.download_rates_data()
     print(status, result)
+    context = {
+        'navbar': 'terms',
+    }
+    return render(request, 'app/terms.html', context)
+
+
+def connection_test(request):
+    (status, error) = cron_grids.check_connection()
+    api_status = ApiStatus.objects.first()
+    if api_status:
+        api_status.status = status
+    else:
+        api_status = ApiStatus()
+        api_status.status = status
+    api_status.save()
+
+    print(status, error)
     context = {
         'navbar': 'terms',
     }

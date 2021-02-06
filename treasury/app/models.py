@@ -20,3 +20,7 @@ class DataFile(models.Model):
 
     def __str__(self):
         return self.csv_file.name
+
+
+class ApiStatus(models.Model):
+    status = models.BooleanField(default=False)

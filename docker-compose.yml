@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+    restart: on-failure
+  app:
+    hostname: app
+    container_name: django
+    image: app_image:latest
+    volumes:
+      - static:/static
+      - /opt/media:/app/app/media
+    build:
+      context: .
+    command: bash -c "python manage.py makemigrations --no-input && python manage.py migrate --no-input && python manage.py collectstatic --no-input && gunicorn app_rama.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+  celery_worker:
+    image: app_image:latest
+    command: bash -c "celery -A app_rama worker -l info"
+    container_name: celery_worker
+    volumes:
+      - static:/static
+      - /opt/media:/app/app/media
+    depends_on:
+      - app
+      - rabbitmq
+    restart: on-failure
+  celery_beat:
+    image: app_image:latest      
+    command: sh -c "celery -A app_rama beat -l info"
+    container_name: celery_beat
+    volumes:
+      - static:/static
+      - /opt/media:/media
+    depends_on:
+      - app
+      - rabbitmq
+    restart: on-failure
+
+volumes:
+  static:

@@ -2,8 +2,8 @@
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
 
-email_default = "web.user@treasuryquants.com"     # Prod's
-#email_default = "valya.varechkina.76@bk.ru"       # Daria's
+# email_default = "web.user@treasuryquants.com"     # Prod's
+email_default = "valya.varechkina.76@bk.ru"       # Daria's
 #email_default = "test.account@treasuryquants.com" # Shahram's
 
 
@@ -20,7 +20,7 @@ url_server = "http://operations.treasuryquants.com"
 # 2) use is_test=True for the api calls
 # 3) ... ?
 #
-is_development = False
+is_development = True
 
 
 #
@@ -28,7 +28,7 @@ is_development = False
 #
 token_path = "app/configs/token.json"
 
-
+api_status_path = "app/configs/api_status.txt"
 
 #
 # Location of the grid files

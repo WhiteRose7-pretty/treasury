@@ -2,7 +2,7 @@ FROM python:3.8.5
 
 RUN pip install --upgrade pip
 
-COPY ./web_daria/treasury /app
+COPY ./treasury /app
 
 WORKDIR /app
 

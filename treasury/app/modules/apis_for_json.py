@@ -50,6 +50,9 @@ class WebResponse:
 
     def to_string(self):
         response = dict()
+        # backend server disconnected
+        if not self.error and not self.results:
+            self.error = 'There is not internet connection with backend server.'
         response['error'] = self.error
         response['results'] = self.results
         response['source_caller'] = self.source_caller
@@ -174,11 +177,9 @@ class AccountActivationKeyStatus(functionCall):
 
         return True, ''
 
-
-    def call(self,connection,is_test):
+    def call(self, connection, is_test):
         status, results = apis.account_activation_key_status(connection, self.activation_key)
-        return self._make_response(status,results)
-
+        return self._make_response(status, results)
 
     def create_new(self):
         return AccountActivationKeyStatus()
@@ -366,7 +367,6 @@ class AccountActivate(functionCall):
         return AccountActivate()
 
 
-
 class AccountTokenCreate(functionCall):
     def __init__(self):
         super(AccountTokenCreate, self).__init__("account_token_create")
@@ -400,8 +400,6 @@ account_apis_factory[AccountPasswordReset().name] = AccountPasswordReset()
 account_apis_factory[AccountActivate().name] = AccountActivate()
 
 
-
-
 class Describe(functionCall):
     def __init__(self):
         super(Describe, self).__init__("describe")
@@ -413,16 +411,15 @@ class Describe(functionCall):
 
         self.user_email = web_request.arguments['user_email'].strip()
 
-        self.element =''
+        self.element = ''
         if 'element' in web_request.arguments:
             self.element = web_request.arguments['element'].strip()
 
         return True, ''
 
     def call(self, connection, is_test=False):
-        status, results = apis.describe(connection,self.user_email, self.element)
+        status, results = apis.describe(connection, self.user_email, self.element)
         return self._make_response(status, results)
-
 
     def create_new(self):
         return Describe()
@@ -439,16 +436,15 @@ class ShowAvailable(functionCall):
 
         self.user_email = web_request.arguments['user_email'].strip()
 
-        self.element =''
+        self.element = ''
         if 'element' in web_request.arguments:
             self.element = web_request.arguments['element'].strip()
 
         return True, ''
 
     def call(self, connection, is_test=False):
-        status, results = apis.show_available(connection,self.user_email, self.element)
+        status, results = apis.show_available(connection, self.user_email, self.element)
         return self._make_response(status, results)
-
 
     def create_new(self):
         return ShowAvailable()
@@ -457,9 +453,9 @@ class ShowAvailable(functionCall):
 class PnlAttribute(functionCall):
     def __init__(self):
         super(PnlAttribute, self).__init__("pnl_attribute")
-        self.load_as=''
-        self.from_date=''
-        self.to_date=''
+        self.load_as = ''
+        self.from_date = ''
+        self.to_date = ''
 
     def is_valid(self, web_request):
 
@@ -485,7 +481,7 @@ class PnlAttribute(functionCall):
         return True, ''
 
     def call(self, connection, is_test=False):
-        status, results = apis.pnl_attribute(connection,self.user_email,self.load_as,self.from_date,self.to_date)
+        status, results = apis.pnl_attribute(connection, self.user_email, self.load_as, self.from_date, self.to_date)
         return self._make_response(status, results)
 
     def create_new(self):
@@ -556,11 +552,12 @@ class RiskLadder(functionCall):
         return True, ''
 
     def call(self, connection, is_test=False):
-        status, results = apis.risk_ladder(connection, self.user_email,self.asof,self.load_as)
+        status, results = apis.risk_ladder(connection, self.user_email, self.asof, self.load_as)
         return self._make_response(status, results)
 
     def create_new(self):
         return RiskLadder()
+
 
 class Price(functionCall):
     def __init__(self):
@@ -580,7 +577,6 @@ class Price(functionCall):
             return False, " key 'load_as' is missing"
         self.load_as = web_request.arguments['load_as'].strip()
 
-
         self.asof = ''
         if 'asof' not in web_request.arguments:
             return False, " key 'asof' is missing"
@@ -589,32 +585,33 @@ class Price(functionCall):
         return True, ''
 
     def call(self, connection, is_test=False):
-        status, results = apis.price(connection, self.user_email,self.asof,self.load_as)
+        status, results = apis.price(connection, self.user_email, self.asof, self.load_as)
         return self._make_response(status, results)
 
     def create_new(self):
         return Price()
 
+
 class PriceVanillaSwap(functionCall):
     def __init__(self):
         super(PriceVanillaSwap, self).__init__("price_vanilla_swap")
-        self.asof=''
-        self.type_=''
-        self.notional=''
-        self.trade_date=''
-        self.trade_maturity=''
-        self.index_id=''
-        self.discount_id=''
-        self.floating_leg_period=''
-        self.fixed_leg_period=''
-        self.floating_leg_daycount=''
-        self.fixed_leg_daycount=''
-        self.fixed_rate=''
-        self.is_payer=''
-        self.spread=''
-        self.business_day_rule=''
-        self.business_centres=''
-        self.spot_lag_days=''
+        self.asof = ''
+        self.type_ = ''
+        self.notional = ''
+        self.trade_date = ''
+        self.trade_maturity = ''
+        self.index_id = ''
+        self.discount_id = ''
+        self.floating_leg_period = ''
+        self.fixed_leg_period = ''
+        self.floating_leg_daycount = ''
+        self.fixed_leg_daycount = ''
+        self.fixed_rate = ''
+        self.is_payer = ''
+        self.spread = ''
+        self.business_day_rule = ''
+        self.business_centres = ''
+        self.spot_lag_days = ''
         self.save_as = ''
 
     def is_valid(self, web_request):
@@ -623,12 +620,10 @@ class PriceVanillaSwap(functionCall):
             return False, " key 'user_email' is missing"
         self.user_email = web_request.arguments['user_email'].strip()
 
-
         self.asof = ''
         if 'asof' not in web_request.arguments:
             return False, " key 'asof' is missing"
         self.asof = web_request.arguments['asof'].strip()
-
 
         self.type_ = ''
         if 'type' not in web_request.arguments:
@@ -639,7 +634,6 @@ class PriceVanillaSwap(functionCall):
         if 'notional' not in web_request.arguments:
             return False, " key 'notional' is missing"
         self.notional = web_request.arguments['notional'].strip()
-
 
         self.trade_date = ''
         if 'trade_date' not in web_request.arguments:
@@ -652,27 +646,27 @@ class PriceVanillaSwap(functionCall):
         self.trade_maturity = web_request.arguments['trade_maturity'].strip()
 
         self.index_id = ''
-        if 'index_id'  not in web_request.arguments:
+        if 'index_id' not in web_request.arguments:
             return False, " key 'index_id' is missing"
         self.index_id = web_request.arguments['index_id'].strip()
 
         self.discount_id = ''
-        if 'discount_id' not  in web_request.arguments:
+        if 'discount_id' not in web_request.arguments:
             return False, " key 'discount_id' is missing"
         self.discount_id = web_request.arguments['discount_id'].strip()
 
         self.floating_leg_period = ''
-        if 'floating_leg_period'  not in web_request.arguments:
+        if 'floating_leg_period' not in web_request.arguments:
             return False, " key 'floating_leg_period' is missing"
         self.floating_leg_period = web_request.arguments['floating_leg_period'].strip()
 
         self.fixed_leg_period = ''
-        if 'fixed_leg_period' not  in web_request.arguments:
+        if 'fixed_leg_period' not in web_request.arguments:
             return False, " key 'fixed_leg_period' is missing"
         self.fixed_leg_period = web_request.arguments['fixed_leg_period'].strip()
 
         self.floating_leg_daycount = ''
-        if 'floating_leg_daycount' not  in web_request.arguments:
+        if 'floating_leg_daycount' not in web_request.arguments:
             return False, " key 'floating_leg_daycount' is missing"
         self.floating_leg_daycount = web_request.arguments['floating_leg_daycount'].strip()
 
@@ -714,48 +708,48 @@ class PriceVanillaSwap(functionCall):
         if 'save_as' in web_request.arguments:
             self.save_as = web_request.arguments['save_as'].strip()
 
-
         return True, ''
 
     def call(self, connection, is_test=False):
         status, results = apis.price_vanilla_swap(
             connection
-        , self.user_email
-        , self.asof
-        , self.type_
-        , self.notional
-        , self.trade_date
-        , self.trade_maturity
-        , self.index_id
-        , self.discount_id
-        , self.floating_leg_period
-        , self.fixed_leg_period
-        , self.floating_leg_daycount
-        , self.fixed_leg_daycount
-        , self.fixed_rate
-        , self.is_payer
-        , self.spread
-        , self.business_day_rule
-        , self.business_centres
-        , self.spot_lag_days
-        , self.save_as)
+            , self.user_email
+            , self.asof
+            , self.type_
+            , self.notional
+            , self.trade_date
+            , self.trade_maturity
+            , self.index_id
+            , self.discount_id
+            , self.floating_leg_period
+            , self.fixed_leg_period
+            , self.floating_leg_daycount
+            , self.fixed_leg_daycount
+            , self.fixed_rate
+            , self.is_payer
+            , self.spread
+            , self.business_day_rule
+            , self.business_centres
+            , self.spot_lag_days
+            , self.save_as)
 
         return self._make_response(status, results)
 
     def create_new(self):
         return PriceVanillaSwap()
 
+
 class PriceFxForward(functionCall):
     def __init__(self):
         super(PriceFxForward, self).__init__("price_fx_forward")
-        self.asof=''
-        self.type_=''
-        self.trade_date= ''
-        self.trade_expiry= ''
-        self.pay_amount= ''
-        self.pay_currency= ''
-        self.receive_amount= ''
-        self.receive_currency= ''
+        self.asof = ''
+        self.type_ = ''
+        self.trade_date = ''
+        self.trade_expiry = ''
+        self.pay_amount = ''
+        self.pay_currency = ''
+        self.receive_amount = ''
+        self.receive_currency = ''
         self.save_as = ''
 
     def is_valid(self, web_request):
@@ -764,18 +758,15 @@ class PriceFxForward(functionCall):
             return False, " key 'user_email' is missing"
         self.user_email = web_request.arguments['user_email'].strip()
 
-
         self.asof = ''
         if 'asof' not in web_request.arguments:
             return False, " key 'asof' is missing"
         self.asof = web_request.arguments['asof'].strip()
 
-
         self.type_ = ''
         if 'type' not in web_request.arguments:
             return False, " key 'type' is missing"
         self.type_ = web_request.arguments['type'].strip()
-
 
         self.trade_date = ''
         if 'trade_date' not in web_request.arguments:
@@ -788,22 +779,22 @@ class PriceFxForward(functionCall):
         self.trade_expiry = web_request.arguments['trade_expiry'].strip()
 
         self.pay_amount = ''
-        if 'pay_amount'  not in web_request.arguments:
+        if 'pay_amount' not in web_request.arguments:
             return False, " key 'pay_amount' is missing"
         self.pay_amount = web_request.arguments['pay_amount'].strip()
 
         self.pay_currency = ''
-        if 'pay_currency' not  in web_request.arguments:
+        if 'pay_currency' not in web_request.arguments:
             return False, " key 'pay_currency' is missing"
         self.pay_currency = web_request.arguments['pay_currency'].strip()
 
         self.receive_amount = ''
-        if 'receive_amount'  not in web_request.arguments:
+        if 'receive_amount' not in web_request.arguments:
             return False, " key 'receive_amount' is missing"
         self.receive_amount = web_request.arguments['receive_amount'].strip()
 
         self.receive_currency = ''
-        if 'receive_currency'  not in web_request.arguments:
+        if 'receive_currency' not in web_request.arguments:
             return False, " key 'receive_currency' is missing"
         self.receive_currency = web_request.arguments['receive_currency'].strip()
 
@@ -811,32 +802,31 @@ class PriceFxForward(functionCall):
         if 'save_as' in web_request.arguments:
             self.save_as = web_request.arguments['save_as'].strip()
 
-
         return True, ''
 
     def call(self, connection, is_test=False):
         status, results = apis.price_fx_forward(connection
-        , self.user_email
-        , self.asof
-        , self.type_
-        , self.trade_date
-        , self.trade_expiry
-        , self.pay_amount
-        , self.pay_currency
-        , self.receive_amount
-        , self.receive_currency
-        , self.save_as )
+                                                , self.user_email
+                                                , self.asof
+                                                , self.type_
+                                                , self.trade_date
+                                                , self.trade_expiry
+                                                , self.pay_amount
+                                                , self.pay_currency
+                                                , self.receive_amount
+                                                , self.receive_currency
+                                                , self.save_as)
         return self._make_response(status, results)
 
     def create_new(self):
         return PriceFxForward()
+
 
 class MarketSwapRates(functionCall):
     def __init__(self):
         super(MarketSwapRates, self).__init__("market_swap_rates")
         self.asof = ''
         self.currency = ''
-
 
     def is_valid(self, web_request):
 
@@ -849,7 +839,6 @@ class MarketSwapRates(functionCall):
             return False, " key 'asof' is missing"
         self.asof = web_request.arguments['asof'].strip()
 
-
         self.currency = ''
         if 'currency' not in web_request.arguments:
             return False, " key 'currency' is missing"
@@ -858,11 +847,12 @@ class MarketSwapRates(functionCall):
         return True, ''
 
     def call(self, connection, is_test=False):
-        status, results = apis.market_swap_rates(connection, self.user_email,self.asof,self.currency)
+        status, results = apis.market_swap_rates(connection, self.user_email, self.asof, self.currency)
         return self._make_response(status, results)
 
     def create_new(self):
         return MarketSwapRates()
+
 
 class MarketFxRates(functionCall):
     def __init__(self):
@@ -870,7 +860,6 @@ class MarketFxRates(functionCall):
         self.base_date = ''
         self.base_currency = ''
         self.asof = ''
-
 
     def is_valid(self, web_request):
 
@@ -882,7 +871,6 @@ class MarketFxRates(functionCall):
         if 'asof' not in web_request.arguments:
             return False, " key 'asof' is missing"
         self.asof = str(web_request.arguments['asof']).strip()
-
 
         self.base_currency = ''
         if 'base_currency' not in web_request.arguments:
@@ -898,13 +886,11 @@ class MarketFxRates(functionCall):
 
     def call(self, connection, is_test=False):
 
-        status, results = apis.market_fx_rates(connection, self.user_email,self.asof,self.to_date,self.base_currency)
+        status, results = apis.market_fx_rates(connection, self.user_email, self.asof, self.to_date, self.base_currency)
         return self._make_response(status, results)
 
     def create_new(self):
         return MarketFxRates()
-
-
 
 
 class Workspace(functionCall):
@@ -919,18 +905,16 @@ class Workspace(functionCall):
             return False, " key 'user_email' is missing"
         self.user_email = web_request.arguments['user_email'].strip()
 
-
         if 'list' in web_request.arguments:
             self.list = web_request.arguments['list'].strip()
         else:
             if 'delete' in web_request.arguments:
                 self.delete = web_request.arguments['delete'].strip()
 
-
         return True, ''
 
     def call(self, connection, is_test=False):
-        status, results = apis.workspace(connection, self.user_email,self.list,self.delete)
+        status, results = apis.workspace(connection, self.user_email, self.list, self.delete)
         return self._make_response(status, results)
 
     def create_new(self):
@@ -956,9 +940,8 @@ general_apis_factory[Workspace().name] = Workspace()
 
 
 def api_gateway(json_request_string, factory=None):
-
     if factory is None:
-        factory=account_apis_factory
+        factory = account_apis_factory
 
     connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
     #
@@ -999,10 +982,8 @@ def api_gateway(json_request_string, factory=None):
         #
         # and off we go
         #
+        print(web_response.to_string())
         return web_response.to_string()
     except Exception as e:
         web_response.error = str(e)
         return web_response.to_string()
-
-
-

@@ -13,16 +13,11 @@ email_default = "web.user@treasuryquants.com"     # Prod's
 # server's url
 #
 url_server = "http://operations.treasuryquants.com"
-url_server="http://192.168.1.80:8080" #Shahram's local server
+#url_server="http://192.168.1.80:8080" #Shahram's local server
 
 
 target_url="http://77.68.119.98/"
-target_url=url_server
-#
-# server's url
-#
-url_server = "http://operations.treasuryquants.com"
-#url_server="http://192.168.1.80:8080" #Shahram's local server
+#target_url=url_server
 
 #
 # this means set the backend for the dev environment. i.e.

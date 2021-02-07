@@ -67,7 +67,7 @@ def workbench2(request):
     user_email = ''
     if 'user_email' in request.session:
         user_email = request.session['user_email']
-    arrays = range(1, 10)
+    arrays = range(1, 8)
 
     context = {
         'navbar': 'workbench',

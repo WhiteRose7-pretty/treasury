@@ -58,8 +58,9 @@
     }
 
 
-    function post_message(subject,message){
+    function post_message(subject,message, output_object=false){
         var token = '{{csrf_token}}';
+        let result;
         $.ajax({
             headers: {
                 "X-CSRFToken": token
@@ -72,12 +73,20 @@
                 'source_caller': document.location.href,
             }),
             success: function (data) {
-               console.log('message sent successfully.')
+               console.log('message sent successfully.');
+               if(output_object){
+                   output_object.html('Successfully done.');
+               }
             },
             error: function (jqXhr, textStatus, errorMessage) {
-               console.log("Error: " + errorMessage)
+               console.log("Error: " + errorMessage);
+               result = errorMessage;
+               if(output_object){
+                   output_object.html(errorMessage);
+               }
             },
         });
+
     }
 
 </script>

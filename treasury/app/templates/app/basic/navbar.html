@@ -7,7 +7,8 @@
         <div class="modal-content bg-dark-dark">
             <div class="modal-body">
                 <p class="text-sm text-white mb-3 line-height-15">
-                    We use cookies to ensure the highest level of performance of our website. By using our website, you consent to their use.
+                    We use cookies to ensure the highest level of performance of our website. By using our website, you
+                    consent to their use.
                 </p>
                 <a href="{% url 'app:policy_notice' %}" class="btn btn-sm btn-white" target="_blank">See Policy</a>
                 <button type="button" class="btn btn-sm btn-primary ml-2" data-dismiss="modal">Okay</button>
@@ -20,7 +21,7 @@
 <header class="header">
     <nav class="navbar navbar-expand-lg ">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'app:home' %}"><img src="{% static 'assets/images/logo.png' %}" alt=""
+            <a class="navbar-brand" href="{% url 'app:home' %}"><img src="{% static 'assets/images/logo.svg' %}" alt=""
                                                                      class="img-fluid"></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -29,6 +30,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
+
                     <li class="nav-item">
                         <a class="nav-link {% check_navbar navbar 'home' %}" aria-current="page"
                            href="{% url 'app:home' %}">markets</a>

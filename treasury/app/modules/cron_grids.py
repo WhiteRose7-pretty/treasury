@@ -33,10 +33,15 @@ def check_connection():
     res = api_gateway(
         "{\"function_name\":\"connection_is_ok\", \"arguments\":{}, \"source_caller\":\"some_caller\"}")
     res_dic = json.loads(res)
+    print(res)
+    # if backend server is offline, error = ''
     error = res_dic['error']
     if error:
         status = False
         utility_common.process_fatal_error("check_connection", error, settings.is_development)
+    elif not res_dic['results']:
+        status = False
+        error = 'it is not connected with backend'
     else:
         status = True
     return status, error

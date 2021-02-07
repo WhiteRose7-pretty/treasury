@@ -19,9 +19,9 @@
 {% include 'app/basic/navbar.html' %}
 
 <section class="mid">
+    {% include 'app/basic/middle_office.html' %}
     <section class="middle-office">
         <div class="container-fluid" style="max-width: 1600px;">
-            <h2>Your Middle Office</h2>
             <div class="user-information">
                 <div class="grid-mother">
                     <div>
@@ -97,41 +97,30 @@
 
                         </div>
                         <div class="board-footer">
-                            <button class="btn btn-primary btn-block">CALCULATE</button>
+                            <button class="btn btn-primary btn-block" id="calculate-button">CALCULATE</button>
                         </div>
 
                     </div>
                     <div class="board-output">
                         <div class="board-title">Output</div>
-                        <div class="board-main">
-                            {% for item in list %}
-                                <div class="form-group row">
-                                    <label class="col-6 col-form-label font-weight-bold">price{{ item }}:</label>
-                                    <label class="col-6 col-form-label ">16205189.025432</label>
-                                </div>
-                            {% endfor %}
-                            {% for item in list %}
-                                <div class="form-group row">
-                                    <label class="col-6 col-form-label font-weight-bold">price{{ item }}:</label>
-                                    <label class="col-6 col-form-label ">16205189.025432</label>
-                                </div>
-                            {% endfor %}
+                        <div class="board-main" >
+                            <div id="output"></div>
                         </div>
 
                     </div>
-                    <div class="board-output">
+                    <div class="board-description">
                         <div class="board-title">Description</div>
                         <div class="board-main">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                             Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
                             ridiculus mus. <br><br>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
                             Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                            eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
-                            felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper
-                            nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae,
                             eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.<br><br>
                             Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean Phasellus viverra
                             nulla ut<br><br> metus varius laoreet. Quisque rutrum. Aenean i
+                        </div>
+                        <div class="board-footer">
+                            <button class="btn btn-primary btn-block" id="send-feedback">Send Feedback</button>
                         </div>
                     </div>
 
@@ -161,12 +150,48 @@
 
 </section>
 
+<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="change-video-data"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
+                    <div>
+                        <span class="text-muted"><i class="mr-3" data-feather="key"></i></span>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 font-weight-bold">Let us know what we are missing...</h4>
+                    </div>
+
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mb-3">
+                <textarea class="form-control" placeholder="Put your feedback" id="feedback-content"></textarea>
+
+                <div class="mt-3"></div>
+                <button class="btn btn-primary btn-block" style="float: right; " onclick="send_feedback()">Send Feedback
+                    <span class="spinner-border spinner-border-sm" id="loading-icon-password" role="status"
+                          aria-hidden="true"> </span></button>
+                <div style="clear: both"></div>
+                <div id="msg" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Core JS  -->
 <script src="{% static 'assets/js/jquery-2.1.3.min.js' %}"></script>
 <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'assets/js/chart.js' %}"></script>
 <script src="{% static 'assets/js/custom.js' %}"></script>
+
+{% include 'app/basic/js.html' %}
+
 <script>
 
 /*
@@ -1032,17 +1057,27 @@ if(email!='' && email!=null){
 
 }else{
  $('#output').text('Your not Logged in.');
- document.getElementById("calculate-button").disabled = true
- document.getElementById("api-list").disabled = true
+ document.getElementById("calculate-button").disabled = true;
+ document.getElementById("api-list").disabled = true;
+ document.getElementById("send-feedback").disabled = true
 }
 
 
 
+$('#send-feedback').on('click', function (){
+    $('#feedback-modal').modal('show');
+})
 
+function send_feedback(){
 
+    let message = $('#feedback-content').val();
+    if(!message){
+        $('#msg').html('Fill out feedback!');
+        return false;
+    }
+    post_message('Send Feedback', message, $('#msg'));
 
-
-
+}
 
 
 </script>

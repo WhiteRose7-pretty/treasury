@@ -17,6 +17,11 @@ fx_file = 'app/media/currency_data/FX.csv'
 
 
 @register.simple_tag
+def get_development_status():
+    return settings.is_development
+
+
+@register.simple_tag
 def get_api_status():
     api_status = ApiStatus.objects.first()
     if api_status:

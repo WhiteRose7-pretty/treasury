@@ -19,9 +19,10 @@
 {% include 'app/basic/navbar.html' %}
 
 <section class="mid">
+    {% include 'app/basic/middle_office.html' %}
     <section class="middle-office">
         <div class="container-fluid" style="max-width: 1600px;">
-            <h2>Your Middle Office</h2>
+
             <div class="user-information">
                 <div class="grid-mother">
                     <div>
@@ -120,16 +121,18 @@
                     <div class="board-output">
                         <div class="board-title">Description</div>
                         <div id="description" class="board-main">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-                            ridiculus mus. <br><br>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-                            Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                            eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
-                            felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper
-                            nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae,
-                            eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.<br><br>
-                            Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean Phasellus viverra
-                            nulla ut<br><br> metus varius laoreet. Quisque rutrum. Aenean i
+<!--                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.-->
+
+
+                            <!--                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur-->
+<!--                            ridiculus mus. <br><br>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.-->
+<!--                            Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate-->
+<!--                            eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum-->
+<!--                            felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper-->
+<!--                            nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae,-->
+<!--                            eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.<br><br>-->
+<!--                            Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean Phasellus viverra-->
+<!--                            nulla ut<br><br> metus varius laoreet. Quisque rutrum. Aenean i-->
                         </div>
                         <div class="board-footer">
                             <button class="btn btn-primary btn-block" id="send-feedback">Send Feedback</button>
@@ -203,7 +206,7 @@ The objective of the design is to introduce these apis in a cohesive and intuiti
 The design is simple. User selects an api name (function name) from the main combo list from the top.
 A dynamic Form is then created based on the chosen api's specification. Once the final submission
 button is clicked, there will be a validation, request creation and an api call over http. The results
-are then parsed and placed in various locations on the screen.
+are then parsed and placed in various locations on the screen. So the key to the design is the api specifications.
 
 API Specification
 =================
@@ -218,7 +221,7 @@ Data Type Specification
 =======================
 Data types used for argument_type processing cover a range of types from number to various combo lists.
 
-Each type covers type, width, init_values and default.
+Each type covers type, width and init_values .
 - type is the type name that is used to distinguish this type from others.
 - width is the width of the input filed that is meant to be the same for each type all its instantiations.
 - init_values are used for combo list.
@@ -227,6 +230,7 @@ Each type covers type, width, init_values and default.
 
 
 
+/******************************** Data and API specifications *********************************/
 
 
 
@@ -234,41 +238,41 @@ Each type covers type, width, init_values and default.
 // declaring  the data type specifications
 //
 var data_type_spec = {
-      'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': [], 'default':''}
-    , 'TYPE_STRING': {'type': 'string', 'width': '10', 'init_values': [], 'default':''}
-    , 'TYPE_DATE': {'type': 'date', 'width': '8', 'init_values': [], 'default':''}
-    , 'TYPE_BOOLEAN': {'type': 'combo', 'width': '10', 'init_values': ['true', 'false'], 'default':'0'}
+      'TYPE_NUMBER': {'type': 'number', 'width': '10', 'init_values': []}
+    , 'TYPE_STRING': {'type': 'string', 'width': '10', 'init_values': []}
+    , 'TYPE_DATE': {'type': 'date', 'width': '8', 'init_values': []}
+    , 'TYPE_BOOLEAN': {'type': 'combo', 'width': '10', 'init_values': ['true', 'false']}
     , 'TYPE_BUSINESS_CENTRE': {'type': 'combo', 'width': '10',
                                 'init_values': ['none', 'frankfort', 'london', 'milan', 'newyork', 'paris', 'target',
-                                                'tokyo', 'zurich'],'default':'0'}
+                                                'tokyo', 'zurich']}
     , 'TYPE_DISCOUNT_CURVE': {'type': 'combo', 'width': '10',
-                               'init_values': ['usd.ois','eur.ois','gbp.ois','chf.ois',   'jpy.ois' ],'default':'0'}
+                               'init_values': ['usd.ois','eur.ois','gbp.ois','chf.ois',   'jpy.ois' ]}
     , 'TYPE_LIBOR_CURVE': {'type': 'combo', 'width': '10',
                             'init_values': ['usd.libor3m','usd.libor6m','eur.libor3m', 'eur.libor6m','gbp.libor3m',
-                                            'gbp.libor6m','chf.libor3m', 'chf.libor6m',   'jpy.libor3m', 'jpy.libor6m' ],'default':'0'}
-    , 'TYPE_CURRENCY': {'type': 'combo', 'width': '10', 'init_values': ['usd', 'gbp', 'eur', 'chf', 'jpy'],'default':'0'}
+                                            'gbp.libor6m','chf.libor3m', 'chf.libor6m',   'jpy.libor3m', 'jpy.libor6m' ]}
+    , 'TYPE_CURRENCY': {'type': 'combo', 'width': '10', 'init_values': ['usd', 'gbp', 'eur', 'chf', 'jpy']}
     , 'TYPE_ELEMENT_DESCRIBE': {'type': 'combo', 'width': '10',
                                  'init_values': ['','book', 'describe', 'formatted_grid_swap_rates', 'market_fx_rates',
                                                  'market_swap_rates', 'pnl_attribute', 'pnl_predict', 'price',
                                                  'price_fx_forward', 'price_vanilla_swap', 'risk_ladder',
-                                                 'show_available', 'workspace'],'default':'0'}
+                                                 'show_available', 'workspace']}
     , 'TYPE_ELEMENT_SHOW_AVAILABLE': {'type': 'combo', 'width': '10',
                                        'init_values': ['','asof_dates', 'daycounts', 'calendar', 'business_day_rule',
-                                                       'libor_curves', 'discount_curves'],'default':'0'}
+                                                       'libor_curves', 'discount_curves']}
     , 'TYPE_MARKET_DATES': {'type': 'combo', 'width': '10',
-                               'init_values': [],'default':'last'}
+                               'init_values': []}
     , 'TYPE_TRADE_LIST': {'type': 'combo', 'width': '10',
-                               'init_values': [],'default':'0'}
+                               'init_values': []}
     , 'TYPE_SWAP_TYPES': {'type': 'combo', 'width': '10',
-                               'init_values': ['ir_vanilla_swap'],'default':'0'}
+                               'init_values': ['ir_vanilla_swap']}
     , 'TYPE_FXFWD_TYPES': {'type': 'combo', 'width': '10',
-                               'init_values': ['fx_forward'],'default':'0'}
+                               'init_values': ['fx_forward']}
     , 'TYPE_PERIOD': {'type': 'combo', 'width': '10',
-                               'init_values': ['3m', '6m', '1y'],'default':'0'}
+                               'init_values': ['3m', '6m', '1y']}
     , 'TYPE_DAYCOUNT': {'type': 'combo', 'width': '10',
-                               'init_values': ['act/360','act/365','30/360', 'act/act', '30/360eu','30/360_us','30/360_isda' ],'default':'0'}
+                               'init_values': ['act/360','act/365','30/360', 'act/act', '30/360eu','30/360_us','30/360_isda' ]}
     , 'TYPE_BUSINESS_DAY_RULE': {'type': 'combo', 'width': '10',
-                               'init_values': ['none','modified_following','modified_precedent', 'following', 'precedent'],'default':'0'}
+                               'init_values': ['none','modified_following','modified_precedent', 'following', 'precedent']}
     };
 
 
@@ -462,13 +466,16 @@ api_descriptions={
    'show_available':'',
     }
 
+
+
+
+/******************************** Form Creation *********************************/
+
+
 //
 // Populates the list for any type that contains a selection
 //
 function get_list(id,list, default_value){
-
-
-//style=\"direction: rtl; height:25px; margin-left:10px; float:right;\"
     var content= "<div class=\"col-6\"><select class=\"form-control\"  id=\""+id+"\" name=\""+id+"\">";
     for ( j=0; j<list.length; ++j){
 
@@ -488,17 +495,18 @@ function get_list(id,list, default_value){
 
     return content;
 }
+
+
+
+
 function build_input_text_box(argument,type_attribute='text',value='',placeholder='', size='', maxlength=''){
-
-
-
         var style_attrib=" style=\"height:25px; margin-left:10px; float:right;\" ";
         var placeholder_attrib=" placeholder="+" \""+placeholder+"\" ";
         var size_attrib=" size="+"\""+size+"\"  ";
         var maxlength_attrib=" maxlength="+" \""+maxlength+"\" ";
         var value_attrib= " value="+" \""+value+"\" ";
 
-        var content="<div class=\"col-3\"><input id=\""+argument+"\" name=\""+argument+" type=\""+type_attribute+"\"";
+        var content="<div class=\"col-3\"><input class=\"form-control\" id=\""+argument+"\" name=\""+argument+" type=\""+type_attribute+"\"";
 
         if(value!=''){
             content+=value_attrib;
@@ -512,7 +520,7 @@ function build_input_text_box(argument,type_attribute='text',value='',placeholde
         if(maxlength!=''){
             content+=maxlength_attrib;
         }
-        content+=style_attrib+ " class=\"form-control\"></div>";
+        content+=style_attrib+ " ></div>";
 
         return content;
 
@@ -528,7 +536,7 @@ function get_input_object(argument,argument_text,argument_optional,argument_type
         simple_type_content+= " type=\"email\"";
         simple_type_content+= " >";
 
-    //console.log(argument+":"+argument_default);
+
 
     var content="";
     var place_holder="";
@@ -649,11 +657,7 @@ function print_form(choice){
         var argument_type=argument_types[i];
 
 
-        //get default value for the input we provide
-       // var default_value=data_type_spec[argument_type]['default'];
-      //  if (argument_type=='TYPE_NUMBER' || argument_type=='TYPE_STRING' || argument_type=='TYPE_DATE'){ // the same as if input is not list
-           default_value= argument_values[i];
-       // }
+        default_value= argument_values[i];
 
 
         form_content+="<div class=\"form-group row\"><label class=\"col-6 col-form-label font-weight-bold\">"+argument_label+":"+"</label>";
@@ -668,7 +672,7 @@ function print_form(choice){
 
 
     // place the description
-    console.log(Object.keys(api_descriptions).toString());
+
     document.getElementById("description").innerHTML =api_descriptions[name];
 
 }
@@ -687,6 +691,9 @@ function clear_output(){
 function clear_form(){
     document.getElementById("api-entries").innerHTML=''
 }
+
+
+/******************************** Calculate Form *********************************/
 
 //
 // Performs the validation and processes the form. starts by validating the each field,
@@ -772,7 +779,7 @@ function calculate(){
     }
 }
 
-
+/******************************** callback functions *********************************/
 //
 // Market dates callback function to treat the response
 //
@@ -811,45 +818,6 @@ function callback_nothing(data, request){
 return;
 }
 
-
-function print_output(results){
-
-
- var cntr=0;
- var output_content="<div class=\"form-group row\" >";
- var keys=Object.keys(results);
-
- for (cntr=0;cntr<keys.length;++cntr){
-
-    output_content+="<label class=\"col-6 col-form-label font-weight-bold\">"+keys[cntr]+":</label>";
-    output_content+="<label class=\"col-6 col-form-label \">"+results[keys[cntr]]+"</label>";
- }
-  output_content+="</div>";
- document.getElementById('output').innerHTML=output_content;
-return;
-
-}
-
-
-function print_summary(data, request){
- var url= "{{ target_url|safe }}";
- document.getElementById('balance').innerHTML=data['Response']['balance'];
- document.getElementById('client_id').innerHTML=data['client_id'];
- document.getElementById('ip').innerHTML=data['source_id'];
- var request_id=data['id'];
- var request_text="<b>Request:"+request_id+"</b><br>";
- request_text+="<b>URL:</b>"+url+"<br>";
- request_text+="<b>Method:</b> POST"+"<br>";
- request_text+="<em>"+request+"</em>";
-
- var response_text="<br><b>Response:"+request_id+"</b><br><em>"+JSON.stringify(data)+"</em>";
-
- document.getElementById('log').innerHTML=request_text+request+ response_text+"<hr>" + document.getElementById('log').innerHTML;
- return;
-}
-
-
-
 //
 // Token Create callback function to treat the response
 //
@@ -868,11 +836,58 @@ function callback_account_token_create(data, request){
    now = new Date(now); //  Date object
    $('#token_expiry').text(now.toISOString ());
    print_summary(data, request);
+
 }
 
 
-function load_asof_dates(){
 
+
+/******************************** screen functions *********************************/
+
+//
+// prints the result to the output window
+//
+function print_output(results){
+
+
+ var cntr=0;
+ var output_content="<div class=\"form-group row\" >";
+ var keys=Object.keys(results);
+
+ for (cntr=0;cntr<keys.length;++cntr){
+
+    output_content+="<label class=\"col-6 col-form-label font-weight-bold\">"+keys[cntr]+":</label>";
+    output_content+="<label class=\"col-6 col-form-label \">"+results[keys[cntr]]+"</label>";
+ }
+  output_content+="</div>";
+ document.getElementById('output').innerHTML=output_content;
+return;
+
+}
+
+//
+// updates the summary of balanec, token, expiry, etc.
+//
+function print_summary(data, request){
+ var url= "{{ target_url|safe }}";
+ document.getElementById('balance').innerHTML=data['Response']['balance'];
+ document.getElementById('client_id').innerHTML=data['client_id'];
+ document.getElementById('ip').innerHTML=data['source_id'];
+ var request_id=data['id'];
+ var request_text="<b>Request:"+request_id+"</b><br>";
+ request_text+="<b>URL:</b>"+url+"<br>";
+ request_text+="<b>Method:</b> POST"+"<br>";
+ request_text+="<em>"+request+"</em>";
+
+ var response_text="<br><b>Response:"+request_id+"</b><br><em>"+JSON.stringify(data)+"</em>";
+
+ document.getElementById('log').innerHTML=request_text+request+ response_text+"<hr>" + document.getElementById('log').innerHTML;
+ return;
+}
+
+/******************************** internal api calls  *********************************/
+
+function load_asof_dates(){
     var function_name='show_available';
     arguments={'element':'asof_dates'};
     api_call(function_name,arguments, callback_fill_market_dates);
@@ -885,7 +900,29 @@ function load_trade_ids(){
     api_call(function_name,arguments, callback_fill_trade_ids);
 }
 
+//this function should be run with setInterval
+function obtain_or_refresh_token(){
+    var email= "{{ user_email|safe }}";
+    if ($('#token').text().trim()==''){
+        var arguments={'email':email};
+        api_call('account_token_create',arguments,callback_account_token_create);
+        return $('#token').text();
+    }
 
+    var expiry=Date.parse($('#token_expiry').text());
+    var diff_second =(expiry - new Date()) / 1000;
+    var diff_minutes=Math.round( diff_second/60);
+    if ($('#token').text().trim()==''|| diff_minutes<2){
+        var arguments={'email':email};
+        api_call('account_token_create',arguments,callback_account_token_create);
+    }
+
+//     var email_div = document.getElementById('email');
+//     email_div.innerHTML=email;
+    $('#email').text(email);
+
+    return $('#token').text();
+}
 
 
 
@@ -929,40 +966,39 @@ function argument_make_string(function_name,arguments){
     return argument_string;
 }
 
+function format_date(date){
+    var month=date.getMonth()+1;
+    var day=date.getDate();
+    var year=date.getFullYear();
+    if (day<10)
+       day="0"+day;
 
-//this function should be run with setInterval
-function obtain_or_refresh_token(){
-    var email= "{{ user_email|safe }}";
-    if ($('#token').text().trim()==''){
-        var arguments={'email':email};
-        api_call('account_token_create',arguments,callback_account_token_create);
-        return $('#token').text();
-    }
+    if (month<10)
+       month="0"+month;
 
-    var expiry=Date.parse($('#token_expiry').text());
-    var diff_second =(expiry - new Date()) / 1000;
-    var diff_minutes=Math.round( diff_second/60);
-    if ($('#token').text().trim()==''|| diff_minutes<2){
-        var arguments={'email':email};
-        api_call('account_token_create',arguments,callback_account_token_create);
-    }
+    var today_date_formatted=year.toString()+month+day;
+    return today_date_formatted;
+}
 
-//     var email_div = document.getElementById('email');
-//     email_div.innerHTML=email;
-    $('#email').text(email);
 
-    return $('#token').text();
+function hex2ascii(hexx) {
+    var hex = hexx.toString();//force conversion
+    var str = '';
+    for (var i = 0; (i < hex.length && hex.substr(i, 2) !== '00'); i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
 }
 
 
 
+/******************************** API gateway *********************************/
 
 async function asyncFetch(url, requestOptions,callback_function) {
-  //  console.log("Request:"+JSON.stringify(requestOptions));
+
     let response = await fetch(url,requestOptions);
     let data = await response.json();
     callback_function(data,requestOptions.body);
-  //  console.log("Result:"+JSON.stringify(data));
+
 }
 
 
@@ -979,7 +1015,7 @@ function api_call(function_name,arguments,callback_function){
     }
 
     var arguments_string=argument_make_string(function_name,arguments);
-    //console.log("request:"+JSON.stringify(arguments_string));
+
     const requestOptions = {
             method: 'POST',
             headers: {
@@ -994,19 +1030,9 @@ function api_call(function_name,arguments,callback_function){
 }
 
 
-function format_date(date){
-    var month=date.getMonth()+1;
-    var day=date.getDate();
-    var year=date.getFullYear();
-    if (day<10)
-       day="0"+day;
 
-    if (month<10)
-       month="0"+month;
+/******************************** initialization segment *********************************/
 
-    var today_date_formatted=year.toString()+month+day;
-    return today_date_formatted;
-}
 
 function initialize_page(){
     // set the default for the trade date
@@ -1030,24 +1056,13 @@ function initialize_page(){
 
 }
 
-function hex2ascii(hexx) {
-    var hex = hexx.toString();//force conversion
-    var str = '';
-    for (var i = 0; (i < hex.length && hex.substr(i, 2) !== '00'); i += 2)
-        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-    return str;
-}
+
 
 //
 // load the description text from the session
 //
 function load_descriptions(){
-    var descriptions_html={{descriptions|safe}};
-    console.log(descriptions_html);
-
-
-    var descriptions =descriptions_html;//JSON.parse(descriptions_html);
-
+    var descriptions={{descriptions|safe}};
 
     if (descriptions.length==0){
       return;
@@ -1059,8 +1074,10 @@ function load_descriptions(){
         descriptions[api_names[i]]=hex2ascii(descriptions[api_names[i]]);
     }
      api_descriptions=descriptions;
-     //console.log(api_descriptions);
+
 }
+
+
 
 
 var email= "{{ user_email|default:"" }}";
@@ -1096,6 +1113,7 @@ function send_feedback(){
     post_message('Send Feedback', message, $('#msg'));
 
 }
+/******************************** End *********************************/
 
 
 </script>

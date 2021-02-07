@@ -17,8 +17,9 @@ url_server = "http://operations.treasuryquants.com"
 
 target_url = "http://77.68.119.98/"
 # target_url=url_server
+# url_server="http://192.168.1.80:8080" #Shahram's local server
 
-#
+
 # this means set the backend for the dev environment. i.e.
 # 1) don't send emails,
 # 2) use is_test=True for the api calls

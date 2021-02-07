@@ -1,4 +1,12 @@
 # How to test website
+
+## how to check in localhost(admin)
+  for pull source from git repostory, admin need to migrate database.
+    
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py runserver {port}
+    
 ## !Confirm development status and backend Api connection status(For Administrator)
     1. Confirm development status
         In development status, site doesn't working with full functions.

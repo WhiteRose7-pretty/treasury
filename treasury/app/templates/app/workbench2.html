@@ -19,34 +19,34 @@
 {% include 'app/basic/navbar.html' %}
 
 <section class="mid">
-    {% include 'app/basic/middle_office.html' %}
     <section class="middle-office">
         <div class="container-fluid" style="max-width: 1600px;">
+            <h2>Your Middle Office</h2>
             <div class="user-information">
                 <div class="grid-mother">
                     <div>
                         <p>IP:</p>
-                        <p id="ip">123.232.123.121</p>
+                        <p id="ip"></p>
                     </div>
                     <div>
                         <p>Token:</p>
-                        <p id="token">l757hwhsnt57k1unz_w_mg</p>
+                        <p id="token"></p>
                     </div>
                     <div>
                         <p>Token Expiry:</p>
-                        <p id="token_expiry">2021-02-04T19:21:13.446Z</p>
+                        <p id="token_expiry"></p>
                     </div>
                     <div>
                         <p>Email:</p>
-                        <p id="email">valya.varechkina.76@bk.ru</p>
+                        <p id="email"></p>
                     </div>
                     <div>
                         <p>Balance:</p>
-                        <p id="balance">998.25</p>
+                        <p id="balance">0.00</p>
                     </div>
                     <div>
                         <p>User-id:</p>
-                        <p id="client_id">00000860</p>
+                        <p id="client_id"></p>
                     </div>
 
                 </div>
@@ -58,63 +58,75 @@
                         <div class="board-title">API</div>
                         <div class="board-list">
                             <div>
-                                <select id="api-list" name="api-list">
+                                <select id="api-list" name="api-list" onchange="print_form(this.value)">
                                 </select>
                             </div>
 
                         </div>
                         <div class="board-main">
-                            {% for item in list %}
-                                <div class="form-group row">
-                                    <label for="type-{{ item }}"
-                                           class="col-6 col-form-label font-weight-bold">Type{{ item }}:</label>
-                                    <div class="col-6">
-                                        <select class="form-control" id="type={{ item }}">
-                                            <option selected value="price">Price{{ item }}</option>
-                                            <option value="price1">Price</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            {% endfor %}
+<!--                            {% for item in list %}-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label for="type-{{ item }}"-->
+<!--                                           class="col-6 col-form-label font-weight-bold">Type{{ item }}:</label>-->
+<!--                                    <div class="col-6">-->
+<!--                                        <select class="form-control" id="type={{ item }}">-->
+<!--                                            <option selected value="price">Price{{ item }}</option>-->
+<!--                                            <option value="price1">Price</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            {% endfor %}-->
 
-                            <div class="form-group row">
-                                <label for="fixed-rate"
-                                       class="col-6 col-form-label font-weight-bold">Fixed Rate:</label>
-                                <div class="col-6">
-                                    <input id="fixed-rate" type="text" placeholder="0.01" class="form-control">
-                                </div>
-                            </div>
+<!--                            <div class="form-group row">-->
+<!--                                <label for="fixed-rate"-->
+<!--                                       class="col-6 col-form-label font-weight-bold">Fixed Rate:</label>-->
+<!--                                <div class="col-6">-->
+<!--                                    <input id="fixed-rate" type="text" placeholder="0.01" class="form-control">-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <div class="form-group row">
-                                <label class="col-6 col-form-label font-weight-bold">Save as:</label>
-                                <div class="col-3">
-                                    <input id="fixed-rate" type="text" class="form-control">
-                                </div>
-                                <div class="col-3">
-                                    <input id="fixed-rate" type="text" class="form-control">
-                                </div>
-                            </div>
+<!--                            <div class="form-group row">-->
+<!--                                <label class="col-6 col-form-label font-weight-bold">Save as:</label>-->
+<!--                                <div class="col-3">-->
+<!--                                    <input id="fixed-rate" type="text" class="form-control">-->
+<!--                                </div>-->
 
+<!--                            </div>-->
+                        <div id="api-entries"></div>
                         </div>
                         <div class="board-footer">
-                            <button class="btn btn-primary btn-block" id="calculate-button">CALCULATE</button>
+                            <button id="calculate-button" class="btn btn-primary btn-block" onclick="calculate()">CALCULATE</button>
                         </div>
 
                     </div>
                     <div class="board-output">
                         <div class="board-title">Output</div>
-                        <div class="board-main" >
-                            <div id="output"></div>
+                        <div class="board-main" id="output">
+<!--                            {% for item in list %}-->
+<!--                                <div class="form-group row" >-->
+<!--                                    <label class="col-6 col-form-label font-weight-bold">price{{ item }}:</label>-->
+<!--                                    <label class="col-6 col-form-label ">16205189.025432</label>-->
+<!--                                </div>-->
+<!--                            {% endfor %}-->
+<!--                            {% for item in list %}-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-6 col-form-label font-weight-bold">price{{ item }}:</label>-->
+<!--                                    <label class="col-6 col-form-label ">16205189.025432</label>-->
+<!--                                </div>-->
+<!--                            {% endfor %}-->
                         </div>
 
                     </div>
-                    <div class="board-description">
+                    <div class="board-output">
                         <div class="board-title">Description</div>
-                        <div class="board-main">
+                        <div id="description" class="board-main">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                             Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
                             ridiculus mus. <br><br>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
                             Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
+                            eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+                            felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper
+                            nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae,
                             eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.<br><br>
                             Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean Phasellus viverra
                             nulla ut<br><br> metus varius laoreet. Quisque rutrum. Aenean i
@@ -128,20 +140,7 @@
             </div>
             <div class="log">
                 <div class="board-title">Log</div>
-                <div class="board-main" id="log">
-                    Request:34657244356413
-                    URL:http://operations.treasuryquants.com
-                    Method: POST
-                    asof=20210203&load_as=test_ir_swap.xml&function_name=price&token=i1zzm91kgbaxxr7cgv-v8aasof=20210203&load_as=test_ir_swap.xml&function_name=price&token=i1zzm91kgbaxxr7cgv-v8a
-                    Response:34657244356413
-                    {"client_id":"00000890","session_id":"na","id":"34657244356413","version":"1.0","note":"na","source_id":"158.255.2.2","Response":{"cost":"0.35","balance":"997.55","focus":"results","id":"34657244356413","expiry_minutes":"22.76","Results":{"Price":"-5194136.805349633098","Currency":"eur"},"Errors":{},"Logs":{},"Notes":[]}}
-                    Request:34656810462013
-                    URL:http://operations.treasuryquants.com
-                    Method: POST
-                    email=valya.varechkina.76@bk.ru&function_name=account_token_createemail=valya.varechkina.76@bk.ru&function_name=account_token_create
-                    Response:34656810462013
-                    {"client_id":"","session_id":"","id":"34656810462013","version":"1.0","note":"na","source_id":"158.255.2.2","Response":{"cost":"0.00","balance":"997.90","focus":"results","id":"34656810462013","expiry_minutes":"29.99","Results":{"account_token_create":"i1zzm91kgbaxxr7cgv-v8a"},"Errors":{},"Logs":{},"Notes":[]}}
-                </div>
+                <div class="board-main" id="log"></div>
             </div>
 
         </div>
@@ -468,7 +467,9 @@ api_descriptions={
 //
 function get_list(id,list, default_value){
 
-    var content= "<select  style=\"direction: rtl; height:25px; margin-left:10px; float:right;\" id=\""+id+"\" name=\""+id+"\">";
+
+//style=\"direction: rtl; height:25px; margin-left:10px; float:right;\"
+    var content= "<div class=\"col-6\"><select class=\"form-control\"  id=\""+id+"\" name=\""+id+"\">";
     for ( j=0; j<list.length; ++j){
 
         content+="<option value=\""+list[j]+"\"";
@@ -483,11 +484,13 @@ function get_list(id,list, default_value){
         }
         content+=">"+list[j]+"</option>";
     }
-    content+="</select>";
+    content+="</select></div>";
 
     return content;
 }
 function build_input_text_box(argument,type_attribute='text',value='',placeholder='', size='', maxlength=''){
+
+
 
         var style_attrib=" style=\"height:25px; margin-left:10px; float:right;\" ";
         var placeholder_attrib=" placeholder="+" \""+placeholder+"\" ";
@@ -495,7 +498,7 @@ function build_input_text_box(argument,type_attribute='text',value='',placeholde
         var maxlength_attrib=" maxlength="+" \""+maxlength+"\" ";
         var value_attrib= " value="+" \""+value+"\" ";
 
-        var content="<input id=\""+argument+"\" name=\""+argument+" type=\""+type_attribute+"\"";
+        var content="<div class=\"col-3\"><input id=\""+argument+"\" name=\""+argument+" type=\""+type_attribute+"\"";
 
         if(value!=''){
             content+=value_attrib;
@@ -504,12 +507,12 @@ function build_input_text_box(argument,type_attribute='text',value='',placeholde
             content+=placeholder_attrib;
         }
         if(size!=''){
-            content+=size_attrib;
+           content+=size_attrib;
         }
         if(maxlength!=''){
             content+=maxlength_attrib;
         }
-        content+=style_attrib + " >";
+        content+=style_attrib+ " class=\"form-control\"></div>";
 
         return content;
 
@@ -521,7 +524,7 @@ function build_input_text_box(argument,type_attribute='text',value='',placeholde
 //
 function get_input_object(argument,argument_text,argument_optional,argument_type, argument_default){
     var simple_type_content="<input ";
-        simple_type_content+=" class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\"";
+        simple_type_content+="   class=\"form-control\" id=\""+argument+"\" name=\""+argument+"\"";
         simple_type_content+= " type=\"email\"";
         simple_type_content+= " >";
 
@@ -653,9 +656,9 @@ function print_form(choice){
        // }
 
 
-        form_content+="<div style=\"margin-left:5px;margin-right:5px;line-height: 30px;\"<label>"+argument_label+":"+"</label>";
+        form_content+="<div class=\"form-group row\"><label class=\"col-6 col-form-label font-weight-bold\">"+argument_label+":"+"</label>";
         form_content+= get_input_object(argument,argument_label,argument_optional,argument_type,default_value);
-        form_content+="<br></div>";
+        form_content+="</div>";
 
 
     }
@@ -665,6 +668,7 @@ function print_form(choice){
 
 
     // place the description
+    console.log(Object.keys(api_descriptions).toString());
     document.getElementById("description").innerHTML =api_descriptions[name];
 
 }
@@ -676,7 +680,6 @@ function print_form(choice){
 //
 function clear_output(){
  $('#output').text('');
- $('#request').text('');
   document.getElementById("api-entries").innerHTML=''
 }
 
@@ -738,20 +741,20 @@ function calculate(){
 
         if (argument_optionals[i]!=1 && value==''){
             is_error=true;
-            $('#output').text("'"+argument_labels[i]+"' cannot be empty.");
+            print_output({'Error':"'"+argument_labels[i]+"' cannot be empty."});
             break;
         }
 
         if (argument_types[i]=='TYPE_NUMBER' && !is_valid_number(value)){
             is_error=true;
-            $('#output').text("'"+argument_labels[i]+"' should be numeric.");
+            print_output({'Error':"'"+argument_labels[i]+"' should be numeric."});
             break;
         }
 
 
         if (argument_types[i]=='TYPE_DATE' && (value=='' || !is_valid_date(value))){
             is_error=true;
-            $('#output').text(argument_labels[i]+" should be a valid date in the following format: yyyymmdd.");
+            print_output({'Error': argument_labels[i]+" should be a valid date in the following format: yyyymmdd."});
             break;
         }
 
@@ -762,6 +765,7 @@ function calculate(){
     //
     //  If no error, we call the api with the corresponding callback function to consume the results
     //
+
 
     if (!is_error){
         api_call(function_name,arguments_dictionary, callback_nothing);
@@ -802,24 +806,36 @@ function callback_nothing(data, request){
   results=data['Response']['Results'];
  }
 
- var cntr=0;
- var output_content='';
- var keys=Object.keys(results);
- for (cntr=0;cntr<keys.length;++cntr){
-    output_content+=keys[cntr]+":"+"<b>"+results[keys[cntr]]+ "</b><br>"
- }
- document.getElementById('output').innerHTML=output_content;
+ print_output(results);
  print_summary(data, request);
 return;
 }
 
+
+function print_output(results){
+
+
+ var cntr=0;
+ var output_content="<div class=\"form-group row\" >";
+ var keys=Object.keys(results);
+
+ for (cntr=0;cntr<keys.length;++cntr){
+
+    output_content+="<label class=\"col-6 col-form-label font-weight-bold\">"+keys[cntr]+":</label>";
+    output_content+="<label class=\"col-6 col-form-label \">"+results[keys[cntr]]+"</label>";
+ }
+  output_content+="</div>";
+ document.getElementById('output').innerHTML=output_content;
+return;
+
+}
+
+
 function print_summary(data, request){
  var url= "{{ target_url|safe }}";
-
  document.getElementById('balance').innerHTML=data['Response']['balance'];
  document.getElementById('client_id').innerHTML=data['client_id'];
  document.getElementById('ip').innerHTML=data['source_id'];
- log_div=document.getElementById('log');
  var request_id=data['id'];
  var request_text="<b>Request:"+request_id+"</b><br>";
  request_text+="<b>URL:</b>"+url+"<br>";
@@ -828,7 +844,7 @@ function print_summary(data, request){
 
  var response_text="<br><b>Response:"+request_id+"</b><br><em>"+JSON.stringify(data)+"</em>";
 
- log_div.innerHTML=request_text+request+ response_text+"<hr>" +  log_div.innerHTML;
+ document.getElementById('log').innerHTML=request_text+request+ response_text+"<hr>" + document.getElementById('log').innerHTML;
  return;
 }
 
@@ -931,9 +947,9 @@ function obtain_or_refresh_token(){
         api_call('account_token_create',arguments,callback_account_token_create);
     }
 
-     var email_div = document.getElementById('email');
-     email_div.innerHTML=email;
-
+//     var email_div = document.getElementById('email');
+//     email_div.innerHTML=email;
+    $('#email').text(email);
 
     return $('#token').text();
 }
@@ -1014,23 +1030,24 @@ function initialize_page(){
 
 }
 
-function hex_to_ascii(str1)
- {
-	var hex  = str1.toString();
-	var str = '';
-	for (var n = 0; n < hex.length; n += 2) {
-		str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
-	}
-	return str;
- }
+function hex2ascii(hexx) {
+    var hex = hexx.toString();//force conversion
+    var str = '';
+    for (var i = 0; (i < hex.length && hex.substr(i, 2) !== '00'); i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+}
 
 //
 // load the description text from the session
 //
 function load_descriptions(){
-    var descriptions_html="{{ descriptions  }}";
+    var descriptions_html={{descriptions|safe}};
     console.log(descriptions_html);
-    var descriptions = JSON.parse(descriptions_html);
+
+
+    var descriptions =descriptions_html;//JSON.parse(descriptions_html);
+
 
     if (descriptions.length==0){
       return;
@@ -1039,14 +1056,15 @@ function load_descriptions(){
     var i = 0 ;
     var api_names=Object.keys(descriptions);
     for(i=0;i<api_names.length;++i){
-        api_descriptions[api_names[i]]=hex_to_ascii(descriptions[api_names[i]]);
+        descriptions[api_names[i]]=hex2ascii(descriptions[api_names[i]]);
     }
+     api_descriptions=descriptions;
+     //console.log(api_descriptions);
 }
 
 
 var email= "{{ user_email|default:"" }}";
 if(email!='' && email!=null){
-
 
     setTimeout(obtain_or_refresh_token,0);
     setTimeout(load_descriptions,0);
@@ -1056,9 +1074,9 @@ if(email!='' && email!=null){
     setTimeout(function (){document.getElementById("api-list").innerHTML =get_api_list();},2000);
 
 }else{
- $('#output').text('Your not Logged in.');
- document.getElementById("calculate-button").disabled = true;
- document.getElementById("api-list").disabled = true;
+ print_output({'Error':'Your not Logged in.'});
+ document.getElementById("calculate-button").disabled = true
+ document.getElementById("api-list").disabled = true
  document.getElementById("send-feedback").disabled = true
 }
 

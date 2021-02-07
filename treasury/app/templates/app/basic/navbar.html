@@ -37,10 +37,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% check_navbar navbar 'workbench' %}" aria-current="page"
-                           href="{% url 'app:workbench' %}">workbench</a>
+                           href="{% url 'app:workbench2' %}">workbench</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">About<span
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">about<span
                                 class="caret ml-2"></span></a>
                         <ul class="dropdown-menu">
                             <li class="nav-item1">
@@ -63,7 +63,7 @@
                     {% if user_flag %}
                         <li class="nav-item">
                             <a class="nav-link {% check_navbar navbar 'profile' %}"
-                               href="{% url 'account_cycle:profile' %}">Profile</a>
+                               href="{% url 'account_cycle:profile' %}">account</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-primary"

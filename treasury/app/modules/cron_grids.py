@@ -14,7 +14,8 @@ def download_fx_data():
         ['USD', 'GBP', 'EUR', 'CHF', 'JPY', 'CAD', 'AUD', 'SGD', 'NZD'], "USD", settings.grid_folder)
     if not status:
         # Do Failure
-        utility_common.process_fatal_error("download_fx_data",utility_common.dict_to_string(results), settings.is_development)
+        utility_common.process_fatal_error("download_fx_data", utility_common.dict_to_string(results),
+                                           settings.is_development)
     return status
 
 
@@ -25,7 +26,8 @@ def download_rates_data():
                                                                                  settings.grid_folder)
     if not status:
         # Do Failure
-        utility_common.process_fatal_error("download_rates_data",utility_common.dict_to_string(results), settings.is_development)
+        utility_common.process_fatal_error("download_rates_data", utility_common.dict_to_string(results),
+                                           settings.is_development)
     return status, results
 
 
@@ -44,4 +46,21 @@ def check_connection():
         error = 'it is not connected with backend'
     else:
         status = True
+
+    api_status_to_file(settings.api_status_path, status)
+
     return status, error
+
+
+def api_status_from_file(path):
+    with open(path, 'rt') as file:
+        content = file.read()
+    if content == "True":
+        return True
+    else:
+        return False
+
+
+def api_status_to_file(path, status):
+    file = open(path, 'w')
+    file.writelines(str(status))

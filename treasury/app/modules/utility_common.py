@@ -35,10 +35,9 @@ def process_fatal_error(subject,error_message, is_development=False):
 def get_workbench_descriptions_json_string(api_names):
     descriptions = dict()
     for api_name in api_names:
-        descriptions[api_name] = ''
-        file_path = os.path.join("app/modules/workbench/descriptions/", api_name + ".html")
+        file_path = os.path.join("app/modules/workbench/descriptions/", api_name + ".txt")
         try:
-            input_file= open(file_path, "r")
+            input_file= open(file_path, "rt")
             descriptions[api_name] = input_file.read().encode("utf-8").hex()
             input_file.close()
         except:

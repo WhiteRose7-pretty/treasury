@@ -39,16 +39,16 @@ def workbench(request):
     user_email = ''
     if 'user_email' in request.session:
         user_email = request.session['user_email']
-
+    print(json.dumps(descriptions))
     context = {
         'navbar': 'workbench',
         'user_email': user_email,
         'target_url': settings.url_server,
-        'target_ip': "http://77.68.119.98/",
-        'descriptions': "{}"  # json.dumps(descriptions)
+        'target_ip': settings.target_url,
+        'descriptions': json.dumps(descriptions)
     }
-    # print(context)
-    return render(request, 'app/workbench.html', context)
+    print(context)
+    return render(request, 'app/workbench2.html', context)
 
 
 def workbench2(request):

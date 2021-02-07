@@ -2,17 +2,21 @@
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
 
-# email_default = "web.user@treasuryquants.com"     # Prod's
-email_default = "valya.varechkina.76@bk.ru"       # Daria's
-#email_default = "test.account@treasuryquants.com" # Shahram's
 
+email_default = "web.user@treasuryquants.com"  # Prod's
+# email_default = "valya.varechkina.76@bk.ru"       # Daria's
+# email_default = "test.account@treasuryquants.com" # Shahram's
 
 
 #
 # server's url
 #
 url_server = "http://operations.treasuryquants.com"
-#url_server="http://192.168.1.80:8080" #Shahram's local server
+# url_server="http://192.168.1.80:8080" #Shahram's local server
+
+
+target_url = "http://77.68.119.98/"
+# target_url=url_server
 
 #
 # this means set the backend for the dev environment. i.e.
@@ -21,7 +25,6 @@ url_server = "http://operations.treasuryquants.com"
 # 3) ... ?
 #
 is_development = True
-
 
 #
 # Location of the token files

@@ -2,6 +2,7 @@ from django import template
 from app.models import CurrencyData, ApiStatus
 from app.modules import utility_grids
 from app.modules import settings
+from app.modules import cron_grids
 
 register = template.Library()
 
@@ -23,12 +24,8 @@ def get_development_status():
 
 @register.simple_tag
 def get_api_status():
-    api_status = ApiStatus.objects.first()
-    if api_status:
-        return api_status.status
-    else:
-        return False
-
+    print(cron_grids.api_status_from_file(settings.api_status_path))
+    return cron_grids.api_status_from_file(settings.api_status_path)
 
 def read_data(file_path):
     obj = CurrencyData('', ['', '', ''], [[0, 0, 0, 0]], [0],

@@ -140,14 +140,6 @@ def cron_test(request):
 
 def connection_test(request):
     (status, error) = cron_grids.check_connection()
-    api_status = ApiStatus.objects.first()
-    if api_status:
-        api_status.status = status
-    else:
-        api_status = ApiStatus()
-        api_status.status = status
-    api_status.save()
-
     print(status, error)
     context = {
         'navbar': 'terms',

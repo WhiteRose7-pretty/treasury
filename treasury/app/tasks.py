@@ -18,13 +18,6 @@ def main():
 @periodic_task(run_every=(crontab(minute='*/5')))
 def check_connection():
     (status, error) = cron_grids.check_connection()
-    api_status = ApiStatus.objects.first()
-    if api_status:
-        api_status.status = status
-    else:
-        api_status = ApiStatus()
-        api_status.status = status
-    api_status.save()
     return status, error
 
 

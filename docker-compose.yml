@@ -15,7 +15,7 @@ services:
     volumes:
       - static:/static
       - /opt/media:/app/app/media
-      - /opt/config:/app/app/config
+      - /opt/configs:/app/app/configs
     build:
       context: .
     command: bash -c "python manage.py makemigrations --no-input && python manage.py migrate --no-input && python manage.py collectstatic --no-input && gunicorn app_rama.wsgi:application --bind 0.0.0.0:8000"
@@ -38,7 +38,7 @@ services:
     volumes:
       - static:/static
       - /opt/media:/app/app/media
-      - /opt/config:/app/app/config
+      - /opt/configs:/app/app/configs
     depends_on:
       - app
       - rabbitmq

@@ -5,277 +5,131 @@
 ## package condition
 - python: 3.5 and higher
 - rabbitMQ
+- docker
+- docker compose
 
 ## python package (requirements.txt)  
 - Django: 2.2 adn higher
 - TQapis: latest
 - Celery: 4.4.0rc2 and higher
 - gunicorn: latest
+- other packages are in requirements.txt 
 
-## Updating package
-    sudo apt-get update
-    sudo apt-get -y upgrade
+## Step by step
 
-## NGINX to handle static resources and to start the server
-    sudo apt-get -y install nginx
+1. Updating package
 
-## The Supervisor installation starts and manages the application server in the event of a failure or restart
-    sudo apt-get -y install supervisor
 
-    sudo systemctl enable supervisor
+     sudo apt-get update
+     sudo apt-get -y upgrade
+
+2. docker install
+
+
+    curl -fsSL https://get.docker.com/ | sudo sh
+    # confirm install
+    docker --version
     
-    sudo systemctl start supervisor
-
-## Installation of a virtual environment (for python 3)
-    sudo apt install -y python3-pip
-
-    sudo apt install build-essential libssl-dev libffi-dev python3-dev
-
-## Application user configuration
-    adduser app
-
-    gpasswd -a app sudo
+3. docker compose install
 
 
-## Virtual environment configuration
-  "python3.5 -m venv." - (this should be done in the user's home directory / home / app)
-  ( if you cannot enter the directory, restart PUTTY) (if premision denide should be used before python3.5 'sudo'
-  
-   Please check python version by command " python3 --version "
+    sudo curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s-uname -m` -o /usr/local/bin/docker-compose
+    # confirm install
+    docker-compose --version
 
-   if you are using python 3.6, use "python3.6 -m venv."
+4. Create folder for installation
 
-    cd /home/app
-
-    #install package for create virtual environment
-    apt-get install python3-venv
-
-    #create virtual environment
-    python3.6 -m venv .
     
-    #activate venv
-    source bin/activate
+    mkdir docker
 
-## Installing the application
-    su app
-  'cd name-repository' - project specific, in our case, web_daria
-   project-name, in our case, treasury 
-   if you didn't intall git, install git by "apt install git"
+5. Download project
+    
 
+    # for dev branch
+    git clone -b dev https://github.com/shahram-alavian/web_daria.git
+    # for master branch
     git clone https://github.com/shahram-alavian/web_daria.git
+
+6. Move the project folder and copy config files, run docker
+
+
+    cd web_daria
+    cp -a treasury/app/media/. /opt/media/
+    cp -a treasury/app/configs/. /opt/configs/
+    docker-compose up --d
+
+7. Check if docker image, containers created exactly
+
+
+    docker-compose ps
+        >>>>>>    
+        celery_beat         sh -c celery -A app_rama b ...   Up
+        celery_worker       bash -c celery -A app_rama ...   Up
+        django              bash -c python manage.py m ...   Up      0.0.0.0:8000->8000/tcp
+        rabbitmq            docker-entrypoint.sh rabbi ...   Up      15691/tcp, 15692/tcp, 25672/tcp, 4369/tcp, 5671/tcp, 0.0.0.0:5672->5672/tcp
+        web_daria_nginx_1   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:80->80/tcp
+
+    docker image list
+        >>>>>>
+        app_image         latest          ad41c0ea678c   14 minutes ago   1.1GB
+        web_daria_nginx   latest          dc6119c5ef5f   7 hours ago      21.3MB
+        rabbitmq          latest          c05fdf32bdad   2 weeks ago      156MB
+        python            3.8.5           28a4c88cdbbf   5 months ago     882MB
+        nginx             1.19.0-alpine   7d0cdcc60a96   8 months ago     21.3MB
+                
+    docker container list
+        >>>>>>
+        CONTAINER ID   IMAGE              COMMAND                  CREATED          STATUS          PORTS                                                                    NAMES
+        5dc9f6a2dd4c   app_image:latest   "sh -c 'celery -A ap…"   14 minutes ago   Up 14 minutes                                                                            celery_beat
+        432ef853fcd3   web_daria_nginx    "/docker-entrypoint.…"   14 minutes ago   Up 14 minutes   0.0.0.0:80->80/tcp                                                       web_daria_nginx_1
+        1007f3459e37   app_image:latest   "bash -c 'celery -A …"   14 minutes ago   Up 14 minutes                                                                            celery_worker
+        9aa60ec60cc6   app_image:latest   "bash -c 'python man…"   14 minutes ago   Up 14 minutes   0.0.0.0:8000->8000/tcp                                                   django
+        7dcffa4f56cd   rabbitmq:latest    "docker-entrypoint.s…"   14 minutes ago   Up 14 minutes   4369/tcp, 5671/tcp, 15691-15692/tcp, 25672/tcp, 0.0.0.0:5672->5672/tcp   rabbitmq
     
-    cd name-repository/project-name
-    
-    pip install -r requirements.txt
 
-## confirm STATIC_ROOT in settings.py
-    STATIC_ROOT = os.path.join(BASE_DIR, '..', '..' ,'static')
+8. See log
 
-## Create - gunicorn_start
-  (I need to be in / home / app to run this)
-  We create a file called gunicorn_start in the bin folder
-    cd /home/app
-    vim bin/gunicorn_start
 
-## gunicorn_start FILE
-  I create a file with the following VIM content I close with ': wq!'
-  (you can use other editor what you prefer.)
+    docker logs -f celery_beat
+    docker logs -f celery_worker
+    docker logs -f django
+    docker logs -f nginx 
 
-    #!/bin/sh
-    
-    NAME="app"
-    DIR=/home/app/web_daria/treasury
-    USER=app
-    GROUP=app
-    WORKERS=3
-    TIMEOUT=600
-    BIND=unix:/home/app/run/gunicorn.sock
-    DJANGO_SETTINGS_MODULE=app_rama.settings
-    DJANGO_WSGI_MODULE=app_rama.wsgi
-    LOG_LEVEL=error
-    
-    cd $DIR
-    source ../../bin/activate
-    
-    export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-    export PYTHONPATH=$DIR:$PYTHONPATH
-    
-    exec ../../bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
-      --name $NAME \
-      --workers $WORKERS \
-      --timeout $TIMEOUT \
-      --user=$USER \
-      --group=$GROUP \
-      --bind=$BIND \
-      --log-level=$LOG_LEVEL \
-      --log-file=-
 
-## We make gunicorn_start customizable
-    chmod u+x bin/gunicorn_start
+## how to update server
 
-## We create a directory called run
-    # create as su app !!!
-    mkdir run
 
-## Configuring Supervisor to take care of starting the gunicorn server
-  (in the / home / app folder if I am 'app' in the current location)
-
-    mkdir logs
-    touch logs/gunicorn-error.log
-
-## We create a new super configuration file
-    sudo vim /etc/supervisor/conf.d/app.conf
-
-## app.conf FILE
-
-    [program:app]
-    command =sh /home/app/bin/gunicorn_start
-    user = app
-    autostart = true
-    autorestart = true
-    redirect_stderr = true
-    stdout_logfile = /home/app/logs/gunicorn-error.log
-
-## Refreshing the supervisor configuration file and making the new program available
-  If everything is ok, then we check the application status (the result is like the RUNNING pid 20195 app, uptime 0:00:29).
-
-  If the application refreshes all the time, delete the entire run folder and create it again as NOT SUDO, e.g. as 'su - app'
-  
-  If you want to update your app's source code with a new version, you can download the code from GitHub and then restart the process:
-  sudo supervisorctl restart app
-
-    sudo supervisorctl reread
-    sudo supervisorctl update
-    
-    sudo supervisorctl status app
-
-## NGINX configuration
-    sudo vim /etc/nginx/sites-available/app 
-   Adding a new file called app in / etc / nginx / sites-available /
-
-    upstream app_server {
-        server unix:/home/app/run/gunicorn.sock fail_timeout=0;
-    }
-    
-    server {
-        listen 80;
-    
-        # add here the ip address of your server
-        # or a domain pointing to that ip (like example.com or www.example.com)
-        server_name 213.171.210.28;
-    
-        keepalive_timeout 5;
-        client_max_body_size 4G;
-    
-        access_log /home/app/logs/nginx-access.log;
-        error_log /home/app/logs/nginx-error.log;
-    
-        location /static/ {
-            alias /home/app/static/;
-        }
-    
-        # checks for static file, if not found proxy to app
-        location / {
-            try_files $uri @proxy_to_app;
-        }
-    
-        location @proxy_to_app {
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header Host $http_host;
-          proxy_redirect off;
-          proxy_pass http://app_server;
-        }
-    }   
-    
+1. Move to project folder and down server
    
-  
-## Symbolic link to a directory of enabled sites
 
-    sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
-  
-## Removing the default NGINX page
+    cd /home/docker/web_daria
+    docker-compose down
 
-    sudo rm /etc/nginx/sites-enabled/default
 
-## Restarting NGINX
-  In order to verify that everything is working, you can restart the remote computer
+1. Update source
 
-    sudo service nginx restart
+
+    # for dev
+    git pull origin dev
     
-    sudo reboot
+    # for master
+    git pull origin master
 
-## Static File
+2. Delete docker image
+
+
+    docker image rm -f app_image
     
-    cd /home/app/web_daria/treasury
+3. Restart docker compose
 
-    source ../../bin/activate
 
-    python manage.py makemigrations
+    docker-compose up --d
 
-    python manage.py collectstatic
 
-    sudo supervisorctl restart app
+
+
     
-## Confirm if site is working in browser
-
-## Install RabbitMq
-    apt-get install rabbitmq
-
-## Run RabbitMq
-    rabbitmq-server
-
-##  app-celery-beat.conf
-  We create a new file in the folder 'etc / supervisor / conf.d /' called 'app-celery-beat.conf'. May change logs to 'app-Rama-beat.log
-  
-    [program:app-celery-beat]
-    command=/home/app/bin/celery beat -A app_rama -l INFO
-    directory=/home/app/web_daria/treasury
-    user=app
-    numprocs=1
-    stdout_logfile=/home/app/logs/app-rama-beat.log
-    stderr_logfile=/home/app/logs/app-rama-beat.log
-    autostart=true
-    autorestart=true
-    startsecs=10
-    stopwaitsecs = 600
-    killasgroup=true
-    priority=998
-
-
-## app-celery-worker.conf
-Create a new file in the folder 'etc / supervisor / conf.d /' called 'app-celery-worker.conf'
-
-    [program:app-celery-worker]
-    command=/home/app/bin/celery worker -A app_rama -l INFO
-    directory=/home/app/web_daria/treasury
-    user=app
-    numprocs=1
-    stdout_logfile=/home/app/logs/app-rama-worker.log
-    stderr_logfile=/home/app/logs/app-rama-worker.log
-    autostart=true
-    autorestart=true
-    startsecs=10
-    stopwaitsecs = 600
-    killasgroup=true
-    priority=998
-
-
-## bash (after enabling the virtual environment)
-
-    source /home/app/bin/activate
-    sudo supervisorctl reread     
-    sudo supervisorctl update     
     
-    sudo supervisorctl restart app     
-    sudo supervisorctl status app
-    sudo service nginx restart 
-    
-    sudo supervisorctl start app-celery-worker
-    sudo supervisorctl stop app-celery-worker
-    sudo supervisorctl status app-celery-worker 
-    
-    sudo supervisorctl start app-celery-beat 
-    sudo supervisorctl stop app-celery-beat
-    sudo supervisorctl status app-celery-beat
+        
 
-
+    

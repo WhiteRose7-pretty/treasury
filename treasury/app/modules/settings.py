@@ -2,8 +2,9 @@
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
 
-
-email_default = "web.user@treasuryquants.com"  # Prod's
+# email_default = "webmaster.b@treasuryquants.com"  # Prod's server 2, master
+email_default = "webmaster.a@treasuryquants.com"  # Prod's server 2, dev
+# email_default = "web.user@treasuryquants.com"  # Prod's
 # email_default = "valya.varechkina.76@bk.ru"       # Daria's
 # email_default = "test.account@treasuryquants.com" # Shahram's
 

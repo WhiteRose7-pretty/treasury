@@ -122,10 +122,9 @@ def api_gateway(request):
 
 def post_message(request):
     data = request.body.decode('utf-8')
-    subject = "post_message"
-    if 'subject' in request:
-        subject = request['subject']
-    utility_common.process_fatal_error(subject, data, settings.is_development)
+    subject = request.POST.get('subject', 'post message')
+    message = request.POST.get('message', data)
+    utility_common.process_fatal_error(subject, message, settings.is_development)
     return JsonResponse('success', safe=False)
 
 

@@ -41,7 +41,7 @@
                             </td>
                             <td>{{ value }}
                                 {% if key == 'ip' %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="pull-right-md text-primary" onclick="open_change_ip_window()" style="cursor: pointer;"><i class="mr-1" data-feather="edit" ></i>change&nbsp;Ip</span>
+                                    <span class="pull-right-md text-primary" data-toggle="modal" data-target="#change-ip-modal" style="cursor: pointer;"><i class="mr-1" data-feather="edit" ></i>change&nbsp;Ip</span>
                                 {% elif key == 'last_login' %}
                                     <span class="pull-right-md text-primary" onclick="open_change_password_window()" style="cursor: pointer;"><i
                                             class="mr-1" data-feather="edit"></i>change&nbsp;Password</span>
@@ -64,8 +64,7 @@
 </section>
 
 
-<div class="modal fade" id="change-ip-modal" tabindex="-1" role="dialog" aria-labelledby="change-video-data"
-     aria-hidden="true">
+<div class="modal" id="change-ip-modal" tabindex="-1" role="dialog" >
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -102,8 +101,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="change-password-modal" tabindex="-1" role="dialog" aria-labelledby="change-video-data"
-     aria-hidden="true">
+<div class="modal" id="change-password-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">

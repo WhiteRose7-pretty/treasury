@@ -804,6 +804,26 @@ button:focus {
     border-top: 0;
 }
 
+#send-feedback {
+    padding: 1rem;
+}
+
+#send-feedback svg{
+    margin-top: -.2rem;
+}
+
+#send-feedback span:first-child{
+    float:right;
+    color:#000;
+    border-bottom: 1px solid #000;
+}
+
+#send-feedback span:first-child:hover{
+    color: #2f3778!important;
+    border-bottom: 1px solid #2f3778;
+    transform: translateY(-0.2rem);
+}
+
 @media only screen and (max-width: 1366px) {
     .grid-mother {
         display: grid;

@@ -91,6 +91,9 @@
     docker logs -f nginx 
 
 
+### 8. Update Ip of webmaster
+
+
 ## how to update server
 
 ### 1. Move to project folder and down server

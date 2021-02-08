@@ -30,7 +30,8 @@
     
 ### 3. docker compose install
 
-    sudo curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -`s`-uname -m` -o /usr/local/bin/docker-compose
+    sudo curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
     # confirm install
     docker-compose --version
 
@@ -38,6 +39,7 @@
 
     cd /home
     mkdir docker
+    cd docker
 
 ### 5. Download project
 

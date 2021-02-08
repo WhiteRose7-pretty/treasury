@@ -67,11 +67,11 @@
             },
             type: 'post',
             url: "{% url 'app:post_message' %}",
-            data: JSON.stringify({
+            data: {
                 'subject': subject,
                 'message': message,
                 'source_caller': document.location.href,
-            }),
+            },
             success: function (data) {
                console.log('message sent successfully.');
             },

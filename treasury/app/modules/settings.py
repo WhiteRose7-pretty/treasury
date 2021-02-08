@@ -25,7 +25,7 @@ target_url = "http://77.68.119.98/"
 # 2) use is_test=True for the api calls
 # 3) ... ?
 #
-is_development = True
+is_development = False
 
 #
 # Location of the token files

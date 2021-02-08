@@ -1,0 +1,15 @@
+<div>
+    <b>API</b>: price <br><hr>
+<b>Summary</b>:It prices a saved trade. The Main useage of this api is to price a trade daily after saving it only once.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>As of</b>: This is the date as of when you price the trade for.<br>
+<b>Load as</b>: Select a name of trade to be priced. They are created with the field "Save As" populated when pricing a trade.<br>
+<br>
+<b>See Also</b>:<br><hr>
+For creating a vanilla swap, see api:price_vanilla_swap<br>
+For creating an FX forward, see api:price_fx_forward<br>
+</div>
+
+
+

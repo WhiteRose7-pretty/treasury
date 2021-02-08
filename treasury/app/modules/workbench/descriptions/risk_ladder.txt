@@ -1,0 +1,15 @@
+<div>
+    <b>API</b>: risk_ladder <br><hr>
+<b>Summary</b>:It calculates the spot and ladder sensitivies to all the risk factors of a saved trade.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>As of</b>: This is the date as of when you are calculating the sensitivitied for. Note that you can only calculate the sensitivites of the trade for a date whose market data is available.<br>
+<b>Load as</b>: Select a name of trade to be proced. They are created with the field "Save As" populated when pricing a trade.<br>
+<br>
+<b>See Also</b>:<br><hr>
+For creating a vanilla swap, see api:price_vanilla_swap<br>
+For creating an FX forward, see api:price_fx_forward<br>
+</div>
+
+
+

@@ -1,0 +1,15 @@
+<div>
+    <b>API</b>: pnl_attribute <br><hr>
+<b>Summary</b>:It calculates p&l attribution. This is where the mtm of a saved trade between two dates are broken down to changes of the market data in whole without calculating the sensitivities. The benefit of the pnl attribute is that it makes no assumptions on the sensitivities as it performs explicit evaluation of the trade. This is usually compared with the pnl predict where pnl break down is based on the sensitivity calculation
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>As of</b>: This is the date as of when you are calculating the pnl attribution for. Note that you can only calculate the sensitivites of the trade for a date whose market data is available.<br>
+<b>Load as</b>: Select a name of trade for which the pnl atribution is to be calculated. They are created with the field "Save As" populated when pricing a trade.<br>
+<br>
+<b>See Also</b>:<br><hr>
+For creating a vanilla swap, see api:price_vanilla_swap<br>
+For creating an FX forward, see api:price_fx_forward<br>
+</div>
+
+
+

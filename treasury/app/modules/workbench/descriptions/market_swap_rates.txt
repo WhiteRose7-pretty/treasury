@@ -1,0 +1,112 @@
+<div>
+    <b>API</b>: market_swap_rates <br><hr>
+<b>Summary</b>:It provides the market implied swap rates for various currencies and dates.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>As of</b>: This is the date for which swap rates are required.<br>
+<b>Currency</b>: The currency for which the standard swap rates are to be calculated.<br>
+<br>
+<b>See Also</b>:<br><hr>
+
+<table >
+ <col >
+ <tr >
+  <td >Default Specs</td>
+  <td ></td>
+  <td ></td>
+  <td ></td>
+  <td ></td>
+  <td ></td>
+ </tr>
+ <tr >
+  <td >Currency</td>
+  <td>usd</td>
+  <td>eur</td>
+  <td>gbp</td>
+  <td>chf</td>
+  <td>jpy</td>
+  <td></td>
+ </tr>
+ <tr >
+  <td >index_id</td>
+  <td>usd.libor3m</span></td>
+  <td>eur.libor6m</span></td>
+  <td>gbp.libor6m</span></td>
+  <td>chf.libor6m</span></td>
+  <td>jpy.libor6m</td>
+ </tr>
+ <tr >
+  <td >discount_id</span></td>
+  <td>usd.ois</td>
+  <td>eur.ois</td>
+  <td>gbp.ois</td>
+  <td>chf.ois</td>
+  <td>jpy.ois</td>
+  <td></td>
+ </tr>
+ <tr >
+  <td >floating_leg_period</span></td>
+  <td>3m</td>
+  <td>6m</td>
+  <td>6m</td>
+  <td>6m</td>
+  <td>6m</td>
+  <td></td>
+ </tr>
+ <tr >
+  <td >fixed_leg_period</span></td>
+  <td>6m</td>
+  <td>1y</td>
+  <td>6m</td>
+  <td>1y</td>
+  <td>6m</td>
+  <td></td>
+ </tr>
+ <tr >
+  <td >floating_leg_daycount</span></td>
+  <td>act/360</td>
+  <td>act/360</td>
+  <td>act/365</td>
+  <td>act/360</td>
+  <td>act/360</td>
+  <td></td>
+ </tr>
+ <tr >
+  <td >fixed_leg_daycount</span></td>
+  <td>30/360</td>
+  <td>30/360</td>
+  <td>act/365</td>
+  <td>30/360</td>
+  <td>act/act</td>
+  <td></td>
+ </tr>
+ <tr >
+  <td >business_day_rule</span></td>
+  <td>modified_following</span></td>
+  <td>modified_following</span></td>
+  <td>modified_following</span></td>
+  <td>modified_following</span></td>
+  <td>modified_following</td>
+ </tr>
+ <tr >
+  <td >business_centres</span></td>
+  <td>london,newyork</span></td>
+  <td>london,target</span></td>
+  <td>london</td>
+  <td>london,zurich</span></td>
+  <td>london,tokyo</td>
+ </tr>
+ <tr >
+  <td >spot_lag_days</span></td>
+  <td align=right>2</td>
+  <td align=right>2</td>
+  <td align=right>0</td>
+  <td align=right>2</td>
+  <td align=right>2</td>
+  <td></td>
+ </tr>
+</table>
+</div>
+
+
+

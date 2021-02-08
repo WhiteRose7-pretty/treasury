@@ -1,0 +1,18 @@
+<div>
+    <b>API</b>: price_fx_forward <br><hr>
+<b>Summary</b>:It prices a new fx forward. It can also be used as a way of booking your trade by entering a unique name in the "Save As" input field. The pricer will fail to save the trade if there were any error during pricing. The currency associated with the price would be the receiving currency.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>Type</b>: The only type, at the moment, is fx_forward<br>
+<b>As of</b>: This is the date as of when you are pricing the trade. Note that you can only price the trade for a date whose market data is available.<br>
+<b>Trade Date</b>: This can be any date. During weekend and holidays, the market data will be interpolated between two market dates. If the trade date is in the future of the last market date, forward values from the last market date will be used.<br>
+<b>Expiry</b>: The date (YYYYMMDD) at which the notional amounts are exchanged.<br>
+<b>Pay Amount</b>: The amount to pay at expiry.<br>
+<b>Pay Currency</b>: The currency of the Pay Amount.<br>
+<b>Receive Amount</b>: The amount to receive at expiry.<br>
+<b>Receive Currency</b>: The currency of the Receive Amount.<br>
+<b>Save as</b>: This is an optional argument. If enter an id, the trade will then be saved under that id. You can then use that id to price (api:price), risk (api:risk_ladder), calculate the p&l attribution (api:pnl_attribute) and calculate the p&l predict (api:pnl_predict)<br>
+<br>
+<b>See Also</b>:<br><hr>
+For swap market conventions, see api:market_fx_rates<br>
+</div>

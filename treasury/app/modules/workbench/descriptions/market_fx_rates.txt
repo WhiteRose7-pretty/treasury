@@ -1,0 +1,14 @@
+<div>
+    <b>API</b>: market_fx_rates <br><hr>
+<b>Summary</b>:It provides the market implied forward (or spot) fx rates for various dates as base currencies.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>As of</b>: This is the date for which swap rates are required.<br>
+<b>To Date</b>: This is the maturity of the forward. It can also be the same as 'As of' date.<br>
+<b>Base Currency</b>: FX rates will be provides as quoted against this base currency. i.e. for rates are against 1 unit of the base currency.<br>
+<br>
+<b>See Also</b>:<br><hr>
+
+
+
+

@@ -2,9 +2,7 @@
     <b>API</b>: price_vanilla_swap <br><hr>
 <b>Summary</b>:It prices a new vanilla interest rate swap. It can also be used as a way of booking your swap trade by entering a unique name in the "Save As" input field. The pricer will fail to save the trade if there were any error during pricing. The currency associated with the price would be the currency associated with that index. For example, libor.usd3m will return a price of usd, etc.
 <br><br>
-
-        <b>Arguments</b>:<br><hr>
-
+<b>Arguments</b>:<br><hr>
 <b>Type</b>: The only swap type, at the moment, is ir_vanilla_swap<br>
 <b>As of</b>: This is the date as of when you are pricing the trade. Note that you can only price the trade for a date whose market data is available.<br>
 <b>Notional</b>: one single notional amount to be applied to both legs.<br>

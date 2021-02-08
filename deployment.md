@@ -17,49 +17,45 @@
 
 ## Step by step
 
-1. Updating package
-
+### 1. Updating package
 
      sudo apt-get update
      sudo apt-get -y upgrade
 
-2. docker install
-
+### 2. docker install
 
     curl -fsSL https://get.docker.com/ | sudo sh
     # confirm install
     docker --version
     
-3. docker compose install
+### 3. docker compose install
 
-
-    sudo curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s-uname -m` -o /usr/local/bin/docker-compose
+    sudo curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -`s`-uname -m` -o /usr/local/bin/docker-compose
     # confirm install
     docker-compose --version
 
-4. Create folder for installation
+### 4. Create folder for installation
 
-    
+    cd /home
     mkdir docker
 
-5. Download project
-    
+### 5. Download project
 
+    # if you didn't install git
+    apt install git
     # for dev branch
     git clone -b dev https://github.com/shahram-alavian/web_daria.git
     # for master branch
     git clone https://github.com/shahram-alavian/web_daria.git
 
-6. Move the project folder and copy config files, run docker
-
+### 6. Move the project folder and copy config files, run docker
 
     cd web_daria
     cp -a treasury/app/media/. /opt/media/
     cp -a treasury/app/configs/. /opt/configs/
     docker-compose up --d
 
-7. Check if docker image, containers created exactly
-
+### 7. Check if docker image, containers created exactly
 
     docker-compose ps
         >>>>>>    
@@ -87,8 +83,7 @@
         7dcffa4f56cd   rabbitmq:latest    "docker-entrypoint.s…"   14 minutes ago   Up 14 minutes   4369/tcp, 5671/tcp, 15691-15692/tcp, 25672/tcp, 0.0.0.0:5672->5672/tcp   rabbitmq
     
 
-8. See log
-
+### 8. See log
 
     docker logs -f celery_beat
     docker logs -f celery_worker
@@ -98,16 +93,13 @@
 
 ## how to update server
 
-
-1. Move to project folder and down server
-   
+### 1. Move to project folder and down server
 
     cd /home/docker/web_daria
     docker-compose down
 
 
-1. Update source
-
+### 2. Update source
 
     # for dev
     git pull origin dev
@@ -115,13 +107,11 @@
     # for master
     git pull origin master
 
-2. Delete docker image
-
+### 3. Delete docker image
 
     docker image rm -f app_image
     
-3. Restart docker compose
-
+### 4. Restart docker compose
 
     docker-compose up --d
 

@@ -843,8 +843,16 @@ button:focus {
     padding: 8px 10px 8px 0;
 }
 
-#loading-icon-feedback{
+#loading-icon-feedback, #loading-icon-calculate{
     display: none;
+}
+
+div.disabled svg, div.disabled span{
+    color: grey;
+}
+
+#send-feedback.disabled span:first-child {
+    border-bottom: 1px solid grey;
 }
 
 @media only screen and (max-width: 1366px) {

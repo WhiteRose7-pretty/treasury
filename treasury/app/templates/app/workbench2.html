@@ -70,6 +70,8 @@
                         <div class="board-footer">
                             <button id="calculate-button" class="btn btn-primary btn-block" onclick="calculate()">
                                 CALCULATE
+                                <span class="spinner-border spinner-border-sm" id="loading-icon-calculate" role="status"
+                          aria-hidden="true"> </span>
                             </button>
                         </div>
 
@@ -761,6 +763,7 @@
 
 
         if (!is_error) {
+            $('#loading-icon-calculate').css('display', 'inline-block');
             api_call(function_name, arguments_dictionary, callback_nothing);
         }
     }
@@ -800,6 +803,7 @@
 
         print_output(results);
         print_summary(data, request);
+        $('#loading-icon-calculate').css('display', 'none');
         return;
     }
 
@@ -886,11 +890,13 @@
     //this function should be run with setInterval
 
 
-    function obtain_or_refresh_token() {
+    async function obtain_or_refresh_token() {
         var email = "{{ user_email|safe }}";
+        $('#email').text(email);
         if ($('#token').text().trim() == '') {
             var arguments = {'email': email};
-            api_call('account_token_create', arguments, callback_account_token_create);
+            await api_call('account_token_create', arguments, callback_account_token_create);
+            console.log('token create start-7');
             return $('#token').text();
         }
 
@@ -905,7 +911,7 @@
 
 //     var email_div = document.getElementById('email');
 //     email_div.innerHTML=email;
-        $('#email').text(email);
+
 
         return $('#token').text();
     }
@@ -975,10 +981,12 @@
     /******************************** API gateway *********************************/
 
     async function asyncFetch(url, requestOptions, callback_function) {
-
+        console.log('token create start-2');
         let response = await fetch(url, requestOptions);
         let data = await response.json();
-        callback_function(data, requestOptions.body);
+        console.log('token create start-3');
+
+        await callback_function(data, requestOptions.body);
     }
 
 
@@ -987,8 +995,8 @@
 
         arguments['function_name'] = function_name;
         if (function_name != 'account_token_create') {
-            var token = obtain_or_refresh_token();
-            arguments['token'] = token;
+            await obtain_or_refresh_token();
+            arguments['token'] = $('#token').text();
         }
 
         var arguments_string = argument_make_string(function_name, arguments);
@@ -1001,19 +1009,18 @@
             body: arguments_string
         };
 
+        console.log('token create start-1');
         await asyncFetchWrapper(url, requestOptions, callback_function);
+        console.log('token create start-6');
 
-//        await new Promise((resolve => {
-//            asyncFetch(url, requestOptions, (callback_function) => {
-//                resolve(callback_function);
-//            })
-//        }))
     }
 
     function asyncFetchWrapper(url, requestOptions, callback_function) {
         return new Promise((resolve, reject) => {
             asyncFetch(url, requestOptions, (data, response) => {
+                console.log('token create start-4');
                 callback_function(data, response);
+                console.log('token create start-5');
                 resolve();
             });
         });
@@ -1071,13 +1078,14 @@
 
             console.log('token create start');
 
-            setTimeout(obtain_or_refresh_token, 0);
+            load_descriptions();
+            await obtain_or_refresh_token();
 
             console.log('token create end');
-            setTimeout(load_descriptions, 0);
-            setTimeout(load_asof_dates, 2000);
-            setTimeout(load_trade_ids, 2000);
-            setTimeout(initialize_page, 300);
+
+            load_asof_dates();
+            load_trade_ids();
+            initialize_page();
 
             setTimeout(function () {
                 document.getElementById("api-list").innerHTML = get_api_list();
@@ -1087,12 +1095,16 @@
             print_output({'Error': 'Your not Logged in.'});
             document.getElementById("calculate-button").disabled = true
             document.getElementById("api-list").disabled = true
-            document.getElementById("send-feedback").disabled = true
+            document.getElementById("send-feedback");
+            $('#send-feedback').addClass('disabled');
         }
     }
 
 
     $('#send-feedback').on('click', function () {
+        if($('#send-feedback').hasClass('disabled')){
+            return false;
+        }
         $('#feedback-modal').modal('show');
         $('#feedback-content').val('');
         $('#msg').html('');
@@ -1107,7 +1119,7 @@
             return false;
         }
         $('#loading-icon-feedback').css('display', 'inline-block');
-        let res = await post_message1('Send Feedback', message, $('#msg'));
+        let res = await post_message1('Feedback from '+email, message, $('#msg'));
         $('#feedback-modal').modal('hide');
         $('#loading-icon-feedback').css('display', 'none');
     }

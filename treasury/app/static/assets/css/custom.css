@@ -9,7 +9,7 @@
     height: 38px;
 }
 
-:hover {
+button:hover, a:hover {
     transition: 0.6s;
 }
 
@@ -637,6 +637,7 @@ strong {
 .grid-mother p {
     line-height: 1.5;
     margin-bottom: 0;
+    font-size: 1rem;
 }
 
 .grid-mother div p:first-child {
@@ -660,14 +661,14 @@ strong {
 }
 
 .board-title {
-    padding: 1rem 2rem;
+    padding: 0.6rem 2rem;
     font-size: 18px;
     font-weight: bold;
     border-bottom: #f4f5f9 2px solid;
 }
 
 .board-list {
-    padding: 0.8rem 1.5rem;
+    padding: 0.5rem 1.5rem;
     background: #e9e9f3;
     width: 100%;
 }
@@ -695,19 +696,25 @@ button:focus {
 }
 
 .board-main {
-    padding: 1rem 1.5rem;
+    padding: 0.6rem 1.5rem;
 }
 
 .board-main .form-control {
-    height: 36px;
+    height: 24px;
+    font-size: 0.8rem;
 }
 
 .board-main .form-group {
-    margin-bottom: 8px;
+    margin-bottom: 2px;
+}
+
+.board-main .col-form-label {
+    line-height: 1;
+    font-size: 14px;
 }
 
 .board-footer {
-    padding: 0.8rem 4rem;
+    padding: 0.5rem 4rem;
     width: 100%;
     border-top: #f4f5f9 2px solid;
 }
@@ -721,19 +728,19 @@ button:focus {
 }
 
 .board-main {
-    height: 53vh;
+    height: 59vh;
     overflow: auto;
 }
 
 
 .board-output .board-main {
     overflow: auto;
-    height: calc(53vh + 69px + 63px);
+    height: calc(59vh + 58px + 54px);
 }
 
 .board-description .board-main {
     overflow: auto;
-    height: calc(53vh + 69px);
+    height: calc(59vh + 69px);
 }
 
 .board-output .board-main .form-group:nth-child(even) {
@@ -821,10 +828,34 @@ button:focus {
 #send-feedback span:first-child:hover{
     color: #2f3778!important;
     border-bottom: 1px solid #2f3778;
-    transform: translateY(-0.2rem);
+}
+
+#send-feedback:disabled span:first-child, #send-feedback:disabled span:first-child:hover{
+    color: grey;
+}
+
+.table-container{
+    max-width: 435px;
+    overflow-x: auto;
+}
+
+.board-main .table-container td{
+    padding: 8px 10px 8px 0;
+}
+
+#loading-icon-feedback{
+    display: none;
 }
 
 @media only screen and (max-width: 1366px) {
+
+    .table-container{
+        max-width: inherit;
+        overflow-x: auto;
+    }
+
+
+
     .grid-mother {
         display: grid;
         grid-template-columns: 1fr 1fr 20%;
@@ -850,6 +881,7 @@ button:focus {
 
     .grid-board .board-output:nth-child(3) .board-main {
         height: auto;
+        min-height: 20vh;
     }
 }
 
@@ -943,7 +975,6 @@ button:focus {
 
 
 @media (max-width: 1600px) {
-
 
     .changes-detail-sec ul {
         flex-wrap: wrap;

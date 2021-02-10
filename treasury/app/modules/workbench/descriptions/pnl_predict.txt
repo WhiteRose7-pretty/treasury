@@ -1,0 +1,15 @@
+<div>
+    <b>API</b>: pnl_predict <br><hr>
+<b>Summary</b>:It calculates p&l predict. This is where the mtm of a saved trade between two dates are broken down to changes of the market data in terms of curve maturities. The benefit of the pnl precit is that it provides a more detailed break-down, down to the curve maturities. This is usually compared with the pnl attribute where pnl break down is only by the the change at the curve leve.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>As of</b>: This is the date as of when you are calculating the pnl attribution for. Note that you can only calculate the sensitivites of the trade for a date whose market data is available.<br>
+<b>Load as</b>: Select a name of trade for which the pnl atribution is to be calculated. They are created with the field "Save As" populated when pricing a trade.<br>
+<br>
+<b>See Also</b>:<br><hr>
+For creating a vanilla swap, see api:price_vanilla_swap<br>
+For creating an FX forward, see api:price_fx_forward<br>
+</div>
+
+
+

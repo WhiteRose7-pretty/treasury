@@ -38,23 +38,57 @@
     console.log(format.test("My string with spaces") + "<br/>");
     console.log(format.test("MyStringContainingNoSpecialChars"));
 
-    function contains_any(str, set){
+    function contains_any(str, set) {
         return set.test(str);
     }
 
-    function password_validate(password, confirm_password){
+    function password_validate(password, confirm_password) {
         let msg_text = '';
-        if(password !== confirm_password){
+        if (password !== confirm_password) {
             msg_text += `Password not matched.<br>`;
         }
-        if(password.length < 10){
+        if (password.length < 10) {
             msg_text += `Password should be at least 10 characters long.<br>`;
         }
         let unaccepted_set = /[ '"&|,]/;
-        if(contains_any(password, unaccepted_set)){
+        if (contains_any(password, unaccepted_set)) {
             msg_text += `Password contains invalid characters.<br>`;
         }
         return msg_text;
+    }
+
+
+    async function post_message1(subject, message, output_object = false) {
+        var token = '{{csrf_token}}';
+        let result;
+        await new Promise((resolve, reject) => {
+            $.ajax({
+                headers: {
+                    "X-CSRFToken": token
+                },
+                type: 'post',
+                url: "{% url 'app:post_message' %}",
+                data: {
+                    'subject': subject,
+                    'message': message,
+                    'source_caller': document.location.href,
+                },
+                success: function (data) {
+                    console.log('message sent successfully.');
+                    resolve();
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    console.log("Error: " + errorMessage);
+                    result = errorMessage;
+                    if (output_object) {
+                        output_object.html(errorMessage);
+                    }
+                    reject();
+                },
+            });
+        })
+        console.log('end1');
+        return true;
     }
 
 
@@ -73,17 +107,18 @@
                 'source_caller': document.location.href,
             },
             success: function (data) {
-               console.log('message sent successfully.');
+                console.log('message sent successfully.');
             },
             error: function (jqXhr, textStatus, errorMessage) {
-               console.log("Error: " + errorMessage);
-               result = errorMessage;
-               if(output_object){
-                   output_object.html(errorMessage);
-               }
+                console.log("Error: " + errorMessage);
+                result = errorMessage;
+                if (output_object) {
+                    output_object.html(errorMessage);
+                }
             },
         });
 
     }
+
 
 </script>

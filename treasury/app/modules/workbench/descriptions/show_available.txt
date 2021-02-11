@@ -1,0 +1,13 @@
+<div>
+    <b>API</b>: show_available <br><hr>
+<b>Summary</b>:Provides all available options for various input parameters.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>Element</b>: This is the name of the parameter for which the options are needed.<br>
+<br>
+<b>See Also</b>:<br><hr>
+To see the description for any of the apis, see api:show_available<br>
+</div>
+
+
+

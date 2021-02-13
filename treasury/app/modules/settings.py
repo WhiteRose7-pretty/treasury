@@ -31,7 +31,11 @@ def self_ip():
 
 email_dictionary = {'77.68.24.21': 'webmaster.b@treasuryquants.com', '77.68.7.117': 'webmaster.b@treasuryquants.com'}
 
-email_default = email_dictionary[self_ip()]  # Prod's server 2, master
+try:
+    email_default = email_dictionary[self_ip()]
+except:
+    email_default = "web.user@treasuryquants.com"
+# Prod's server 2, master
 # email_default = "webmaster.a@treasuryquants.com"  # Prod's server 2, dev
 # email_default = "web.user@treasuryquants.com"  # Prod's
 # email_default = "valya.varechkina.76@bk.ru"       # Daria's
@@ -42,11 +46,11 @@ email_default = email_dictionary[self_ip()]  # Prod's server 2, master
 # server's url
 #
 url_server = "http://operations.treasuryquants.com"
-#url_server="http://192.168.1.80:8080" #Shahram's local server
+# url_server="http://192.168.1.80:8080" #Shahram's local server
 
 
 target_url = "http://77.68.119.98/"
-#target_url=url_server
+# target_url=url_server
 # url_server="http://192.168.1.80:8080" #Shahram's local server
 
 

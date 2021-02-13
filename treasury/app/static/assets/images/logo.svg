@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 266.21 74.68"
+   version="1.1"
+   id="svg38"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata44">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Asset 18</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs42" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1440"
+     inkscape:window-height="837"
+     id="namedview40"
+     showgrid="false"
+     inkscape:zoom="1.3838798"
+     inkscape:cx="109.0746"
+     inkscape:cy="-47.211103"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg38"
+     inkscape:document-rotation="0" />
+  <title
+     id="title2">Asset 18</title>
+  <g
+     id="g999"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96">
+    <rect
+       style="fill:#cccccc;fill-opacity:0;stroke-width:1.38168"
+       id="rect160"
+       width="146.76627"
+       height="130.7917"
+       x="44.801582"
+       y="-167.64461"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <g
+       id="g158"
+       transform="matrix(1.3229091,0,0,1.5479821,44.080423,-157.06849)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <polygon
+         points="0,0 0,15.31 19.44,15.31 19.44,66.83 36.87,66.83 36.87,15.31 56.3,15.31 56.3,0 "
+         id="polygon32"
+         transform="matrix(0.87463856,0,0,0.83667179,2.2333079,2.8904249)"
+         style="fill:#000055" />
+      <path
+         d="M 89.931446,44.949833 A 7.0653798,7.0653798 0 0 1 84.74267,47.232894 H 76.795198 A 7.0913236,7.0913236 0 0 1 69.703874,40.14157 V 22.603517 a 7.0913236,7.0913236 0 0 1 7.091324,-7.091324 h 7.930175 a 7.0913236,7.0913236 0 0 1 7.091321,7.091324 V 37.797974 L 105.84368,49.040317 A 24.638025,24.638025 0 0 0 107.236,40.202106 V 22.387317 c 0,-4.739079 -0.77832,-10.161347 -4.73908,-13.9232081 -3.960757,-3.761861 -9.460867,-6.313008 -21.836086,-6.313008 -12.375224,0 -17.875324,2.594387 -21.827439,6.313008 -3.952117,3.7186211 -4.747728,9.1841291 -4.747728,13.9232081 v 17.814789 c 0,4.73908 0.786963,10.161348 4.747728,13.923208 3.960763,3.761862 9.460863,6.313008 21.827439,6.313008 A 48.428551,48.428551 0 0 0 93.805723,58.96817 l 9.772187,7.78316 6.5811,-8.016655 -19.025503,-15.220402 z"
+         id="path34"
+         style="fill:#000055;stroke-width:0.864793" />
+    </g>
+  </g>
+</svg>

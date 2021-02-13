@@ -1,6 +1,7 @@
 import socket
 
 
+
 def self_ip():
     # collects all the ips associated with this http_server
     ip_list1 = [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] \
@@ -31,10 +32,10 @@ def self_ip():
 
 email_dictionary = {'77.68.24.21': 'webmaster.b@treasuryquants.com', '77.68.7.117': 'webmaster.a@treasuryquants.com'}
 
-try:
-    email_default = email_dictionary[self_ip()]
-except:
-    email_default = "web.user@treasuryquants.com"
+master_ip = '77.68.24.21'
+dev_ip = '77.68.7.117'
+email_default = email_dictionary[dev_ip]
+
 # Prod's server 2, master
 # email_default = "webmaster.a@treasuryquants.com"  # Prod's server 2, dev
 # email_default = "web.user@treasuryquants.com"  # Prod's

@@ -1,0 +1,13 @@
+<div>
+    <b>API</b>: describe <br><hr>
+<b>Summary</b>:Provides a description of the apis. If no argument is provided, the response would be the summary description of each api available. If a name of an api was given as the argument, then, the response would be the description of the api as well as the specification of the input arguments.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>Element</b>: This is the name of api to receive the description for.<br>
+<br>
+<b>See Also</b>:<br><hr>
+To see further available options for various input parameters etc., see api:show_available<br>
+</div>
+
+
+

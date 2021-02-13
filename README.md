@@ -41,13 +41,6 @@ Small coding standards so (python, js) different people write the same way.
 How to clone, pull request, ...
 
 
-## Maintenance
-What are the steps we need to make sure the site continues to work in production?
-
-
-# Common issues:
-## Server not working:
-## next Issue (add here)
 
 
 # Structure
@@ -96,4 +89,29 @@ What are the steps we need to make sure the site continues to work in production
  
     
    
-  
+## Maintenance
+What are the steps we need to make sure the site continues to work in production?
+# Common issues:
+## Server not working:
+Every once in a while the server suddenly stops and needs to be restarted. Use putty to login to the server using username and sudo password.
+the IP for the server is defined inside app/modules/settings.py. Look for a line like 
+    
+    target_url = "http://77.68.119.98/"
+    
+### Go to /home/prod/bin/python/TQmain/
+    cd /home/prod/bin/python/TQmain
+### Check to ensure the server process is actually running.
+    ps ax | grep python
+This will filter out all the processes with 'python' in the process name/command line.
+There usually is two instances of gateway.py script running using "python"
+### Kill server processes
+For each of the two instances above take a nore of their PID
+
+    sudo kill -9 <PID 1>
+    sudo kill -9 <PID 2>
+## Restart the server
+    sudo nohup python3 gateway.py shahramalavian > gateway.out &   
+The above line ensures the process resides in the background even after the Putty session is closed.
+
+## next Issue (add here)
+      

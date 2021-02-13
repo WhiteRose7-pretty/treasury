@@ -42,11 +42,11 @@ email_default = email_dictionary[self_ip()]  # Prod's server 2, master
 # server's url
 #
 url_server = "http://operations.treasuryquants.com"
-# url_server="http://192.168.1.80:8080" #Shahram's local server
+#url_server="http://192.168.1.80:8080" #Shahram's local server
 
 
 target_url = "http://77.68.119.98/"
-# target_url=url_server
+#target_url=url_server
 # url_server="http://192.168.1.80:8080" #Shahram's local server
 
 

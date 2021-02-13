@@ -24,8 +24,8 @@ def get_development_status():
 
 @register.simple_tag
 def get_api_status():
-    print(cron_grids.api_status_from_file(settings.api_status_path))
     return cron_grids.api_status_from_file(settings.api_status_path)
+
 
 def read_data(file_path):
     obj = CurrencyData('', ['', '', ''], [[0, 0, 0, 0]], [0],
@@ -51,7 +51,6 @@ def read_data(file_path):
         data2.append(col2)
     obj = CurrencyData(grid.title, grid.headings, elements, tenors, data1, data2)
     obj.head_data[0] = ''
-
     return obj
 
 

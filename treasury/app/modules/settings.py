@@ -29,7 +29,7 @@ def self_ip():
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
 
-email_dictionary = {'77.68.24.21': 'webmaster.b@treasuryquants.com', '77.68.7.117': 'webmaster.b@treasuryquants.com'}
+email_dictionary = {'77.68.24.21': 'webmaster.b@treasuryquants.com', '77.68.7.117': 'webmaster.a@treasuryquants.com'}
 
 try:
     email_default = email_dictionary[self_ip()]

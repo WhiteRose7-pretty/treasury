@@ -69,7 +69,6 @@ def workbench2(request):
         user_email = request.session['user_email']
     arrays = range(1, 8)
 
-    print( json.dumps(descriptions))
     context = {
         'navbar': 'workbench',
         'user_email': user_email,

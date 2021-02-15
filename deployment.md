@@ -9,7 +9,7 @@
 - docker compose
 
 ## python package (requirements.txt)  
-- Django: 2.2 adn higher
+- Django: 2.2 and higher
 - TQapis: latest
 - Celery: 4.4.0rc2 and higher
 - gunicorn: latest

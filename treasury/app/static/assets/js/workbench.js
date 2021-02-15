@@ -65,6 +65,10 @@ var data_type_spec = {
         'type': 'combo', 'width': '10',
         'init_values': ['none', 'modified_following', 'modified_precedent', 'following', 'precedent']
     }
+    , 'TYPE_SPOT_LAG_DAYS': {
+        'type': 'combo', 'width': '10',
+        'init_values': ['0', '1', '2']
+    }
 };
 
 
@@ -180,7 +184,7 @@ var _price_vanilla_swap = {
         'TYPE_BOOLEAN',
         'TYPE_BUSINESS_DAY_RULE',
         'TYPE_BUSINESS_CENTRE',
-        'TYPE_NUMBER',
+        'TYPE_SPOT_LAG_DAYS',
         'TYPE_STRING']
     ,
     'argument_values': ['0', 'last', '100000000', '', '30y', '0', '0', '0', '0', '0', '0', '0', '0.01', '0', '0', '0', '0', '']
@@ -409,6 +413,9 @@ function get_input_object(argument, argument_text, argument_optional, argument_t
         case 'TYPE_BUSINESS_DAY_RULE':
             content = get_list(argument, data_type_spec['TYPE_BUSINESS_DAY_RULE']['init_values'], argument_default);
             break;
+        case 'TYPE_SPOT_LAG_DAYS':
+            content = get_list(argument, data_type_spec['TYPE_SPOT_LAG_DAYS']['init_values'], argument_default);
+            break;
         default:
             content = "<input class=\"form-control\" id=\"" + argument + "\" name=\"" + argument + "\" type=\"text\">";
     }
@@ -470,12 +477,14 @@ function print_form(choice) {
 function clear_output() {
     $('#output').text('');
     document.getElementById("api-entries").innerHTML = ''
+    document.getElementById("description").innerHTML = ''
+
 }
 
 
-function clear_form() {
-    document.getElementById("api-entries").innerHTML = ''
-}
+//function clear_form() {
+//    document.getElementById("api-entries").innerHTML = ''
+//}
 
 
 /******************************** Calculate Form *********************************/
@@ -868,6 +877,7 @@ function load_descriptions(descriptions) {
 
 async function initial_load(email,descriptions) {
     if (email != '' && email != null) {
+        print_output({'Connecting to Server': 'Please wait...'});
 
         load_descriptions(descriptions);
         await obtain_or_refresh_token();
@@ -878,10 +888,11 @@ async function initial_load(email,descriptions) {
 
         setTimeout(function () {
             document.getElementById("api-list").innerHTML = get_api_list();
+            clear_output();
         }, 2000);
 
     } else {
-        print_output({'Error': 'Your not Logged in.'});
+        print_output({'Error': 'Please login first.'});
         document.getElementById("calculate-button").disabled = true
         document.getElementById("api-list").disabled = true
         document.getElementById("send-feedback");

@@ -21,6 +21,14 @@ def connection_is_ok(connection):
     message = connection.send_web(request_ip_return)
     return make_results(message, connection)
 
+def ip_return(connection):
+    #
+    # Check if we have connections
+    #
+    request_ip_return = TQRequests.request_ip_return()
+    message = connection.send_web(request_ip_return)
+    return make_results(message, connection)
+
 
 def account_status(connection, user_email):
     #
@@ -143,129 +151,129 @@ def formatted_grid_swap_rates(connection, from_date, to_date,currency, tenors):
 
 
 
-
-def describe(connection, user_email, element=''):
-
-    request_function_describe = TQRequests.request_function_describe(element)
-    request_function_describe.params['email']=user_email
-    message = connection.send_web(request_function_describe)
-    return make_results(message, connection)
-
-def show_available(connection, user_email, element=''):
-    request_function_show_available = TQRequests.request_function_show_available(element)
-    request_function_show_available.params['email']=user_email
-    message = connection.send_web(request_function_show_available)
-    return make_results(message, connection)
-
-def pnl_attribute(connection, user_email,load_as, from_date, to_date):
-    request_function_pnl_attribute = TQRequests.request_function_pnl_attribute(load_as, from_date, to_date)
-    request_function_pnl_attribute.params['email']=user_email
-    message = connection.send_web(request_function_pnl_attribute)
-    return make_results(message, connection)
-
-
-def pnl_predict(connection, user_email,load_as, from_date, to_date):
-    request_function_pnl_predict = TQRequests.request_function_pnl_predict(load_as, from_date, to_date)
-    request_function_pnl_predict.params['email']=user_email
-    message = connection.send_web(request_function_pnl_predict)
-    return make_results(message, connection)
-
-def risk_ladder(connection, user_email,asOf, load_as):
-    request_function_risk_ladder = TQRequests.request_function_risk_ladder(asOf, load_as)
-    request_function_risk_ladder.params['email']=user_email
-    message = connection.send_web(request_function_risk_ladder)
-    return make_results(message, connection)
-
-def price(connection, user_email,asOf, load_as):
-    request_function_price = TQRequests.request_function_price(asOf, load_as)
-    request_function_price.params['email']=user_email
-    message = connection.send_web(request_function_price)
-    return make_results(message, connection)
-
-
-def workspace(connection, user_email,list='', delete=''):
-    request_function_workspace = TQRequests.request_function_workspace_show_files()
-    if delete!='':
-        request_function_workspace = TQRequests.request_function_workspace_delete_file(delete)
-    request_function_workspace.params['email']=user_email
-    message = connection.send_web(request_function_workspace)
-    return make_results(message, connection)
-
-
-
-def price_vanilla_swap(
-                connection
-                , user_email
-                , asof
-                , type
-                , notional
-                , trade_date
-                , trade_maturity
-                , index_id
-                , discount_id
-                , floating_leg_period
-                , fixed_leg_period
-                , floating_leg_daycount
-                , fixed_leg_daycount
-                , fixed_rate
-                , is_payer
-                , spread
-                , business_day_rule
-                , business_centres
-                , spot_lag_days
-                , save_as=""):
-    request_function_price_vanilla_swap = TQRequests.request_function_price_vanilla_swap(asof
-                , type
-                , notional
-                , trade_date
-                , trade_maturity
-                , index_id
-                , discount_id
-                , floating_leg_period
-                , fixed_leg_period
-                , floating_leg_daycount
-                , fixed_leg_daycount
-                , fixed_rate
-                , is_payer
-                , spread
-                , business_day_rule
-                , business_centres
-                , spot_lag_days
-                , save_as)
-    request_function_price_vanilla_swap.params['email']=user_email
-    message = connection.send_web(request_function_price_vanilla_swap)
-    return make_results(message, connection)
-
-def price_fx_forward(connection
-                , user_email
-                , asof
-                , type
-                , trade_date
-                , trade_expiry
-                , pay_amount
-                , pay_currency
-                , receive_amount
-                , receive_currency
-                , save_as=""):
-    request_function_price_fx_forward = TQRequests.request_function_price_fx_forward(asof
-                , type
-                , trade_date
-                , trade_expiry
-                , pay_amount
-                , pay_currency
-                , receive_amount
-                , receive_currency
-                , save_as)
-    request_function_price_fx_forward.params['email']=user_email
-    message = connection.send_web(request_function_price_fx_forward)
-    return make_results(message, connection)
-
-
-def market_swap_rates(connection, user_email,asof, currency):
-    request_function_market_swap_rates = TQRequests.request_function_market_swap_rates(asof, currency)
-    request_function_market_swap_rates.params['email']=user_email
-    message = connection.send_web(request_function_market_swap_rates)
-    return make_results(message, connection)
+# all these functions are called from front-end directly. No need to be supported from the back-end
+# def describe(connection, user_email, element=''):
+#
+#     request_function_describe = TQRequests.request_function_describe(element)
+#     request_function_describe.params['email']=user_email
+#     message = connection.send_web(request_function_describe)
+#     return make_results(message, connection)
+#
+# def show_available(connection, user_email, element=''):
+#     request_function_show_available = TQRequests.request_function_show_available(element)
+#     request_function_show_available.params['email']=user_email
+#     message = connection.send_web(request_function_show_available)
+#     return make_results(message, connection)
+#
+# def pnl_attribute(connection, user_email,load_as, from_date, to_date):
+#     request_function_pnl_attribute = TQRequests.request_function_pnl_attribute(load_as, from_date, to_date)
+#     request_function_pnl_attribute.params['email']=user_email
+#     message = connection.send_web(request_function_pnl_attribute)
+#     return make_results(message, connection)
+#
+#
+# def pnl_predict(connection, user_email,load_as, from_date, to_date):
+#     request_function_pnl_predict = TQRequests.request_function_pnl_predict(load_as, from_date, to_date)
+#     request_function_pnl_predict.params['email']=user_email
+#     message = connection.send_web(request_function_pnl_predict)
+#     return make_results(message, connection)
+#
+# def risk_ladder(connection, user_email,asOf, load_as):
+#     request_function_risk_ladder = TQRequests.request_function_risk_ladder(asOf, load_as)
+#     request_function_risk_ladder.params['email']=user_email
+#     message = connection.send_web(request_function_risk_ladder)
+#     return make_results(message, connection)
+#
+# def price(connection, user_email,asOf, load_as):
+#     request_function_price = TQRequests.request_function_price(asOf, load_as)
+#     request_function_price.params['email']=user_email
+#     message = connection.send_web(request_function_price)
+#     return make_results(message, connection)
+#
+#
+# def workspace(connection, user_email,list='', delete=''):
+#     request_function_workspace = TQRequests.request_function_workspace_show_files()
+#     if delete!='':
+#         request_function_workspace = TQRequests.request_function_workspace_delete_file(delete)
+#     request_function_workspace.params['email']=user_email
+#     message = connection.send_web(request_function_workspace)
+#     return make_results(message, connection)
+#
+#
+#
+# def price_vanilla_swap(
+#                 connection
+#                 , user_email
+#                 , asof
+#                 , type
+#                 , notional
+#                 , trade_date
+#                 , trade_maturity
+#                 , index_id
+#                 , discount_id
+#                 , floating_leg_period
+#                 , fixed_leg_period
+#                 , floating_leg_daycount
+#                 , fixed_leg_daycount
+#                 , fixed_rate
+#                 , is_payer
+#                 , spread
+#                 , business_day_rule
+#                 , business_centres
+#                 , spot_lag_days
+#                 , save_as=""):
+#     request_function_price_vanilla_swap = TQRequests.request_function_price_vanilla_swap(asof
+#                 , type
+#                 , notional
+#                 , trade_date
+#                 , trade_maturity
+#                 , index_id
+#                 , discount_id
+#                 , floating_leg_period
+#                 , fixed_leg_period
+#                 , floating_leg_daycount
+#                 , fixed_leg_daycount
+#                 , fixed_rate
+#                 , is_payer
+#                 , spread
+#                 , business_day_rule
+#                 , business_centres
+#                 , spot_lag_days
+#                 , save_as)
+#     request_function_price_vanilla_swap.params['email']=user_email
+#     message = connection.send_web(request_function_price_vanilla_swap)
+#     return make_results(message, connection)
+#
+# def price_fx_forward(connection
+#                 , user_email
+#                 , asof
+#                 , type
+#                 , trade_date
+#                 , trade_expiry
+#                 , pay_amount
+#                 , pay_currency
+#                 , receive_amount
+#                 , receive_currency
+#                 , save_as=""):
+#     request_function_price_fx_forward = TQRequests.request_function_price_fx_forward(asof
+#                 , type
+#                 , trade_date
+#                 , trade_expiry
+#                 , pay_amount
+#                 , pay_currency
+#                 , receive_amount
+#                 , receive_currency
+#                 , save_as)
+#     request_function_price_fx_forward.params['email']=user_email
+#     message = connection.send_web(request_function_price_fx_forward)
+#     return make_results(message, connection)
+#
+#
+# def market_swap_rates(connection, user_email,asof, currency):
+#     request_function_market_swap_rates = TQRequests.request_function_market_swap_rates(asof, currency)
+#     request_function_market_swap_rates.params['email']=user_email
+#     message = connection.send_web(request_function_market_swap_rates)
+#     return make_results(message, connection)
 
 
 # def market_fx_rates(connection, user_email,base_date,to_date,base_currency):

@@ -14,8 +14,7 @@ def download_fx_data():
         ['USD', 'GBP', 'EUR', 'CHF', 'JPY', 'CAD', 'AUD', 'SGD', 'NZD'], "USD", settings.grid_folder)
     if not status:
         # Do Failure
-        utility_common.process_fatal_error("download_fx_data", utility_common.dict_to_string(results),
-                                           settings.is_development)
+        utility_common.process_fatal_error("download_fx_data", utility_common.dict_to_string(results),settings.path_error_file,settings.email_webmaster, settings.is_development)
     return status
 
 
@@ -26,8 +25,9 @@ def download_rates_data():
                                                                                  settings.grid_folder)
     if not status:
         # Do Failure
-        utility_common.process_fatal_error("download_rates_data", utility_common.dict_to_string(results),
-                                           settings.is_development)
+        utility_common.process_fatal_error("download_rates_data", utility_common.dict_to_string(results),settings.path_error_file,settings.email_webmaster, settings.is_development)
+
+
     return status, results
 
 
@@ -40,7 +40,7 @@ def check_connection():
     error = res_dic['error']
     if error:
         status = False
-        utility_common.process_fatal_error("check_connection", error, settings.is_development)
+        utility_common.process_fatal_error("check_connection", error,settings.path_error_file,settings.email_webmaster, settings.is_development)
     elif not res_dic['results']:
         status = False
         error = 'it is not connected with backend'

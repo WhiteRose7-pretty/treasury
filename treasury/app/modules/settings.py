@@ -9,7 +9,7 @@ email_dictionary = {'77.68.24.21': 'webmaster.b@treasuryquants.com', '77.68.7.11
 
 master_ip = '77.68.24.21'
 dev_ip = '77.68.7.117'
-email_default = email_dictionary[master_ip]
+email_default = email_dictionary[dev_ip]
 
 # Prod's server 2, master
 # email_default = "webmaster.a@treasuryquants.com"  # Prod's server 2, dev
@@ -35,7 +35,7 @@ target_url = "http://77.68.119.98/"
 # 2) use is_test=True for the api calls
 # 3) ... ?
 #
-is_development = True
+is_development = False
 
 #
 # Location of the token files
@@ -44,7 +44,7 @@ token_path = "app/configs/token.json"
 
 api_status_path = "app/configs/api_status.txt"
 
-path_error_file= "app/configs/errors.json"
+path_error_file = "app/configs/errors.json"
 
 #
 # Location of the grid files

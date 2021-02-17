@@ -32,4 +32,4 @@ def test_all():
             #print("Failed on {}".format(key))
     return is_success
 
-print(test_all()) # the return of this function is a single bollean dictating whether the test as passed or failed.
+print(test_all()) # the return of this function is a single bollean dictating whether the test has passed or failed.

@@ -11,14 +11,14 @@ from app.models import ApiStatus
 
 def home(request):
     context = {
-        'navbar': 'home',
+        'navbar': 'Swap & FX Market Rates',
     }
     return render(request, 'app/home.html', context)
 
 
 def about_us(request):
     context = {
-        'navbar': 'about_us',
+        'navbar': 'About us',
     }
     return render(request, 'app/about_us.html', context)
 
@@ -41,7 +41,7 @@ def workbench(request):
         user_email = request.session['user_email']
 
     context = {
-        'navbar': 'workbench',
+        'navbar': 'Workbench',
         'user_email': user_email,
         'target_url': settings.url_server,
         'target_ip': settings.target_url,
@@ -70,7 +70,7 @@ def workbench2(request):
     arrays = range(1, 8)
 
     context = {
-        'navbar': 'workbench',
+        'navbar': 'Workbench',
         'user_email': user_email,
         'target_url': settings.url_server,
         'target_ip': settings.target_url,
@@ -83,14 +83,14 @@ def workbench2(request):
 
 def policy_notice(request):
     context = {
-        'navbar': 'policy_notice',
+        'navbar': 'Policy Notice',
     }
     return render(request, 'app/policy_notice.html', context)
 
 
 def terms_service(request):
     context = {
-        'navbar': 'terms',
+        'navbar': 'Terms of Service',
     }
     return render(request, 'app/terms.html', context)
 

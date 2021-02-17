@@ -22,15 +22,24 @@
     {% include 'app/basic/middle_office.html' %}
     <section style=" margin-top: 10px">
         <div class="container d-flex justify-content-center ">
-            <div class="profile-table mt-4">
-                <h3 class="font-weight-bold">My Account</h3>
+            <div class="profile-table mt-5">
                 {% if result_dic.error %}
                 <div id="error" class="text-danger">{{ result_dic.error }}</div>
                 {% else %}
-                <div>Email: <a>{{ user_email }}</a></div>
+                <h3 class="mb-4">Welcome!</h3>
 
                 <table class="profile-table mt-2">
-
+                    <tr>
+                        <td>
+                            <span class="text-muted">
+                                <i class="mr-3"
+                                   data-feather="mail"></i>
+                            </span>email
+                        </td>
+                        <td>
+                            {{ user_email }}
+                        </td>
+                    </tr>
                     {% for key,value in result_dic.results.items %}
                         <tr>
                             <td>

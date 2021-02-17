@@ -62,16 +62,25 @@ canvas {
 }
 
 .header .navbar .nav-item {
-    padding: 12px 7px;
+    padding: 12px 1rem;
 }
 
-.header .navbar .nav-link {
+.header .navbar .nav-link,
+.footer .nav-link{
     font-size: 18px;
     color: #465373;
     position: relative;
 }
 
-.header .navbar .nav-link:before {
+.footer .nav-link:hover{
+    color: #4f78e0;
+}
+
+.footer .navbar-nav{
+    flex-direction: row;
+}
+
+.header .navbar .nav-link:before{
     position: absolute;
     left: 0;
     bottom: -22px;
@@ -256,7 +265,7 @@ canvas {
 
 .footer {
     padding: 30px 0;
-    box-shadow: 0 -18px 23px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .footer-left {
@@ -264,15 +273,27 @@ canvas {
 }
 
 .footer-logo {
-    margin-right: 60px;
+    margin-right: 20px;
     margin-top: 5px;
+}
+.footer-logo img{
+    height: 80px;
+}
+
+.footer .nav-item{
+    padding: 0 1.5rem;
+    width: 15%;
+}
+
+.full-height{
+    height: 100%;
 }
 
 .address p {
     margin-bottom: 0;
-    font-size: 18px;
+    font-size: 1rem;
     color: #465373;
-    line-height: 1.25;
+    line-height: 1.5;
 }
 
 .address a {
@@ -287,7 +308,7 @@ canvas {
     text-align: right;
     font-size: 18px;
     color: #465373;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
 }
 
 .country-section h3 img {
@@ -365,7 +386,7 @@ canvas {
 }
 
 .login-container .changes-detail-main {
-    padding: 50px 28px;
+    padding: 50px 28px 24px;
 }
 
 .login-container span {
@@ -630,6 +651,7 @@ strong {
 
 .regular-text p {
     margin-bottom: 0;
+    text-align: justify;
 }
 
 .regular-text .section-md {
@@ -646,7 +668,7 @@ strong {
 }
 
 .user-information {
-    margin-top: -2rem;
+    margin-top: 0;
     margin-bottom: 1rem;
 }
 
@@ -744,19 +766,19 @@ button:focus {
 }
 
 .board-main {
-    height: 59vh;
+    height: 58vh;
     overflow: auto;
 }
 
 
 .board-output .board-main {
     overflow: auto;
-    height: calc(59vh + 58px + 54px);
+    height: calc(58vh + 58px + 54px);
 }
 
 .board-description .board-main {
     overflow: auto;
-    height: calc(59vh + 69px);
+    height: calc(58vh + 69px);
 }
 
 .board-output .board-main .form-group:nth-child(even) {
@@ -849,7 +871,7 @@ button:focus {
 }
 
 .table-container{
-    max-width: 435px;
+    max-width: 525px;
     overflow-x: auto;
 }
 
@@ -911,6 +933,10 @@ div.disabled svg, div.disabled span{
     .grid-mother {
         display: grid;
         grid-template-columns: 1fr 1fr;
+    }
+
+    .footer .navbar-nav{
+        flex-direction: column;
     }
 
 

@@ -35,12 +35,12 @@
                 <ul class="navbar-nav ml-auto">
 
                     <li class="nav-item">
-                        <a class="nav-link {% check_navbar navbar 'home' %}" aria-current="page"
+                        <a class="nav-link {% check_navbar navbar 'Swap & FX Market Rates' %}" aria-current="page"
                            href="{% url 'app:home' %}">markets</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% check_navbar navbar 'workbench' %}" aria-current="page"
-                           href="">workbench</a>
+                        <a class="nav-link {% check_navbar navbar 'Workbench' %}" aria-current="page"
+                           href="{% url 'app:workbench2' %}">Workbench</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">about<span
@@ -65,7 +65,7 @@
                     {% authenticated request as user_flag %}
                     {% if user_flag %}
                         <li class="nav-item">
-                            <a class="nav-link {% check_navbar navbar 'profile' %}"
+                            <a class="nav-link {% check_navbar navbar 'My Account' %}"
                                href="{% url 'account_cycle:profile' %}">account</a>
                         </li>
                         <li class="nav-item">

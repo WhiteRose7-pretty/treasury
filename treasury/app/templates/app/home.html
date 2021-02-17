@@ -20,9 +20,8 @@
 
 <section class="mid">
     {% include 'app/basic/middle_office.html' %}
-    <section class="middle-office">
+    <section class="pt-4">
         <div class="container-fluid">
-            <h4>Swap & FX Market Rates</h4>
             <div class="one-usd">
                 {% get_fx_rates_data as fx_data %}
                 <h2>{{ fx_data.title }}</h2>

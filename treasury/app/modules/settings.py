@@ -1,10 +1,7 @@
 
-
-
-#
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
-email_webmaster= 'valya.varechkina.76@bk.ru' #this is the email where the errors are sent
+email_webmaster = 'valya.varechkina.76@bk.ru' #this is the email where the errors are sent
 #email_webmaster= 'test.account@treasuryquants.com'
 
 #email where the wbsite's own account is registered with api server
@@ -12,7 +9,7 @@ email_dictionary = {'77.68.24.21': 'webmaster.b@treasuryquants.com', '77.68.7.11
 
 master_ip = '77.68.24.21'
 dev_ip = '77.68.7.117'
-email_default = email_dictionary[dev_ip]
+email_default = email_dictionary[master_ip]
 
 # Prod's server 2, master
 # email_default = "webmaster.a@treasuryquants.com"  # Prod's server 2, dev
@@ -38,7 +35,7 @@ target_url = "http://77.68.119.98/"
 # 2) use is_test=True for the api calls
 # 3) ... ?
 #
-is_development = False
+is_development = True
 
 #
 # Location of the token files

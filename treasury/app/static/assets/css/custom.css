@@ -5,9 +5,17 @@
     src: local('Helvetica Neue LT Pro 55 Roman'), url('../fonts/HelveticaNeueLTProRoman.woff') format('woff');
 }
 
-.navbar-brand img , .footer-logo img{
-    height: 50px;
+@font-face {
+    font-family: 'Kepler Std Medium Capt';
+    font-style: normal;
+    font-weight: normal;
+    src:url('../fonts/Kepler Std Medium Caption.woff') format('woff');
 }
+
+.navbar-brand img , .footer-logo img{
+    height: 40px;
+}
+
 
 button:hover, a:hover {
     transition: 0.6s;
@@ -18,7 +26,12 @@ a{
 }
 
 body {
-    font-family: 'Helvetica Neue LT Pro 55 Roman';
+    font-family: 'Helvetica Neue LT Pro 55 Roman', serif;
+}
+
+.navbar h2, .middle-office h2{
+    font-family: 'Kepler Std Medium Capt', serif;
+    font-size:36px;
 }
 
 p {
@@ -39,7 +52,7 @@ video, iframe {
 
 header.header {
     position: relative;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 canvas {
@@ -97,7 +110,6 @@ canvas {
 
 .mid {
     background: #fcfdff;
-    padding: 30px 0 0;
 }
 
 .btn-primary {
@@ -114,12 +126,16 @@ canvas {
     color: #fff !important
 }
 
+.middle-office{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
 .middle-office h2 {
-    text-align: center;
     font-size: 30px;
-    font-weight: 700;
     color: #252a32;
     margin-bottom: 20px;
+    flex-grow: 1;
 }
 
 .middle-office h4 {
@@ -138,9 +154,9 @@ canvas {
 }
 
 .one-usd h2 {
-    text-align: center;
     font-size: 20px;
-    margin: 10px 0;
+    margin: 0.5rem 1.2rem;
+    font-weight: bold;
 }
 
 .green-text {
@@ -226,7 +242,6 @@ canvas {
 .country-section {
     text-align: center;
     display: flex;
-    justify-content: center;
     align-items: center;
     border-bottom: 1px solid #e8e9f2;
 }
@@ -235,7 +250,7 @@ canvas {
     font-size: 20px;
     font-weight: 700;
     color: #252a32;
-    margin: 8px 0;
+    margin: 8px 1.2rem;
 }
 
 
@@ -315,8 +330,8 @@ canvas {
     background: #fff;
     border: 1px solid #e8e9f2;
     border-radius: 5px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 4px;
 }
 
 .headings-section div:first-child {
@@ -369,6 +384,7 @@ canvas {
 
 .flag {
     width: 30px;
+    border-radius: 2px;
 }
 
 .custom-control-input-green:focus ~ .custom-control-label::before {
@@ -771,7 +787,6 @@ button:focus {
 }
 
 .api-status {
-    position: absolute;
     right: 36px;
     top: 0;
     height: 100%;
@@ -785,7 +800,6 @@ button:focus {
 }
 
 .development-status {
-    position: absolute;
     left: 15px;
     top: 2px;
     font-size: 24px;

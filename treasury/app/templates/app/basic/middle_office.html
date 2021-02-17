@@ -3,17 +3,21 @@
 
 <section class="middle-office">
     <div class="container-fluid">
-        <h2>Your Middle Office</h2>
-        {% get_development_status as development_status %}
-        {% if development_status %}
-            <div class="development-status">This is development environment!</div>
-        {% endif %}
-        {% get_api_status as api_status %}
-        <div class="api-status">Api Server :
-            {% if api_status %}
-                <img src="{% static 'assets/img/Button-Green.svg'%}" width="20px">
-            {% else %}
-                <img src="{% static 'assets/img/Button-Red.svg'%}" width="20px">
+        <div class="d-flex align-items-center py-3">
+            <div style="width: 8px; background: #303778; height: 24px; margin-right: 10px; border-radius: 5px;"></div>
+            <h2 class="mb-0">Swap & FX Market Rates</h2>
+            {% get_development_status as development_status %}
+            {% if development_status %}
+                <div class="development-status px-4">This is development environment!</div>
             {% endif %}
+            {% get_api_status as api_status %}
+            <div class="api-status">Api Server :
+                {% if api_status %}
+                    <img src="{% static 'assets/images/on.svg' %}" width="20px">
+                {% else %}
+                    <img src="{% static 'assets/images/off.svg' %}" width="20px">
+                {% endif %}
+            </div>
         </div>
+
 </section>

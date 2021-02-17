@@ -5,9 +5,17 @@
     src: local('Helvetica Neue LT Pro 55 Roman'), url('../fonts/HelveticaNeueLTProRoman.woff') format('woff');
 }
 
-.navbar-brand img , .footer-logo img{
-    height: 50px;
+@font-face {
+    font-family: 'Kepler Std Medium Capt';
+    font-style: normal;
+    font-weight: normal;
+    src:url('../fonts/Kepler Std Medium Caption.woff') format('woff');
 }
+
+.navbar-brand img , .footer-logo img{
+    height: 40px;
+}
+
 
 button:hover, a:hover {
     transition: 0.6s;
@@ -18,7 +26,12 @@ a{
 }
 
 body {
-    font-family: 'Helvetica Neue LT Pro 55 Roman';
+    font-family: 'Helvetica Neue LT Pro 55 Roman', serif;
+}
+
+.navbar h2, .middle-office h2{
+    font-family: 'Kepler Std Medium Capt', serif;
+    font-size:36px;
 }
 
 p {
@@ -39,7 +52,7 @@ video, iframe {
 
 header.header {
     position: relative;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 canvas {
@@ -49,16 +62,25 @@ canvas {
 }
 
 .header .navbar .nav-item {
-    padding: 12px 7px;
+    padding: 12px 1rem;
 }
 
-.header .navbar .nav-link {
+.header .navbar .nav-link,
+.footer .nav-link{
     font-size: 18px;
     color: #465373;
     position: relative;
 }
 
-.header .navbar .nav-link:before {
+.footer .nav-link:hover{
+    color: #4f78e0;
+}
+
+.footer .navbar-nav{
+    flex-direction: row;
+}
+
+.header .navbar .nav-link:before{
     position: absolute;
     left: 0;
     bottom: -22px;
@@ -97,7 +119,6 @@ canvas {
 
 .mid {
     background: #fcfdff;
-    padding: 30px 0 0;
 }
 
 .btn-primary {
@@ -114,12 +135,16 @@ canvas {
     color: #fff !important
 }
 
+.middle-office{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
 .middle-office h2 {
-    text-align: center;
     font-size: 30px;
-    font-weight: 700;
     color: #252a32;
     margin-bottom: 20px;
+    flex-grow: 1;
 }
 
 .middle-office h4 {
@@ -138,9 +163,9 @@ canvas {
 }
 
 .one-usd h2 {
-    text-align: center;
     font-size: 20px;
-    margin: 10px 0;
+    margin: 0.5rem 1.2rem;
+    font-weight: bold;
 }
 
 .green-text {
@@ -226,7 +251,6 @@ canvas {
 .country-section {
     text-align: center;
     display: flex;
-    justify-content: center;
     align-items: center;
     border-bottom: 1px solid #e8e9f2;
 }
@@ -235,13 +259,13 @@ canvas {
     font-size: 20px;
     font-weight: 700;
     color: #252a32;
-    margin: 8px 0;
+    margin: 8px 1.2rem;
 }
 
 
 .footer {
     padding: 30px 0;
-    box-shadow: 0 -18px 23px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .footer-left {
@@ -249,15 +273,27 @@ canvas {
 }
 
 .footer-logo {
-    margin-right: 60px;
+    margin-right: 20px;
     margin-top: 5px;
+}
+.footer-logo img{
+    height: 80px;
+}
+
+.footer .nav-item{
+    padding: 0 1.5rem;
+    width: 15%;
+}
+
+.full-height{
+    height: 100%;
 }
 
 .address p {
     margin-bottom: 0;
-    font-size: 18px;
+    font-size: 1rem;
     color: #465373;
-    line-height: 1.25;
+    line-height: 1.5;
 }
 
 .address a {
@@ -272,7 +308,7 @@ canvas {
     text-align: right;
     font-size: 18px;
     color: #465373;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
 }
 
 .country-section h3 img {
@@ -315,8 +351,8 @@ canvas {
     background: #fff;
     border: 1px solid #e8e9f2;
     border-radius: 5px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 4px;
 }
 
 .headings-section div:first-child {
@@ -350,7 +386,7 @@ canvas {
 }
 
 .login-container .changes-detail-main {
-    padding: 50px 28px;
+    padding: 50px 28px 24px;
 }
 
 .login-container span {
@@ -369,6 +405,7 @@ canvas {
 
 .flag {
     width: 30px;
+    border-radius: 2px;
 }
 
 .custom-control-input-green:focus ~ .custom-control-label::before {
@@ -614,6 +651,7 @@ strong {
 
 .regular-text p {
     margin-bottom: 0;
+    text-align: justify;
 }
 
 .regular-text .section-md {
@@ -630,7 +668,7 @@ strong {
 }
 
 .user-information {
-    margin-top: -2rem;
+    margin-top: 0;
     margin-bottom: 1rem;
 }
 
@@ -728,19 +766,19 @@ button:focus {
 }
 
 .board-main {
-    height: 59vh;
+    height: 58vh;
     overflow: auto;
 }
 
 
 .board-output .board-main {
     overflow: auto;
-    height: calc(59vh + 58px + 54px);
+    height: calc(58vh + 58px + 54px);
 }
 
 .board-description .board-main {
     overflow: auto;
-    height: calc(59vh + 69px);
+    height: calc(58vh + 69px);
 }
 
 .board-output .board-main .form-group:nth-child(even) {
@@ -771,7 +809,6 @@ button:focus {
 }
 
 .api-status {
-    position: absolute;
     right: 36px;
     top: 0;
     height: 100%;
@@ -785,7 +822,6 @@ button:focus {
 }
 
 .development-status {
-    position: absolute;
     left: 15px;
     top: 2px;
     font-size: 24px;
@@ -835,7 +871,7 @@ button:focus {
 }
 
 .table-container{
-    max-width: 435px;
+    max-width: 525px;
     overflow-x: auto;
 }
 
@@ -897,6 +933,10 @@ div.disabled svg, div.disabled span{
     .grid-mother {
         display: grid;
         grid-template-columns: 1fr 1fr;
+    }
+
+    .footer .navbar-nav{
+        flex-direction: column;
     }
 
 

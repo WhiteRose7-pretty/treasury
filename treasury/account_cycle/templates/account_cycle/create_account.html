@@ -25,7 +25,7 @@
     {% include 'app/basic/middle_office.html' %}
     <div class="container login-container">
         <div class="changes-detail-main">
-            <h3 class="font-weight-bold">Create Account</h3>
+            <h3 class="font-weight-bold mb-4">Create Account</h3>
 
             <div class="text-muted pt-2 ">Password must be at least 10 characters long and not include the following special characters: "',|&.
             </div>
@@ -74,6 +74,10 @@
                 <div style="margin-top: 30px">
                     <span>Already have an account?</span> <a href="{% url 'account_cycle:login' %}"
                                                              class="ml-4 text-primary">Login</a>
+                </div>
+                <div class="mt-3 pt-3" style="border-top: 1px solid #46537338">
+                    <span> By checking Sign Up you agree to the <a class="text-primary" href="{% url 'app:terms_of_service' %}">Terms</a>
+                        & <a class="text-primary" href="{% url 'app:policy_notice' %}">Privacy Policy</a> </span>
                 </div>
             </form>
 

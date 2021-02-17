@@ -1,10 +1,7 @@
 
-
-
-#
 # this is the email used for creating a connection object. You can/should use your own for testing.
 #
-email_webmaster= 'valya.varechkina.76@bk.ru' #this is the email where the errors are sent
+email_webmaster = 'valya.varechkina.76@bk.ru' #this is the email where the errors are sent
 #email_webmaster= 'test.account@treasuryquants.com'
 
 #email where the wbsite's own account is registered with api server
@@ -47,7 +44,7 @@ token_path = "app/configs/token.json"
 
 api_status_path = "app/configs/api_status.txt"
 
-path_error_file= "app/configs/errors.json"
+path_error_file = "app/configs/errors.json"
 
 #
 # Location of the grid files

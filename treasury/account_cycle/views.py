@@ -11,7 +11,7 @@ def home(request):
 
 def login(request):
     context = {
-        'navbar': 'login'
+        'navbar': 'Login'
     }
     if request.session.get('login', False):
         return HttpResponseRedirect(reverse('account_cycle:profile'))
@@ -42,7 +42,7 @@ def profile(request):
 
     icons = ['user', 'credit-card', 'dollar-sign', 'share-2', 'clock']
     context = {
-        'navbar': 'profile',
+        'navbar': 'My Account',
         'result_dic': result_dic,
         'user_email': request.session['user_email'],
         'password': request.session['password'],
@@ -73,7 +73,10 @@ def call_account_api(request):
 
 
 def password_reset(request):
-    return render(request, 'account_cycle/password_reset.html')
+    context = {
+        'navbar': "Password Reset"
+    }
+    return render(request, 'account_cycle/password_reset.html', context)
 
 
 def check_activation_key(key):
@@ -113,6 +116,7 @@ def password_reset_call_back(request):
     result_dic, input_disabled = check_activation_key(key)
 
     context = {
+        'navbar': "Password Reset",
         'result_dic': result_dic,
         'key': key,
         'input_disabled': input_disabled
@@ -121,12 +125,15 @@ def password_reset_call_back(request):
 
 
 def invalid_page_call(request):
-    return render(request, 'account_cycle/invalid_page.html')
+    context = {
+        'navbar': "Invalid Page",
+    }
+    return render(request, 'account_cycle/invalid_page.html', context)
 
 
 def create_account(request):
     context = {
-        'navbar': 'create_account'
+        'navbar': 'Create Account'
     }
     return render(request, 'account_cycle/create_account.html', context)
 
@@ -138,6 +145,7 @@ def account_activation_callback(request):
 
     result_dic, input_disabled = check_activation_key(key)
     context = {
+        'navbar': 'Activate Account',
         'result_dic': result_dic,
         'key': key,
     }
@@ -145,7 +153,10 @@ def account_activation_callback(request):
 
 
 def confirm_email_activate_account(request):
-    return render(request, 'account_cycle/confirm-email-activate-account.html')
+    context = {
+        'navbar': 'Activate Account',
+    }
+    return render(request, 'account_cycle/confirm-email-activate-account.html', context)
 
 
 def get_client_ip(request):

@@ -1,0 +1,15 @@
+[result]:deafult
+activation_key=09kkunlg2ksbysrame3nftuomfxjv-cd4ghjr__z0mplxpdreckhza
+
+[result]:error in password
+account_create=Password contains invalid characters.
+
+[result]:password missing
+activation_key=6akwwyxtdkjtqiwplurkvsztskb9aqwgitzume_en8smwkhhu0hc1w
+
+[result]:email missing
+account_create=Key 'email' was missing
+
+[result]:url is missing
+activation_key=qf1_s_xag02lkztdspsuz2xz1yr-xdawtcnnnresq5l9pavgha1eaw
+

@@ -1,0 +1,11 @@
+[test]: default
+function_name= account_status
+email="test.account@treasuryquants.com"
+
+
+
+[test]:email does not exist
+function_name= account_status
+email="dummy_email@yahoo.com"
+
+

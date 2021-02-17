@@ -1,0 +1,62 @@
+[test]:default
+function_name=formatted_grid_swap_rates
+currency=usd
+to_date=20201211
+from_date=20201210
+tenors=2, 5, 10, 15, 20, 25, 30, 35
+
+
+[test]:tenor is missing
+function_name=formatted_grid_swap_rates
+currency=usd
+to_date=20201211
+from_date=20201210
+
+
+[test]:no currency
+function_name=formatted_grid_swap_rates
+to_date=20201211
+from_date=20201210
+tenors=2, 5, 10, 15, 20, 25, 30, 35
+
+[test]:unknown currency
+function_name=formatted_grid_swap_rates
+currency=xyz
+to_date=20201211
+from_date=20201210
+tenors=2, 5, 10, 15, 20, 25, 30, 35
+
+[test]:wrong from_date
+function_name=formatted_grid_swap_rates
+currency=usd
+to_date=20201241
+from_date=20201210
+tenors=2, 5, 10, 15, 20, 25, 30, 35
+
+[test]:missing from_date
+function_name=formatted_grid_swap_rates
+currency=usd
+to_date=20201211
+tenors=2, 5, 10, 15, 20, 25, 30, 35
+
+[test]:wrong to_date
+function_name=formatted_grid_swap_rates
+currency=usd
+to_date=20201211
+from_date=20201240
+tenors=2, 5, 10, 15, 20, 25, 30, 35
+
+[test]: to_date <= from_date
+function_name=formatted_grid_swap_rates
+currency=usd
+to_date=20201211
+from_date=20201211
+tenors=2, 5, 10, 15, 20, 25, 30, 35
+
+
+[test]: no market date for to_date
+function_name=formatted_grid_swap_rates
+currency=usd
+to_date=20501211
+from_date=20501211
+tenors=2, 5, 10, 15, 20, 25, 30, 35

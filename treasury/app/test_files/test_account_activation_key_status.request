@@ -1,0 +1,9 @@
+[test]: default
+function_name= account_activation_key_status
+activation_key="vsfjlopfwtxceubwyc9ftkyaxs6byrq4etr0mvpjnmav7x09ilfqag"
+
+
+
+[test]:activation_key missing
+function_name= account_activation_key_status
+

@@ -1,5 +1,39 @@
 /******************************** Data and API specifications *********************************/
 
+/*
+    Notes
+    =====
+    This page is meant to be a simple workbench exposing our apis to the user.
+    Like any function, our apis will have different number of input arguments as well as output results.
+    Furthermore, each argument and each result will have different types: some numbers, some strings, list, etc.
+    The objective of the design is to introduce these apis in a cohesive and intuitive manner
+    The design is simple. User selects an api name (function name) from the main combo list from the top.
+    A dynamic Form is then created based on the chosen api's specification. Once the final submission
+    button is clicked, there will be a validation, request creation and an api call over http. The results
+    are then parsed and placed in various locations on the screen. So the key to the design is the api specifications.
+
+    API Specification
+    =================
+    Each api specification provides the arguments, argument_labels, argument_types and argument_optionals.
+    - arguments are used when building the api request
+    - argument_labels are used to print the argument names in a more user friendly manner
+    - argument_types are used to create the appropriate input fields as well as validating the input values
+    - argument_optionals are used for validating the input and accepting empty values.
+    - argument_values are the initial values to be set at. When it is set at "last" we will set the last entry as selected .When it is set at "previous" we will set the one before the last entry as selected.
+
+    Data Type Specification
+    =======================
+    Data types used for argument_type processing cover a range of types from number to various combo lists.
+
+    Each type covers type, width and init_values .
+    - type is the type name that is used to distinguish this type from others.
+    - width is the width of the input filed that is meant to be the same for each type all its instantiations.
+    - init_values are used for combo list.
+    * note: there are two types that are dynamic: 1) TYPE_MARKET_DATES and 2) TYPE_TRADE_LIST. TYPE_MARKET_DATES should be populated only once and only when the page is loaded. TYPE_TRADE_LIST is populated at the beginning and at each time a trade is saved.
+    */
+
+
+    /******************************** End *********************************/
 
 
 //
@@ -907,7 +941,7 @@ $('#send-feedback').on('click', function () {
     }
     $('#feedback-modal').modal('show');
     $('#feedback-content').val('');
-    $('#msg').html('');
+    ele_msg.html('');
 
 })
 

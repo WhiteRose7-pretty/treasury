@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
-    <link rel="icon" href="{% static 'assets/images/favicon.png' %}"  type="image/png">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
 </head>
 
 <body>
@@ -25,16 +25,15 @@
         <div class="changes-detail-main">
             <h3 class="font-weight-bold">Login</h3>
 
-            <form action="" method="post" id="login-frm">
+            <form method="post" id="login-frm" onsubmit="return login()">
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">
+                        <span class="input-group-text">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <input class="form-control" placeholder="Email" aria-label="Email"
-                           aria-describedby="basic-addon1" id="input-name" name="email" type="email">
+                    <input class="form-control" placeholder="Email" autofocus required id="input-name" type="email">
                 </div>
 
                 <div class="input-group mb-3">
@@ -43,8 +42,7 @@
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <input type="password" class="form-control" placeholder="Password" aria-label="Password"
-                           aria-describedby="basic-addon1" id="input-password" name="password">
+                    <input type="password" class="form-control" placeholder="Password" id="input-password" required>
                 </div>
 
                 <div class="custom-control custom-checkbox custom-checkbox-green" style="margin-top:30px;">
@@ -53,9 +51,8 @@
                     <a href="{% url 'account_cycle:password_reset' %}" class="ml-6" style="float:right;">Forgot your
                         password?</a>
                 </div>
-                <button class="btn btn-primary mt-4 pull-right btn-block" style="float: right" type="button"
-                        onclick="login()">
-                    Submit<span class="spinner-border spinner-border-sm" id="loading-icon" role="status"
+                <button class="btn btn-primary mt-4 pull-right btn-block" style="float: right" type="submit">
+                    Submit<span class="spinner-border spinner-border-sm loading-icon" role="status"
                                 aria-hidden="true"></span>
                 </button>
                 <div style="clear: both"></div>
@@ -64,7 +61,7 @@
                                                                class="ml-4 text-primary">Create account</a>
                 </div>
                 <div class="description">
-                    <span id="msg"></span>
+                    <span class="msg"></span>
                 </div>
             </form>
         </div>
@@ -82,92 +79,57 @@
 <script src="{% static 'assets/js/jquery-2.1.3.min.js' %}"></script>
 <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
-<script src="{% static 'assets/js/custom.js' %}"></script>
 
 {% include 'app/basic/js.html' %}
+<script src="{% static 'assets/js/custom.js' %}"></script>
+
 
 <!-- Feather Icons -->
 <script>
+    const ele_name = $('#input-name');
 
-    function login() {
-        let email = $('#input-name').val();
-        var token = '{{csrf_token}}';
-        $('#loading-icon').css('display', 'inline-block');
-        $.ajax({
-            headers: {
-                "X-CSRFToken": token
-            },
-            type: 'post',
-            url: "{% url 'account_cycle:account_api' %}",
-            data: JSON.stringify({
-                'function_name': 'account_status',
-                'arguments': {
-                    'user_email': email,
-                },
-                'source_caller': 'front-end-function10',
-            }),
-            success: function (data) {
-                if (data.error) {
-                    msg_show($('#msg'), data['error']);
-                } else {
-                    if (data.results.is_exist === 'False') {
-                        msg_show($('#msg'), 'Account does not exist. <a class="text-primary" href="{% url 'account_cycle:create_account' %}">Create Account</a>  ');
-                    } else if (data.results.is_exist === 'True' && data.results.is_active === 'False') {
-                        msg_show($('#msg'), 'Account is not active. <a class="text-primary" href="{% url 'account_cycle:confirm_email_activate_account' %}">Please activate your account</a>');
-                    } else if (data.results.is_exist === 'True' && data.results.is_active === 'True') {
-                        account_profile();
-                    } else {
-                        msg_show($('#msg'), 'server error');
-                    }
-                }
-                $('#loading-icon').css('display', 'none');
-            },
-
-            error: function (jqXhr, textStatus, errorMessage) {
-                post_message("login",errorMessage);
-                $('#msg').text("Error: " + errorMessage);
-                $('#loading-icon').css('display', 'none');
-            },
-        });
-
+    function login_callback(data) {
+        if (data.error) {
+            msg_show(ele_msg, data['error']);
+        } else {
+            if (data.results.is_exist === 'False') {
+                msg_show(ele_msg, 'Account does not exist. <a class="text-primary" href="{% url 'account_cycle:create_account' %}">Create Account</a>  ');
+            } else if (data.results.is_exist === 'True' && data.results.is_active === 'False') {
+                msg_show(ele_msg, 'Account is not active. <a class="text-primary" href="{% url 'account_cycle:confirm_email_activate_account' %}">Please activate your account</a>');
+            } else if (data.results.is_exist === 'True' && data.results.is_active === 'True') {
+                account_profile();
+            } else {
+                msg_show(ele_msg, 'server error');
+            }
+        }
+        ele_loading_icon.css('display', 'none');
     }
 
+    function login() {
+        let email = ele_name.val();
+        ele_loading_icon.css('display', 'inline-block');
+        let argument = {'user_email': email};
+        call_account_api(token, 'account_status', argument, login_callback);
+        return false;
+    }
+
+    function account_profile_callback(data) {
+        if (data.error) {
+            msg_show(ele_msg, data['error']);
+            post_message("account_profile", data.error);
+        } else {
+            document.location.href = "{% url 'account_cycle:profile' %}";
+        }
+    }
 
     function account_profile() {
-        let email = $('#input-name').val();
+        let email = ele_name.val();
         let password = $('#input-password').val();
-        var token = '{{csrf_token}}';
-        $.ajax({
-            headers: {
-                "X-CSRFToken": token
-            },
-            type: 'post',
-            url: "{% url 'account_cycle:account_api' %}",
-            data: JSON.stringify({
-                'function_name': 'account_profile',
-                'arguments': {
-                    'user_email': email,
-                    'password': password,
-                },
-                'source_caller': 'front-end-function10',
-            }),
-            success: function (data) {
-
-                if (data.error) {
-                    msg_show($('#msg'), data['error']);
-                    post_message("account_profile",data.error);
-                } else {
-                    document.location.href = "{% url 'account_cycle:profile' %}";
-                }
-
-            },
-
-            error: function (jqXhr, textStatus, errorMessage) {
-                msg_show($('#msg'), "Error: " + errorMessage);
-                $('#loading-icon').css('display', 'none');
-                post_message("account_profile",errorMessage);
-            },
-        });
+        let arguments = {
+            'user_email': email,
+            'password': password,
+        };
+        call_account_api(token, 'account_profile', arguments, account_profile_callback)
     }
 
 </script>

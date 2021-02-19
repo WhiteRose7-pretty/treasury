@@ -76,7 +76,7 @@ def password_reset(request):
     context = {
         'navbar': "Password Reset"
     }
-    return render(request, 'account_cycle/password_reset.html', context)
+    return render(request, 'account_cycle/confirm_email_password_reset.html', context)
 
 
 def check_activation_key(key):
@@ -88,7 +88,6 @@ def check_activation_key(key):
         'source_caller': 'password_reset_call_back_function',
     }
     result = api_gateway(json.dumps(post_data))
-    print(result)
     result_dic = json.loads(result)
     if result_dic['error']:
         output_str = result_dic['error']
@@ -107,7 +106,7 @@ def check_activation_key(key):
     return output_str, input_disabled
 
 
-def password_reset_call_back(request):
+def password_reset_callback(request):
     key = request.GET.get("activation_key", False)
 
     if not key:
@@ -121,7 +120,7 @@ def password_reset_call_back(request):
         'key': key,
         'input_disabled': input_disabled
     }
-    return render(request, 'account_cycle/password-reset-call-back.html', context)
+    return render(request, 'account_cycle/password_reset_callback.html', context)
 
 
 def invalid_page_call(request):
@@ -133,7 +132,8 @@ def invalid_page_call(request):
 
 def create_account(request):
     context = {
-        'navbar': 'Create Account'
+        'navbar': 'Create Account',
+        'current_ip': get_client_ip(request),
     }
     return render(request, 'account_cycle/create_account.html', context)
 
@@ -149,14 +149,14 @@ def account_activation_callback(request):
         'result_dic': result_dic,
         'key': key,
     }
-    return render(request, 'account_cycle/account-activation-callback.html', context)
+    return render(request, 'account_cycle/account_activation_callback.html', context)
 
 
 def confirm_email_activate_account(request):
     context = {
         'navbar': 'Activate Account',
     }
-    return render(request, 'account_cycle/confirm-email-activate-account.html', context)
+    return render(request, 'account_cycle/confirm_email_activate_account.html', context)
 
 
 def get_client_ip(request):

@@ -6,9 +6,6 @@ import app.modules.utility_connection as utility_connection
 import json
 
 
-
-
-
 #
 # this factory is to support the front end by receiving jason request and returning a json response.
 #
@@ -98,6 +95,7 @@ class ConnectionIsOK(functionCall):
 
     def create_new(self):
         return ConnectionIsOK()
+
 
 # class IpReturn(functionCall):
 #     def __init__(self):
@@ -415,7 +413,6 @@ account_apis_factory[AccountProfile().name] = AccountProfile()
 account_apis_factory[AccountSendActivationKey().name] = AccountSendActivationKey()
 account_apis_factory[AccountPasswordReset().name] = AccountPasswordReset()
 account_apis_factory[AccountActivate().name] = AccountActivate()
-
 
 
 # class Describe(functionCall):
@@ -1000,13 +997,11 @@ def api_gateway(json_request_string, factory=None):
         #
         # and off we go
         #
-        #print(web_response.to_string())
+        # print(web_response.to_string())
         return web_response.to_string()
     except Exception as e:
         web_response.error = str(e)
         return web_response.to_string()
-
-
 
 # def ip_return():
 #     res = api_gateway(

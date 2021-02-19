@@ -1,12 +1,17 @@
 <script>
 
+    let call_api_url = "{% url 'account_cycle:account_api' %}";
+    const ele_loading_icon = $('.loading-icon');
+    const ele_msg = $('.msg');
+    const token = '{{csrf_token}}';
+
     feather.replace({
         'width': '1em',
         'height': '1em'
     });
 
     $('#input-name').click(function () {
-        msg_show($('#msg'), '', false);
+        msg_show(ele_msg, '', false);
     });
 
     $(document).on('click', '#ip', function () {
@@ -15,11 +20,11 @@
     })
 
     $('#input-password').click(function () {
-        msg_show($('#msg'), '', false);
+        msg_show(ele_msg, '', false);
     });
 
     $('#input-password-confirm').click(function () {
-        msg_show($('#msg'), '', false);
+        msg_show(ele_msg, '', false);
     });
 
     function msg_show(obj, text, display = true) {
@@ -33,10 +38,8 @@
 
 
     var format = /[ '"&|,]/;
+
     //            ^                                       ^
-    console.log(format.test("My@string-with(some%text)") + "<br/>");
-    console.log(format.test("My string with spaces") + "<br/>");
-    console.log(format.test("MyStringContainingNoSpecialChars"));
 
     function contains_any(str, set) {
         return set.test(str);
@@ -58,7 +61,7 @@
     }
 
 
-    async function post_message1(subject, message, output_object = false) {
+    async function post_message_async(subject, message, output_object = false) {
         var token = '{{csrf_token}}';
         let result;
         await new Promise((resolve, reject) => {
@@ -87,12 +90,11 @@
                 },
             });
         })
-        console.log('end1');
         return true;
     }
 
 
-    function post_message(subject, message, output_object=false){
+    function post_message(subject, message, output_object = false) {
         var token = '{{csrf_token}}';
         let result;
         $.ajax({

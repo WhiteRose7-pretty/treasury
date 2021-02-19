@@ -29,10 +29,17 @@ body {
     font-family: 'Helvetica Neue LT Pro 55 Roman', serif;
 }
 
-.navbar h2, .middle-office h2{
+.navbar .tagline{
+    font-family: 'Kepler Std Medium Capt', serif;
+    font-size: 30px;
+    margin-top: 18px;
+}
+
+.middle-office h2{
     font-family: 'Kepler Std Medium Capt', serif;
     font-size:36px;
 }
+
 
 p {
     font-size: 18px;
@@ -321,14 +328,23 @@ canvas {
 
 .license-fee {
     padding-left: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    height: 100%;
 }
 
 .license-fee h2 {
     font-size: 36px;
     font-weight: 700;
     color: #252a32;
-    line-height: 42px;
+    line-height: 50px;
     margin-bottom: 20px;
+}
+
+.license-fee p{
+    line-height: 2;
 }
 
 .license-fee a {
@@ -504,11 +520,11 @@ span.spinner-border-sm {
     margin-left: 10px;
 }
 
-#loading-icon, #loading-icon-ip, #loading-icon-password {
+.loading-icon, .loading-icon-ip, .loading-icon-password {
     display: none;
 }
 
-#msg {
+.msg {
     color: black;
 }
 

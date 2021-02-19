@@ -3,11 +3,10 @@ from celery.decorators import periodic_task
 from app.modules import cron_grids
 import datetime
 import pytz
-from app.models import ApiStatus
 
 
 @periodic_task(run_every=(crontab(minute='*/15')))
-def main():
+def download_fx_data():
     try:
         status = cron_grids.download_fx_data()
     except:

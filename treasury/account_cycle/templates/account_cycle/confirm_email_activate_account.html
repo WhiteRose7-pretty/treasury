@@ -1,0 +1,122 @@
+{% load static %}
+{% load app_tags %}
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <title>Treasury Quants</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/libs/ionicons/css/ionicons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
+
+</head>
+
+<body>
+
+{% include 'app/basic/navbar.html' %}
+
+<section class="mid">
+    {% include 'app/basic/middle_office.html' %}
+    <div class="container login-container">
+        <div class="changes-detail-main">
+            <h3 class="font-weight-bold">Confirm Email to Activate Account</h3>
+
+            <form action="" method="post" onsubmit="return account_status()">
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <input class="form-control" placeholder="Email" id="input-name" required type="email">
+                </div>
+
+
+                <button class="btn btn-primary mt-4 pull-right btn-block" style="float: right" type="submit">
+                    Confirm<span class="spinner-border spinner-border-sm loading-icon" role="status"
+                                 aria-hidden="true"></span>
+                </button>
+                <div style="clear: both"></div>
+
+                <div class="description">
+                    <span class="msg"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    {% include "app/basic/license.html" %}
+
+</section>
+
+
+{% include "app/basic/footer.html" %}
+
+<!-- Core JS  -->
+<script src="{% static 'assets/js/jquery-2.1.3.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
+
+{% include "app/basic/js.html" %}
+
+<script src="{% static 'assets/js/custom.js' %}"></script>
+
+
+<script>
+    const ele_name = $('#input-name');
+
+    function account_status_callback(data) {
+        if (data.error) {
+            msg_show(ele_msg, data['error']);
+        } else {
+            if (data.results.is_exist === 'False') {
+                msg_show(ele_msg, `Account does not exist. <a class="text-primary" href="{% url 'account_cycle:create_account' %}">Create Account</a> `);
+            } else if (data.results.is_exist === 'True' && data.results.is_active === 'False') {
+                account_send_activation_key();
+            } else if (data.results.is_exist === 'True' && data.results.is_active === 'True') {
+                msg_show(ele_msg, `Account is already activated. <a class="text-primary" href="{% url 'account_cycle:login' %}">Login</a> `);
+            } else {
+                msg_show(ele_msg, 'server error');
+            }
+        }
+        ele_loading_icon.css('display', 'none');
+    }
+
+    function account_status() {
+        let email = ele_name.val();
+        ele_loading_icon.css('display', 'inline-block');
+        let arguments = {'user_email': email};
+        call_account_api(token, 'account_status', arguments, account_status_callback);
+    }
+
+    function account_send_activation_key_callback(data) {
+        if (data.error) {
+            msg_show(ele_msg, data['error']);
+            post_message("account_send_activation_key", data.error);
+
+        } else {
+            msg_show(ele_msg, "An email with a new activation key was sent to : " + email);
+        }
+    }
+
+    function account_send_activation_key() {
+        let email = ele_name.val();
+        let url = window.location;
+        let arguments = {
+            'user_email': email,
+            'callback_url': url.protocol + '//' + url.host + '/account/account-activation-callback/',
+        };
+        call_account_api(token, 'account_send_activation_key', arguments, account_send_activation_key_callback);
+    }
+
+</script>
+
+</body>
+
+</html>

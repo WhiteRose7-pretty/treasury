@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
-    <link rel="icon" href="{% static 'assets/images/favicon.png' %}"  type="image/png">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'assets/libs/ip_input/ipInput.css' %}">
 </head>
 
@@ -24,43 +24,46 @@
         <div class="container d-flex justify-content-center ">
             <div class="profile-table mt-5">
                 {% if result_dic.error %}
-                <div id="error" class="text-danger">{{ result_dic.error }}</div>
+                    <div id="error" class="text-danger">{{ result_dic.error }}</div>
                 {% else %}
-                <h3 class="mb-4">Welcome!</h3>
+                    <h3 class="mb-4">Welcome!</h3>
 
-                <table class="profile-table mt-2">
-                    <tr>
-                        <td>
+                    <table class="profile-table mt-2">
+                        <tr>
+                            <td>
                             <span class="text-muted">
                                 <i class="mr-3"
                                    data-feather="mail"></i>
                             </span>email
-                        </td>
-                        <td>
-                            {{ user_email }}
-                        </td>
-                    </tr>
-                    {% for key,value in result_dic.results.items %}
-                        <tr>
+                            </td>
                             <td>
+                                {{ user_email }}
+                            </td>
+                        </tr>
+                        {% for key,value in result_dic.results.items %}
+                            <tr>
+                                <td>
                                 <span class="text-muted">
                                     <i class="mr-3"
                                        data-feather="{% get_element_array_index icons forloop.counter0 %}"></i>
                                 </span>{{ key }}
-                            </td>
-                            <td>{{ value }}
-                                {% if key == 'ip' %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="pull-right-md text-primary" data-toggle="modal" data-target="#change-ip-modal" style="cursor: pointer;"><i class="mr-1" data-feather="edit" ></i>change&nbsp;Ip</span>
-                                {% elif key == 'last_login' %}
-                                    <span class="pull-right-md text-primary" onclick="open_change_password_window()" style="cursor: pointer;"><i
-                                            class="mr-1" data-feather="edit"></i>change&nbsp;Password</span>
-                                {% endif %}
-                            </td>
-                        </tr>
+                                </td>
+                                <td>{{ value }}
+                                    {% if key == 'ip' %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="pull-right-md text-primary" data-toggle="modal"
+                                              data-target="#change-ip-modal" style="cursor: pointer;"><i class="mr-1"
+                                                                                                         data-feather="edit"></i>change&nbsp;Ip</span>
+                                    {% elif key == 'last_login' %}
+                                        <span class="pull-right-md text-primary" onclick="open_change_password_window()"
+                                              style="cursor: pointer;"><i
+                                                class="mr-1" data-feather="edit"></i>change&nbsp;Password</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
 
-                    {% endfor %}
+                        {% endfor %}
 
-                </table>
+                    </table>
                 {% endif %}
             </div>
 
@@ -73,7 +76,7 @@
 </section>
 
 
-<div class="modal fade" id="change-ip-modal" tabindex="-1" role="dialog" >
+<div class="modal fade" id="change-ip-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -92,19 +95,22 @@
                 </button>
             </div>
             <div class="modal-body mb-3">
-                <div class="text-muted pt-2 pb-4">Changing your existing IP to a new one means that you will only be able to use our services from the new IP.
-                </div>
-                <div class="row px-3">
-                    <span class="text-muted" style="line-height: 2">New Ip</span>
-                    <div id="ip" class="ml-5"></div>
-                </div>
-                <div class="mt-5"></div>
-                <button class="btn btn-primary btn-block" onclick="change_ip()">Change
-                    <span class="spinner-border spinner-border-sm" id="loading-icon-ip" role="status"
-                          aria-hidden="true"> </span>
-                </button>
+                <form method="post" onsubmit="return account_ip_change()">
+                    <div class="text-muted pt-2 pb-4">Changing your existing IP to a new one means that you will only be
+                        able to use our services from the new IP.
+                    </div>
+                    <div class="row px-3">
+                        <span class="text-muted" style="line-height: 2">New Ip</span>
+                        <div id="ip" class="ml-5"></div>
+                    </div>
+                    <div class="mt-5"></div>
+                    <button class="btn btn-primary btn-block">Change
+                        <span class="spinner-border spinner-border-sm loading-icon" role="status"
+                              aria-hidden="true"> </span>
+                    </button>
+                </form>
                 <div style="clear: both"></div>
-                <div id="ip-msg" style="padding-top:20px;"></div>
+                <div class="msg" style="padding-top:20px;"></div>
             </div>
         </div>
     </div>
@@ -128,23 +134,24 @@
                 </button>
             </div>
             <div class="modal-body mb-3">
-                <div class="text-muted pt-2 pb-4">Password must be longer than 9 characters and not include the
-                    following special characters: "',|&
-                </div>
-                <label class="form-control-label mt-2" for="input-password">New password</label>
-                <input class="form-control" id="input-password" name="password" placeholder="New password"
-                       type="password">
-                <label class="form-control-label mt-2" for="input-password-confirm">Confirm password</label>
-                <input class="form-control" id="input-password-confirm" name="password_confirm"
-                       placeholder="Confirm password"
-                       type="password">
+                <form method="post" onsubmit="return change_password()">
+                    <div class="text-muted pt-2 pb-4">Password must be longer than 9 characters and not include the
+                        following special characters: "',|&
+                    </div>
+                    <label class="form-control-label mt-2" for="input-password">New password</label>
+                    <input class="form-control" id="input-password" placeholder="New password" required
+                           type="password">
+                    <label class="form-control-label mt-2" for="input-password-confirm">Confirm password</label>
+                    <input class="form-control" id="input-password-confirm"
+                           placeholder="Confirm password" required type="password">
 
-                <div class="mt-5"></div>
-                <button class="btn btn-primary btn-block" style="float: right; " onclick="change_password()">Change
-                    <span class="spinner-border spinner-border-sm" id="loading-icon-password" role="status"
-                          aria-hidden="true"> </span></button>
+                    <div class="mt-5"></div>
+                    <button class="btn btn-primary btn-block" style="float: right;" type="submit">Change
+                        <span class="spinner-border spinner-border-sm loading-icon" role="status"
+                              aria-hidden="true"> </span></button>
+                </form>
                 <div style="clear: both"></div>
-                <div id="password-msg" class="mt-4"></div>
+                <div class="mt-4 msg"></div>
             </div>
         </div>
     </div>
@@ -157,116 +164,86 @@
 <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'assets/libs/feather-icons/dist/feather.min.js' %}"></script>
 <script src="{% static 'assets/libs/ip_input/ipInput.js' %}"></script>
-<script src="{% static 'assets/js/custom.js' %}"></script>
 
 {% include "app/basic/js.html" %}
+<script src="{% static 'assets/js/custom.js' %}"></script>
 
-<!-- Feather Icons -->
 <script>
-    feather.replace({
-        'width': '1em',
-        'height': '1em'
-    });
 
     var ip = '{{current_ip}}';
     var ipInput = $('#ip').ipInput(ip);
 
 
-
     function open_change_ip_window() {
+        clear_msg_loading();
         $('#change-ip-modal').modal('show');
     }
 
     function open_change_password_window() {
+        clear_msg_loading();
         $('#change-password-modal').modal('show');
     }
 
+    function account_ip_change_callback(data) {
+        if (data.error) {
+            ele_msg.html(data['error']);
+            post_message("change_ip", data.error);
+        } else {
+            ele_msg.html(data['account_ip_change']);
+            document.location.href = '{% url "account_cycle:profile" %}';
+        }
+        ele_loading_icon.css('display', 'none');
+    }
 
-
-    function change_ip() {
-
+    function account_ip_change() {
         let ip = ipInput.getIp();
         var token = '{{csrf_token}}';
         if (!ip) {
-            $('#ip-msg').text("Please input Ip.");
+            ele_msg.html("Please input Ip.");
             return false;
         }
-        $('#loading-icon-ip').css('display', 'inline-block');
-        $.ajax({
-            headers: {
-                "X-CSRFToken": token
-            },
-            type: 'post',
-            url: "{% url 'account_cycle:account_api' %}",
-            data: JSON.stringify({
-                'function_name': 'account_ip_change',
-                'arguments': {
-                    'user_email': '{{ user_email }}',
-                    'user_password': '{{ password }}',
-                    'new_ip': ip,
-                },
-                'source_caller': document.location.href,
-            }),
-            success: function (data) {
-                if (data.error) {
-                    $('#ip-msg').text(data['error']);
-                    post_message("change_ip",data.error);
-                } else {
-                    $('#ip-msg').text(data['account_ip_change']);
-                    document.location.href = '{% url "account_cycle:profile" %}';
-                }
-                $('#loading-icon-ip').css('display', 'none');
-            },
-            error: function (jqXhr, textStatus, errorMessage) {
-                $('#ip-msg').text("Error: " + errorMessage);
-                $('#loading-icon-ip').css('display', 'none');
-                post_message("change_ip",errorMessage);
-            },
-
-        });
+        ele_loading_icon.css('display', 'inline-block');
+        let argument = {
+            'user_email': '{{ user_email }}',
+            'user_password': '{{ password }}',
+            'new_ip': ip,
+        };
+        call_account_api(token, 'account_ip_change', argument, account_ip_change_callback);
+        return false;
     }
 
+    function account_password_change_callback(data) {
+        if (data.error) {
+            ele_msg.html(data['error']);
+            post_message("change_password", data.error);
+        } else {
+            ele_msg.html(`Password reset successfully. You will be logout soon.`);
+            document.location.href = '/account/logout/';
+            setTimeout(function (){
+                document.location.href = '/account/logout/';
+            }, 1000)
+        }
+        ele_loading_icon.css('display', 'none');
+    }
 
     function change_password() {
-        let password = $('#input-password').val();
+        let new_password = $('#input-password').val();
         let confirm_password = $('#input-password-confirm').val();
-        let msg_text = password_validate(password, confirm_password);
+        let msg_text = password_validate(new_password, confirm_password);
         if (msg_text) {
-            $('#password-msg').html(msg_text);
-            return;
+            ele_msg.html(msg_text);
+            return false;
         }
-        let token = '{{csrf_token}}';
-        $('#loading-icon-password').css('display', 'inline-block');
-        $.ajax({
-            headers: {
-                "X-CSRFToken": token
-            },
-            type: 'post',
-            url: "{% url 'account_cycle:account_api' %}",
-            data: JSON.stringify({
-                'function_name': 'account_password_change',
-                'arguments': {
-                    'user_email': '{{ user_email }}',
-                    'user_password': '{{ password }}',
-                    'new_password': password,
-                },
-                'source_caller': document.location.href,
-            }),
-            success: function (data) {
-                if (data.error) {
-                    $('#password-msg').text(data['error']);
-                    post_message("change_password",data.error);
-                } else {
-                    $('#password-msg').html(`Password reseted successfully. <br> <a class="text-primary" href="{% url 'account_cycle:logout' %}">Please login using new password. </a>`)
-                }
-                $('#loading-icon-password').css('display', 'none');
-            },
-            error: function (jqXhr, textStatus, errorMessage) {
-                $('#password-msg').text("Error: " + errorMessage);
-                $('#loading-icon-password').css('display', 'none');
-                post_message("change_password",errorMessage);
-            },
-        });
+        ele_loading_icon.css('display', 'inline-block');
+
+        let argument = {
+            'user_email': '{{ user_email }}',
+            'user_password': '{{ password }}',
+            'new_password': new_password,
+        };
+
+        call_account_api(token, 'account_password_change', argument, account_password_change_callback);
+        return false;
     }
 
 </script>

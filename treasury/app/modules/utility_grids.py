@@ -69,9 +69,6 @@ class Grid:
             return False, str(e)
 
 
-
-
-
 def utility_download_formatted_grid_swap_rates(connection, currencies, tenors, folder):
     try:
         if not apis.connection_is_ok(connection):
@@ -194,13 +191,13 @@ def utility_download_formatted_grid_fx(currencies, base_currency, folder):
         status, message = grid.save_as(path)
         if not status:
             return (False, {
-                'utility_download_formatted_grid_fx': 'failed while saving file with base_currency={} and folder={}. Exception was {}'.format(
-                    base_currency, folder, message)})
+                'utility_download_formatted_grid_fx': 'failed while saving file with base_currency={} and folder={}. '
+                                                      'Exception was {}'.format(base_currency, folder, message)})
 
 
     except Exception as e:
         return (False, {
-            'utility_download_formatted_grid_fx': 'failed while extracting information with base_currency:{} and folder:{}. Exception was {}'.format(
-                base_currency, folder, e)})
+            'utility_download_formatted_grid_fx': 'failed while extracting information with base_currency:{} and '
+                                                  'folder:{}. Exception was {}'.format(base_currency, folder, e)})
 
     return (True, dict())

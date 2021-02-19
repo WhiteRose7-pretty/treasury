@@ -1,5 +1,5 @@
 from django import template
-from app.models import CurrencyData, ApiStatus
+from app.models import CurrencyData
 from app.modules import utility_grids
 from app.modules import settings
 from app.modules import cron_grids
@@ -15,16 +15,6 @@ swap_rate_files = [
 ]
 
 fx_file = 'app/media/currency_data/FX.csv'
-
-
-@register.simple_tag
-def get_development_status():
-    return settings.is_development
-
-
-@register.simple_tag
-def get_api_status():
-    return cron_grids.api_status_from_file(settings.api_status_path)
 
 
 def read_data(file_path):
@@ -55,9 +45,19 @@ def read_data(file_path):
 
 
 @register.simple_tag
-def string_float(str):
+def get_development_status():
+    return settings.is_development
+
+
+@register.simple_tag
+def get_api_status():
+    return cron_grids.api_status_from_file(settings.api_status_path)
+
+
+@register.simple_tag
+def string_float(m_str):
     try:
-        val = float(str)
+        val = float(m_str)
     except:
         val = str
     return val

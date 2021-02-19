@@ -1,14 +1,15 @@
+# Configuration Parameter list for API server interface
 
-# this is the email used for creating a connection object. You can/should use your own for testing.
-#
-email_webmaster = 'valya.varechkina.76@bk.ru' #this is the email where the errors are sent
-#email_webmaster= 'test.account@treasuryquants.com'
 
-#email where the wbsite's own account is registered with api server
+# this is the email where the errors are sent
+email_webmaster = 'valya.varechkina.76@bk.ru'
+
+# email dictionary with IP where the website's own account is registered with api server
 email_dictionary = {'77.68.24.21': 'webmaster.b@treasuryquants.com', '77.68.7.117': 'webmaster.a@treasuryquants.com'}
 
 master_ip = '77.68.24.21'
 dev_ip = '77.68.7.117'
+
 email_default = email_dictionary[dev_ip]
 
 # Prod's server 2, master
@@ -18,9 +19,7 @@ email_default = email_dictionary[dev_ip]
 # email_default = "test.account@treasuryquants.com" # Shahram's
 
 
-#
 # server's url
-#
 url_server = "http://operations.treasuryquants.com"
 # url_server="http://192.168.1.80:8080" #Shahram's local server
 

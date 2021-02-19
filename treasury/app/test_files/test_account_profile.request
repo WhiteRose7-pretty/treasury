@@ -1,0 +1,4 @@
+[test]:default
+function_name= account_profile
+email="test.account@treasuryquants.com"
+password="test.account@treasuryquants.com"

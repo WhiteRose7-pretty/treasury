@@ -1,0 +1,36 @@
+[result]:default
+title=usd
+headings=20201211,20201210,change
+2Y=0.194858827517,0.221629617793,-0.026770790276
+5Y=0.416311743102,0.457048890317,-0.040737147215
+10Y=0.867474076459,0.940378320132,-0.072904243673
+15Y=1.110740440932,1.198098949225,-0.087358508293
+20Y=1.230899319843,1.324240570109,-0.093341250266
+25Y=1.280191986383,1.380437999038,-0.100246012655
+30Y=1.305312952423,1.408536238408,-0.103223285985
+35Y=1.302542079127,1.405617710415,-0.103075631288
+
+[result]:tenor is missing
+tenors=Missing entry.
+
+[result]:no currency
+currency=Missing entry.
+
+[result]:unknown currency
+xyz=Not recognised.
+
+[result]:wrong from_date
+makeVariant=Value '20201241' is not date.
+
+[result]:missing from_date
+from_date=is missing.
+
+[result]:wrong to_date
+makeVariant=Value '20201240' is not date.
+
+[result]:to_date <= from_date
+from_date=should be strictly before to_date
+
+[result]:no market date for to_date
+from_date=should be strictly before to_date
+

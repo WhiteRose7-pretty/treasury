@@ -1,0 +1,7 @@
+[result]:default
+is_exist=False
+is_active=False
+
+[result]:activation_key missing
+account_activation_key_status=Key 'activation_key' was missing
+

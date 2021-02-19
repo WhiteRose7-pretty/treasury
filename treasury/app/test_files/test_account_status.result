@@ -1,0 +1,8 @@
+[result]:default
+is_exist=True
+is_active=True
+
+[result]:email does not exist
+is_exist=False
+is_active=False
+

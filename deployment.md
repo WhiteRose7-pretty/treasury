@@ -53,8 +53,8 @@
 ### 6. Move the project folder and copy config files, run docker
 
     cd web_daria
-    cp -a treasury/app/media/. /opt/media/
-    cp -a treasury/app/configs/. /opt/configs/
+    cp -a treasury_quants/app/media/. /opt/media/
+    cp -a treasury_quants/app/configs/. /opt/configs/
     docker-compose up --d
 
 ### 7. Check if docker image, containers created exactly

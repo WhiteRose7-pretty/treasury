@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import json
-from app.modules import utility_common, settings
+from app.modules import utility_common, settings, cron_grids
 from django.http import JsonResponse
 from app.templatetags.app_tags import get_market_data
 
@@ -103,3 +103,13 @@ def handler500(request):
         'navbar': '500 Error',
     }
     return render(request, 'app/error_page.html', context,status=500)
+
+
+def test_connection(request):
+    status, error = cron_grids.check_connection()
+    print("check connection:")
+    print(status, error)
+    context = {
+        'navbar': 'Terms of Service',
+    }
+    return render(request, 'app/terms.html', context)

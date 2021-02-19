@@ -193,8 +193,6 @@ def utility_download_formatted_grid_fx(currencies, base_currency, folder):
             return (False, {
                 'utility_download_formatted_grid_fx': 'failed while saving file with base_currency={} and folder={}. '
                                                       'Exception was {}'.format(base_currency, folder, message)})
-
-
     except Exception as e:
         return (False, {
             'utility_download_formatted_grid_fx': 'failed while extracting information with base_currency:{} and '

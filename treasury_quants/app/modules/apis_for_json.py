@@ -957,14 +957,12 @@ account_apis_factory[AccountActivate().name] = AccountActivate()
 def api_gateway(json_request_string, factory=None):
     if factory is None:
         factory = account_apis_factory
-
-    connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
-    #
-    # create an empty response
-    #
     web_response = WebResponse()
     try:
+        connection = utility_connection.WebConnection(settings.email_default, settings.url_server, settings.token_path)
         #
+        # create an empty response
+
         # ceate a request, parse it and validate it
         #
         web_request = WebRequest()

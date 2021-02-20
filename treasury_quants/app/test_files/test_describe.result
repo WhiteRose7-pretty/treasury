@@ -12,12 +12,14 @@ price_vanilla_swap=Prices a single currency vanilla swap.
 risk_ladder=Performs a full risk ladder on a trade that has already been saved/booked.
 show_available=Provides all the options available for for given element. Examples are: market data dates, day-counts, business centres, etc..
 workspace=Lists or delete your saved files. ('list','all') to list or ('delete', <filename>) to delete files.
+workspace_delete=Delete the saved files.
+workspace_list=Lists your saved files.
 
 [result]:element=pnl_predict
 from_date=[date] - Initial date for which the sensitivities are calculated.
 load_as=[string] - Reference name of the trade that has already been saved.
 to_date=[date] - Next date for which the PnL is predicted.
 
-[result]:unkown element
+[result]:unknown element
 unknown=This element is not implemented.
 

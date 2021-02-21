@@ -30,9 +30,21 @@
     - width is the width of the input filed that is meant to be the same for each type all its instantiations.
     - init_values are used for combo list.
     * note: there are two types that are dynamic: 1) TYPE_MARKET_DATES and 2) TYPE_TRADE_LIST. TYPE_MARKET_DATES should be populated only once and only when the page is loaded. TYPE_TRADE_LIST is populated at the beginning and at each time a trade is saved.
+
+
+    Steps of adding a new api
+    =========================
+    1) create a new api specification
+    'name': 'api name'
+    , 'arguments': [arg1, arg2, ...] #the are the actual aruments of the api
+    , 'argument_labels': [label1, label2, ...]
+    , 'argument_optionals': ['0','0','0',...]
+    , 'argument_types': ['TYPE_STRING'. 'TYPE_MARKET_DATES', ...]
+    , 'argument_values': ['def value', '0',...]
+    , 'callback_name': callback_nothing
+
+
     */
-
-
     /******************************** End *********************************/
 
 
@@ -277,6 +289,43 @@ var _pnl_attribute = {
     , 'callback_name': callback_nothing
 }
 
+//
+// api:workspace_list
+//
+var _workspace_list = {
+    'name': 'workspace_list'
+    , 'arguments': []
+    , 'argument_labels': []
+    , 'argument_optionals': []
+    , 'argument_types': []
+    , 'argument_values': []
+    , 'callback_name': callback_nothing
+}
+//
+// api:workspace_read
+//
+var _workspace_list = {
+    'name': 'workspace_read'
+    , 'arguments': ['file_id']
+    , 'argument_labels': ['File Id']
+    , 'argument_optionals': ['0']
+    , 'argument_types': ['TYPE_TRADE_LIST']
+    , 'argument_values': ['0']
+    , 'callback_name': callback_nothing
+}
+//
+// api:workspace_delete
+//
+var _workspace_delete = {
+    'name': 'workspace_delete'
+    , 'arguments': ['file_id']
+    , 'argument_labels': ['File Id']
+    , 'argument_optionals': ['0']
+    , 'argument_types': ['TYPE_STRING']
+    , 'argument_values': ['']
+    , 'callback_name': callback_nothing
+}
+
 
 //
 // create a dictionary of all api specification
@@ -305,6 +354,9 @@ var api_descriptions = {
     'risk_ladder': '',
     'pnl_attribute': '',
     'pnl_predict': '',
+    'workspace_list',
+    'workspace_read',
+    'workspace_delete',
     'market_swap_rates': '',
     'market_fx_rates': '',
     'describe': '',

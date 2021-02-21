@@ -1,12 +1,12 @@
 <div>
-<b>API</b>: workspace_read <br><hr>
-<b>Summary</b>:Provides a list of all your files in the workspace.
-<br><br>
+<b>API</b>: workspace_delete <br><hr>
+<b>Summary</b>:Deletes a saved file.<br><br>
 <b>Arguments</b>:<br><hr>
-<b>None.<br>
+<b>File Id</b>: Name of the file to be deleted. You may also enter '*' for deleting ALL files.<br>
 <br>
 <b>See Also</b>:<br><hr>
-To see further available options for various input parameters etc., see api:show_available<br>
+For uploading/reading any of your files, see api:workapce_read<br>
+For listing of all your files, see api:workapce_list<br>
 </div>
 
 

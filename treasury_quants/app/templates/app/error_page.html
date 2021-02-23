@@ -23,10 +23,10 @@
 
 <section class="mid">
 {% include 'app/basic/middle_office.html' %}
-    <section style=" margin-top: 10px">
-        <div class="container d-flex justify-content-center ">
-            <div class="profile-table mt-4">
-                <h3 class="font-weight-bold">This page doesn’t exist. Please check your URL or return to Treasury Quants home.</h3>
+    <section style="margin-top: 10px">
+        <div class="container d-flex">
+            <div class="mt-5">
+                <h3 class="font-weight-bold">{{ message }}</h3>
                 <a class="mt-4 btn btn-primary" href="{% url 'app:home' %}">Home</a>
             </div>
         </div>

@@ -94,6 +94,7 @@ def post_message(request):
 def handler404(request, exception):
     context = {
         'navbar': '400 Error',
+        'message': 'This page doesn’t exist. Please check your URL or return to Treasury Quants home.',
     }
     return render(request, 'app/error_page.html', context, status=404)
 
@@ -101,6 +102,7 @@ def handler404(request, exception):
 def handler500(request):
     context = {
         'navbar': '500 Error',
+        'message': 'This page doesn’t exist. Please check your URL or return to Treasury Quants home.',
     }
     return render(request, 'app/error_page.html', context,status=500)
 
@@ -113,3 +115,12 @@ def test_connection(request):
         'navbar': 'Terms of Service',
     }
     return render(request, 'app/terms.html', context)
+
+
+def server_down(request):
+    context = {
+        'navbar': 'Server Error',
+        'message': 'Server is down. Please try again later.',
+    }
+    return render(request, 'app/error_page.html', context)
+

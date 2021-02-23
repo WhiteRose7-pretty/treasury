@@ -13,7 +13,7 @@
 }
 
 .navbar-brand img , .footer-logo img{
-    height: 40px;
+    height: 46px;
 }
 
 
@@ -30,13 +30,11 @@ body {
 }
 
 .navbar .tagline{
-    font-family: 'Kepler Std Medium Capt', serif;
     font-size: 30px;
-    margin-top: 18px;
+    margin-top: 12px;
 }
 
 .middle-office h2{
-    font-family: 'Kepler Std Medium Capt', serif;
     font-size:36px;
 }
 
@@ -69,7 +67,7 @@ canvas {
 }
 
 .header .navbar .nav-item {
-    padding: 12px 1rem;
+    padding: 12px .5rem;
 }
 
 .header .navbar .nav-link,
@@ -85,6 +83,7 @@ canvas {
 
 .footer .navbar-nav{
     flex-direction: row;
+    margin-left: 160px;
 }
 
 .header .navbar .nav-link:before{
@@ -288,8 +287,7 @@ canvas {
 }
 
 .footer .nav-item{
-    padding: 0 1.5rem;
-    width: 15%;
+    padding: 0 2rem;
 }
 
 .full-height{
@@ -339,8 +337,7 @@ canvas {
     font-size: 36px;
     font-weight: 700;
     color: #252a32;
-    line-height: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 36px;
 }
 
 .license-fee p{
@@ -742,6 +739,7 @@ strong {
     border: 1px #fff solid;
 }
 
+
 input:focus,
 select:focus,
 textarea:focus,
@@ -907,6 +905,18 @@ div.disabled svg, div.disabled span{
     border-bottom: 1px solid grey;
 }
 
+.video-container{
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 1600px) {
+    .footer .navbar-nav{
+        margin-left: 0;
+    }
+}
+
+
 @media only screen and (max-width: 1366px) {
 
     .table-container{
@@ -914,7 +924,9 @@ div.disabled svg, div.disabled span{
         overflow-x: auto;
     }
 
-
+    .footer .navbar-nav{
+        margin-left: 0;
+    }
 
     .grid-mother {
         display: grid;
@@ -943,6 +955,10 @@ div.disabled svg, div.disabled span{
         height: auto;
         min-height: 20vh;
     }
+
+    .footer .nav-item {
+        padding: 0 1.5rem;
+    }
 }
 
 @media only screen and (max-width: 960px) {
@@ -953,9 +969,12 @@ div.disabled svg, div.disabled span{
 
     .footer .navbar-nav{
         flex-direction: column;
+        margin-left: 0;
     }
 
-
+    .footer .nav-item {
+        padding: 0;
+    }
 }
 
 
@@ -1119,6 +1138,10 @@ div.disabled svg, div.disabled span{
     .license-main {
         padding: 30px 0 70px;
     }
+
+    .dropdown-menu{
+        border: none;
+    }
 }
 
 
@@ -1176,11 +1199,15 @@ div.disabled svg, div.disabled span{
     }
 
     .middle-office h2 {
-        font-size: 24px;
+        font-size: 18px;
     }
 
     .middle-office h4 {
         font-size: 20px;
+    }
+
+    .api-status{
+        font-size: 12px;
     }
 
     .one-usd h2 {

@@ -19,8 +19,6 @@ password: @Trust@
 
 
 
-
-
 # Next Task
 - Unit Tests
 

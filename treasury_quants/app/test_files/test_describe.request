@@ -5,6 +5,6 @@ function_name= describe
 function_name= describe
 element=pnl_predict
 
-[test]:unkown element
+[test]:unknown element
 function_name= describe
 element=unknown

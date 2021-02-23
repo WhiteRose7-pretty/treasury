@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'account_cycle.middleware.ProcessViewNoneMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -108,6 +109,8 @@ CELERY_BROKER_URL = 'pyamqp://{user}:{password}@{host}/{vhost}'.format(
     host='rabbitmq',
     vhost='/'
 )
+
+# CELERY_BROKER_URL = 'amqp://localhost'
 
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = ['json', 'application/json']

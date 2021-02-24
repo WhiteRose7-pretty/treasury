@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 import json
 from app.modules import utility_common, settings, cron_grids
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from app.templatetags.app_tags import get_market_data
 
 
@@ -50,11 +50,11 @@ def workbench(request):
     return render(request, 'app/workbench.html', context)
 
 
-def policy_notice(request):
+def privacy_notice(request):
     context = {
-        'navbar': 'Policy Notice',
+        'navbar': 'Privacy Notice',
     }
-    return render(request, 'app/policy_notice.html', context)
+    return render(request, 'app/privacy_notice.html', context)
 
 
 def terms_service(request):
@@ -104,13 +104,11 @@ def handler500(request):
         'navbar': '500 Error',
         'message': 'This page doesn’t exist. Please check your URL or return to Treasury Quants home.',
     }
-    return render(request, 'app/error_page.html', context,status=500)
+    return render(request, 'app/error_page.html', context, status=500)
 
 
 def test_connection(request):
-    status, error = cron_grids.check_connection()
-    print("check connection:")
-    print(status, error)
+    cron_grids.check_connection()
     context = {
         'navbar': 'Terms of Service',
     }
@@ -118,9 +116,10 @@ def test_connection(request):
 
 
 def server_down(request):
+    if cron_grids.api_status_from_file(settings.api_status_path):
+        return HttpResponseRedirect(reverse('app:home'))
     context = {
         'navbar': 'Server Error',
         'message': 'Server is down. Please try again later.',
     }
     return render(request, 'app/error_page.html', context)
-

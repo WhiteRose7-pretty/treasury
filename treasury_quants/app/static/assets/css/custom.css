@@ -13,7 +13,7 @@
 }
 
 .navbar-brand img , .footer-logo img{
-    height: 46px;
+    height: 52px;
 }
 
 
@@ -30,8 +30,12 @@ body {
 }
 
 .navbar .tagline{
-    font-size: 30px;
-    margin-top: 12px;
+    font-size: 45px;
+    width: Calc(100% - 32px);
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    z-index: -1;
 }
 
 .middle-office h2{
@@ -910,14 +914,33 @@ div.disabled svg, div.disabled span{
     align-items: center;
 }
 
+.navbar .tagline1{
+   display: none;
+}
+
 @media only screen and (max-width: 1600px) {
     .footer .navbar-nav{
         margin-left: 0;
+    }
+    .navbar .tagline{
+        display: none;
+    }
+
+    .navbar .tagline1{
+        display: block;
+    }
+
+    .navbar .tagline1{
+        width: 100%;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
     }
 }
 
 
 @media only screen and (max-width: 1366px) {
+
 
     .table-container{
         max-width: inherit;
@@ -995,6 +1018,14 @@ div.disabled svg, div.disabled span{
 
     .middle-office .board-main {
         height: fit-content;
+    }
+
+    .navbar .tagline1{
+        width: 100%;
+        text-align: left;
+        font-size: 32px;
+        font-weight: bold;
+        margin-top: 20px;
     }
 
 }

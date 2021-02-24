@@ -26,5 +26,6 @@
 For Business Day Rules: See  <a href="https://en.wikipedia.org/wiki/Date_rolling" target="_blank">here</a> <br>
 For Day-count conventions: See <a href="https://en.wikipedia.org/wiki/Day_count_convention" target="_blank">here</a><br>
 For swap market conventions, see api:market_swap_rates<br>
-
+For uploading/reading any of your files, see api:workapce_read<br>
+For listing of all your files, see api:workapce_list<br>
 </div>

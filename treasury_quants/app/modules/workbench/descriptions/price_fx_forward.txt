@@ -15,4 +15,6 @@
 <br>
 <b>See Also</b>:<br><hr>
 For swap market conventions, see api:market_fx_rates<br>
+For uploading/reading any of your files, see api:workapce_read<br>
+For listing of all your files, see api:workapce_list<br>
 </div>

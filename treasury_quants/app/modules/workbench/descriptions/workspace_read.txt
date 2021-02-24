@@ -1,0 +1,15 @@
+<div>
+<b>API</b>: workspace_read <br><hr>
+<b>Summary</b>:Provides a list of all your files in the workspace.
+<br><br>
+<b>Arguments</b>:<br><hr>
+<b>File Id</b>: Name of the file. you may ignore the extension.<br>
+<br>
+<b>See Also</b>:<br><hr>
+For deleting any or all files see api:workapce_delete<br>
+For listing of all your files, see api:workapce_list<br>
+
+</div>
+
+
+

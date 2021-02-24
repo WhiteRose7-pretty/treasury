@@ -9,6 +9,8 @@
 <b>See Also</b>:<br><hr>
 For creating a vanilla swap, see api:price_vanilla_swap<br>
 For creating an FX forward, see api:price_fx_forward<br>
+For uploading/reading any of your files, see api:workapce_read<br>
+For listing of all your files, see api:workapce_list<br>
 </div>
 
 

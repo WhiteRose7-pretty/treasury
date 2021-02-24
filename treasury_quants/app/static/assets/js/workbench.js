@@ -30,9 +30,21 @@
     - width is the width of the input filed that is meant to be the same for each type all its instantiations.
     - init_values are used for combo list.
     * note: there are two types that are dynamic: 1) TYPE_MARKET_DATES and 2) TYPE_TRADE_LIST. TYPE_MARKET_DATES should be populated only once and only when the page is loaded. TYPE_TRADE_LIST is populated at the beginning and at each time a trade is saved.
+
+
+    Steps of adding a new api
+    =========================
+    1) create a new api specification
+    'name': 'api name'
+    , 'arguments': [arg1, arg2, ...] #the are the actual aruments of the api
+    , 'argument_labels': [label1, label2, ...]
+    , 'argument_optionals': ['0','0','0',...]
+    , 'argument_types': ['TYPE_STRING'. 'TYPE_MARKET_DATES', ...]
+    , 'argument_values': ['def value', '0',...]
+    , 'callback_name': callback_nothing
+
+
     */
-
-
     /******************************** End *********************************/
 
 
@@ -277,6 +289,43 @@ var _pnl_attribute = {
     , 'callback_name': callback_nothing
 }
 
+//
+// api:workspace_list
+//
+var _workspace_list = {
+    'name': 'workspace_list'
+    , 'arguments': []
+    , 'argument_labels': []
+    , 'argument_optionals': []
+    , 'argument_types': []
+    , 'argument_values': []
+    , 'callback_name': callback_nothing
+}
+//
+// api:workspace_read
+//
+var _workspace_read = {
+    'name': 'workspace_read'
+    , 'arguments': ['file_id']
+    , 'argument_labels': ['File Id']
+    , 'argument_optionals': ['0']
+    , 'argument_types': ['TYPE_TRADE_LIST']
+    , 'argument_values': ['0']
+    , 'callback_name': callback_nothing
+}
+//
+// api:workspace_delete
+//
+var _workspace_delete = {
+    'name': 'workspace_delete'
+    , 'arguments': ['file_id']
+    , 'argument_labels': ['File Id']
+    , 'argument_optionals': ['0']
+    , 'argument_types': ['TYPE_STRING']
+    , 'argument_values': ['']
+    , 'callback_name': callback_workspace_delete
+}
+
 
 //
 // create a dictionary of all api specification
@@ -290,6 +339,9 @@ var api_specs = {
     'pnl_predict': _pnl_predict,
     'market_swap_rates': _market_swap_rates,
     'market_fx_rates': _market_fx_rates,
+    'workspace_read':_workspace_read,
+    'workspace_list':_workspace_list,
+    'workspace_delete':_workspace_delete,
     'describe': _describe,
     'show_available': _show_available
 }
@@ -298,18 +350,7 @@ var api_specs = {
 //
 // create a dictionary of all api text description
 //
-var api_descriptions = {
-    'price_fx_forward': '',
-    'price_vanilla_swap': '',
-    'price': '',
-    'risk_ladder': '',
-    'pnl_attribute': '',
-    'pnl_predict': '',
-    'market_swap_rates': '',
-    'market_fx_rates': '',
-    'describe': '',
-    'show_available': '',
-}
+var api_descriptions = {}
 
 /******************************** Form Creation *********************************/
 
@@ -647,10 +688,20 @@ function callback_nothing(data, request) {
 // General callback function to price_fx_forward api
 //
 function callback_price_fx_forward(data,request){
-    callback_nothing(data, request);
     if($('#save_as').val()){
         load_trade_ids();
     }
+    callback_nothing(data, request);
+    return;
+}
+
+
+//
+// General callback function to price_fx_forward api
+//
+function callback_workspace_delete(data,request){
+    load_trade_ids();
+    callback_nothing(data, request);
     return;
 }
 
@@ -659,10 +710,10 @@ function callback_price_fx_forward(data,request){
 //
 
 function callback_price_vanilla_swap(data, request){
-    callback_nothing(data, request);
     if($('#save_as').val()){
         load_trade_ids();
     }
+    callback_nothing(data, request);
     return;
 }
 

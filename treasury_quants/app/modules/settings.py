@@ -10,7 +10,7 @@ email_dictionary = {'77.68.24.21': 'webmaster.b@treasuryquants.com', '77.68.7.11
 master_ip = '77.68.24.21'
 dev_ip = '77.68.7.117'
 
-email_default = email_dictionary[dev_ip]
+email_default = email_dictionary[master_ip]
 
 # Prod's server 2, master
 # email_default = "webmaster.a@treasuryquants.com"  # Prod's server 2, dev

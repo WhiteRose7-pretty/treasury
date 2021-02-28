@@ -2,16 +2,11 @@
 
 |Name|	IP|	User	|Password|	OS|
 |---|:---:|---|---|---|
-|web.ubuntu.A	|77.68.6.27	|root|	InV_@K4tX5|	ubuntu 18.0.4|
-|web.ubuntu.B	|213.171.210.28|root|	k$#OKx2Jd*|	ubuntu 18.0.4|
-|web.ubuntu.C	|77.68.28.47	|root|	O60i?$78Vm|	ubuntu 18.0.4|
-77.68.7.117
+|Server2	|77.68.24.21	|root|DmD16D171*	|	ubuntu 18.0.4|
+|Server1	|77.68.7.117	|root|	*u$YP08!1m|	ubuntu 18.0.4|
+|api-server	|77.68.119.98	|root|	N/A|	ubuntu 18.0.4|
 
-# api-server
-===============
-ip: 77.68.119.98 
-username: daria
-password: @Trust@ 
+
 
 
 ## Preparations: Deployment to PROD (£300 for the three above, 3 days)

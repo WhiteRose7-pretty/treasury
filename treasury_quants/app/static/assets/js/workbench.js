@@ -48,6 +48,14 @@
     /******************************** End *********************************/
 
 
+
+
+/******************************** Global Variables *********************************/
+var GLOBAL_IP_ERROR=false; // when the server returns an ip error
+
+
+/******************************** Specification and Definitions *********************************/
+
 //
 // declaring  the data type specifications
 //
@@ -721,10 +729,15 @@ function callback_price_vanilla_swap(data, request){
 // Token Create callback function to treat the response
 //
 function callback_account_token_create(data, request) {
+    $('#token').text('')
+    $('#token_expiry').text('');
+
     if (data['Response']['focus'] == 'errors') {
         callback_nothing(data, request);
+        GLOBAL_IP_ERROR=true;
         return;
     }
+    GLOBAL_IP_ERROR=false;
     var token = data['Response']['Results']['account_token_create'];
     $('#token').text(token);
     var expiry_in_minutes = data['Response']['expiry_minutes'];
@@ -899,6 +912,10 @@ async function api_call(function_name, arguments, callback_function) {
         arguments['token'] = $('#token').text();
     }
 
+    if (GLOBAL_IP_ERROR){
+        return;
+    }
+
     var arguments_string = argument_make_string(function_name, arguments);
 
     const requestOptions = {
@@ -963,10 +980,15 @@ function load_descriptions(descriptions) {
 async function initial_load(email,descriptions) {
     if (email != '' && email != null) {
         print_output({'Connecting to Server': 'Please wait...'});
-
-        load_descriptions(descriptions);
         await obtain_or_refresh_token();
 
+
+        if (GLOBAL_IP_ERROR){
+            return;
+        }
+
+
+        load_descriptions(descriptions);
         load_asof_dates();
         load_trade_ids();
         initialize_page();
